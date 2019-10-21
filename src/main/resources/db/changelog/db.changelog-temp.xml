@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="ladl-001" author= "rudy.boinnard">
+        <createTable tableName="_user">
+            <column autoIncrement="true" name="user_id" type="BIGINT">
+                <constraints primaryKey="true"
+                             primaryKeyName="user_pkey" nullable="false" />
+            </column>
+            <column name="username" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mail" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="version" type="BIGINT" />
+        </createTable>
+
+        <insert tableName="_user">
+            <column name="last_name" value="gasmyr" />
+            <column name="first_name" value="ghomas"/>
+            <column name="mail" value="gasmyrmougang@yahoo.fr" />
+            <column name="username" value="gasmyr" />
+            <column name="password"
+                    value="test" />
+            <column name="version" value="0" />
+        </insert>
+
+        <insert tableName="_user">
+            <column name="first_name" value="rudy" />
+            <column name="last_name" value="boinnard"/>
+            <column name="mail" value="valaragen@google.com" />
+            <column name="username" value="valaragen" />
+            <column name="password"
+                    value="abcd" />
+            <column name="version" value="0" />
+        </insert>
+
+        <rollback>
+            <dropTable tableName="_user"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="ladl-002" author="rudy.boinnard">
+        <createTable tableName="_role">
+            <column autoIncrement="true" name="role_id" type="BIGINT">
+                <constraints primaryKey="true"
+                             primaryKeyName="role_pkey" nullable="false" />
+            </column>
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="version" type="BIGINT" />
+        </createTable>
+
+        <insert tableName="_role">
+            <column name="name" value="ROLE_STAFF" />
+            <column name="description" value="staff" />
+            <column name="version" value="0" />
+        </insert>
+        <insert tableName="_role">
+            <column name="name" value="ROLE_MEMBER" />
+            <column name="description" value="member" />
+            <column name="version" value="0" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="ladl-003" author="rudy.boinnard">
+        <createTable tableName="user_role">
+            <column name="user_id" type="BIGINT" />
+            <column name="role_id" type="BIGINT" />
+        </createTable>
+        <insert tableName="user_role">
+            <column name="user_id" type="BIGINT" valueComputed="(SELECT user_id FROM _user WHERE username='valaragen')" />
+            <column name="role_id" type="BIGINT" valueComputed="(SELECT role_id FROM _role WHERE name='ROLE_STAFF')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" type="BIGINT" valueComputed="(SELECT user_id FROM _user WHERE username='gasmyr')" />
+            <column name="role_id" type="BIGINT" valueComputed="(SELECT role_id FROM _role WHERE name='ROLE_MEMBER')" />
+        </insert>
+    </changeSet>
+</databaseChangeLog>
