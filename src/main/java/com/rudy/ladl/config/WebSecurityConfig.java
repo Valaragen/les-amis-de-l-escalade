@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/index")
                 .failureUrl("/user/login?error")
                 .permitAll()
                 .and()
@@ -73,15 +73,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.key("my-secure-key")
                 .rememberMeCookieName("remember-me")
                 .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(24 * 60 * 60)
+                .tokenValiditySeconds(7 * 24 * 60 * 60)
                 .and()
                 .exceptionHandling()
+                .and()
         ;
     }
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/user/register");
+        web
+                .ignoring()
+                .antMatchers("/user/register")
+                .antMatchers("/","/index")
+                .antMatchers("/css/**")
+                .antMatchers("/js/**")
+        ;
+
     }
 
     private PersistentTokenRepository persistentTokenRepository() {

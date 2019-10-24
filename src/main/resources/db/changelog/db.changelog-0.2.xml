@@ -12,7 +12,7 @@
             <column name="email" value="rudy@gmail.com" />
             <column name="username" value="valaragen" />
             <column name="encrypted_password"
-                    value="xsqTme4OardMONZbhotOMu2NGJW9ej5k5RyN4yVK+aToAADMSKz5nxy3IK/2XPfy" />
+                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
             <column name="version" value="0" />
         </insert>
 
@@ -22,7 +22,7 @@
             <column name="email" value="gasmyrmougang@yahoo.fr" />
             <column name="username" value="user" />
             <column name="encrypted_password"
-                    value="xsqTme4OardMONZbhotOMu2NGJW9ej5k5RyN4yVK+aToAADMSKz5nxy3IK/2XPfy" />
+                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
             <column name="version" value="0" />
         </insert>
     </changeSet>
