@@ -6,11 +6,10 @@
 </head>
 <body>
 <h1>Result</h1>
-<p th:text="'id: ' + ${user.id}"></p>
-<p th:text="'firstname: ' + ${user.firstName}"></p>
-<p th:text="'lastname: ' + ${user.lastName}"></p>
-<p th:text="'username: ' + ${user.username}"></p>
-<p th:text="'email: ' + ${user.email}"></p>
-<a href="register">Register another user</a>
+<p th:text="'firstname: ' + ${registerForm.user.firstName}"></p>
+<p th:text="'lastname: ' + ${registerForm.user.lastName}"></p>
+<p th:text="'username: ' + ${registerForm.user.username}"></p>
+<p th:text="'email: ' + ${registerForm.user.email}"></p>
+<a th:href="@{/user/register}">Register another user</a>
 </body>
 </html>

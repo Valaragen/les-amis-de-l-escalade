@@ -7,21 +7,21 @@
 
     <changeSet id="ladl-001" author="rudy Boinnard">
         <insert tableName="_user">
-            <column name="first_name" value="Rudy" />
-            <column name="last_name" value="BOINNARD" />
-            <column name="email" value="Rudy@gmail.com" />
+            <column name="first_name" value="rudy" />
+            <column name="last_name" value="boinnard" />
+            <column name="email" value="rudy@gmail.com" />
             <column name="username" value="valaragen" />
-            <column name="password"
+            <column name="encrypted_password"
                     value="xsqTme4OardMONZbhotOMu2NGJW9ej5k5RyN4yVK+aToAADMSKz5nxy3IK/2XPfy" />
             <column name="version" value="0" />
         </insert>
 
         <insert tableName="_user">
-            <column name="first_name" value="Thomas" />
-            <column name="last_name" value="Gasmyr" />
+            <column name="first_name" value="thomas" />
+            <column name="last_name" value="gasmyr" />
             <column name="email" value="gasmyrmougang@yahoo.fr" />
             <column name="username" value="user" />
-            <column name="password"
+            <column name="encrypted_password"
                     value="xsqTme4OardMONZbhotOMu2NGJW9ej5k5RyN4yVK+aToAADMSKz5nxy3IK/2XPfy" />
             <column name="version" value="0" />
         </insert>
