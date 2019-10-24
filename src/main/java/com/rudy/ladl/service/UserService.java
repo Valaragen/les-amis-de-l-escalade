@@ -13,9 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+import javax.transaction.Transactional;
 import java.util.List;
 
+;
+
+@Transactional
 @Service
 public class UserService {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -28,7 +31,6 @@ public class UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-
     }
 
     /**
@@ -60,4 +62,5 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
 }

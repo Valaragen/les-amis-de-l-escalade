@@ -1,12 +1,16 @@
 package com.rudy.ladl.controller;
 
 import com.rudy.ladl.controller.form.RegisterForm;
+import com.rudy.ladl.entity.user.User;
 import com.rudy.ladl.exception.EmailNotAvailableException;
 import com.rudy.ladl.exception.UsernameNotAvailableException;
 import com.rudy.ladl.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -61,5 +65,15 @@ public class UserController {
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.findAll());
         return "users";
+    }
+
+    @GetMapping("/login")
+    public String loginForm (User user) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(!(authentication instanceof AnonymousAuthenticationToken)) {
+            return "index";
+        }
+        return "login";
     }
 }
