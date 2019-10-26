@@ -1,7 +1,7 @@
 package com.rudy.ladl.service;
 
-import com.rudy.ladl.core.site.Site;
-import com.rudy.ladl.core.user.User;
+import com.rudy.ladl.entity.site.Site;
+import com.rudy.ladl.entity.user.User;
 import org.springframework.stereotype.Service;
 
 @Service

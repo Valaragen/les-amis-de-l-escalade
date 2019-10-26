@@ -34,7 +34,7 @@
             <column name="last_name" type="VARCHAR(30)">
                 <constraints nullable="false"/>
             </column>
-            <column name="password" type="VARCHAR(64)">
+            <column name="encrypted_password" type="VARCHAR(64)">
                 <constraints nullable="false"/>
             </column>
             <column name="username" type="VARCHAR(30)">
@@ -467,8 +467,8 @@
                                  referencedColumnNames="id" referencedTableName="photo"/>
     </changeSet>
     <changeSet author="Rudy Boinnard" id="ladl-052">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role"
-                                 constraintName="fk_user_role_user_id" deferrable="false"
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role"
+                                 constraintName="fk_user_role_role_id" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="_role"/>
     </changeSet>
@@ -551,8 +551,8 @@
                                  referencedColumnNames="id" referencedTableName="_user"/>
     </changeSet>
     <changeSet author="Rudy Boinnard" id="ladl-066">
-        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role"
-                                 constraintName="fk_user_role_role_id" deferrable="false"
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role"
+                                 constraintName="fk_user_role_user_id" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="_user"/>
     </changeSet>
