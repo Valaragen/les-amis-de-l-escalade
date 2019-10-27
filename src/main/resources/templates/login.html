@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>Se connecter</title>
-  <meta name="description" content="Un site pour les fans d'escalade"/>
-  <meta name="author" content="Valaragen"/>
+  <title>Se connecter - Les amis de l'escalade</title>
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
 </head>
 
 <body>
-<div>
+<div th:replace="/includes/fragments :: navbar"></div>
+<main role="main" class="container">
   <form name="f" th:action="@{/login}" method="post">
     <fieldset>
       <legend>Please Login</legend>
@@ -33,6 +27,6 @@
       </div>
     </fieldset>
   </form>
-</div>
+</main>
 </body>
 </html>

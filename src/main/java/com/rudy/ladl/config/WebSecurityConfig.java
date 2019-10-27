@@ -44,13 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
+    //TODO CHANGER DE BRANCHE
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/admin**").hasRole("ADMIN")
-                .antMatchers("/user/register").anonymous()
-                .antMatchers("/login*","resources/**","/css/**","/js/**","/index","/").permitAll()
+                .antMatchers("/login*","resources/**","/css/**","/js/**","/index","/user/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/index").failureUrl("/login?error")

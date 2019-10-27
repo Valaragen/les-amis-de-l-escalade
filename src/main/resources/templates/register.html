@@ -1,45 +1,45 @@
 <!DOCTYPE HTML>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<head th:replace="includes/fragments :: head(~{::title},~{::link})">
 
-    <title>Les amis de l'escalade</title>
-    <meta name="description" content="Un site pour les fans d'escalade"/>
-    <meta name="author" content="Valaragen"/>
+    <title>S'inscrire - Les amis de l'escalade</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
 </head>
 <body>
-<h1>Créer un compte</h1>
-<form action="#" th:action="@{/user/register}" th:object="${registerForm}" method="post">
-    <label for="LastName">Nom : </label>
-    <input id="LastName" type="text" th:field="*{user.lastName}">
-    <span th:if="${#fields.hasErrors('user.lastName')}" th:errors="*{user.lastName}">lastName Error</span>
+<div th:replace="includes/fragments :: navbar"></div>
+<main role="main" class="container">
+    <h1>Créer un compte</h1>
+    <form action="#" th:action="@{/user/register}" th:object="${registerForm}" method="post">
 
-    <label for="firstName">Prénom : </label>
-    <input id="firstName" type="text" th:field="*{user.firstName}">
-    <td th:if="${#fields.hasErrors('user.firstName')}" th:errors="*{user.firstName}">firstName Error</td>
+        <label for="LastName">Nom : </label>
+        <input id="LastName" type="text" th:field="*{user.lastName}">
+        <span th:if="${#fields.hasErrors('user.lastName')}" th:errors="*{user.lastName}">lastName Error</span>
 
-    <label for="email">Adresse mail : </label>
-    <input id="email" type="text" th:field="*{user.email}">
-    <td th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}">email Error</td>
+        <label for="firstName">Prénom : </label>
+        <input id="firstName" type="text" th:field="*{user.firstName}">
+        <td th:if="${#fields.hasErrors('user.firstName')}" th:errors="*{user.firstName}">firstName Error</td>
 
-    <label for="username">Pseudo : </label>
-    <input id="username" type="text" th:field="*{user.username}">
-    <td th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}">username Error</td>
+        <label for="email">Adresse mail : </label>
+        <input id="email" type="text" th:field="*{user.email}">
+        <td th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}">email Error</td>
 
-    <label for="password">Mot de passe : </label>
-    <input id="password" type="password" th:field="*{user.password}">
-    <td th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">password Error</td>
+        <label for="username">Pseudo : </label>
+        <input id="username" type="text" th:field="*{user.username}">
+        <td th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}">username Error</td>
 
-    <label for="confirmPassword">Confirmez votre mot de passe : </label>
-    <input id="confirmPassword" type="password" th:field="*{confirmPassword}">
-    <td th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">password Error</td>
+        <label for="password">Mot de passe : </label>
+        <input id="password" type="password" th:field="*{user.password}">
+        <td th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">password Error</td>
 
-    <input type="submit" value="submit">
-</form>
+        <label for="confirmPassword">Confirmez votre mot de passe : </label>
+        <input id="confirmPassword" type="password" th:field="*{confirmPassword}">
+        <td th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">password Error</td>
+
+        <input type="submit" value="submit">
+    </form>
+</main>
 </body>
 </html>

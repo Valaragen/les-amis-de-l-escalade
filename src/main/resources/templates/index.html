@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="includes/head :: head(~{::title},~{::link})">
-
+<head>
     <title>Accueil - Les amis de l'escalade</title>
-
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/themes/smoothness/jquery-ui.css}">
-
 </head>
 <body>
 <main role="main" class="container">
-    <div th:replace="includes/navbar :: navbar"></div>
 
     <div class="starter-template">
         <h1>Bootstrap starter template</h1>
@@ -20,11 +14,5 @@
     </div>
 
 </main>
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script th:href="@{/js/jquery-3.4.1.min}" type="application/javascript"></script>
-<script type="application/javascript" th:href="@{/js/bootstrap.js}"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 </body>
 </html>
