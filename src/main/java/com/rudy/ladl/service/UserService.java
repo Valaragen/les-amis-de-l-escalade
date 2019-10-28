@@ -46,9 +46,11 @@ public class UserService {
         Role role = roleRepository.getByName("ROLE_USER");
         user.addRole(role);
         user.setEncryptedPassword(passwordEncoder.encode(user.getPassword()));
-        user = userRepository.save(user);
-        return user;
+
+        return userRepository.save(user);
     }
+
+    //TODO modification
 
 
     public void delete(Long id) {

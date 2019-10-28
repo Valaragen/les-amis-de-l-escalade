@@ -5,6 +5,7 @@ import com.rudy.ladl.entity.user.User;
 import com.rudy.ladl.exception.EmailNotAvailableException;
 import com.rudy.ladl.exception.UsernameNotAvailableException;
 import com.rudy.ladl.service.UserService;
+import com.rudy.ladl.util.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +33,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/register")
+    @GetMapping(Constant.REGISTER_PATH)
     public String registerForm(RegisterForm registerForm, BindingResult bindingResult){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(!(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/";
         }
-        return "register";
+        return Constant.REGISTER;
     }
 
     //TODO add green validation on correct fields and automatic Ajax check for email and username disponibility
-    @PostMapping("/register")
+    @PostMapping(Constant.REGISTER_PATH)
     public String registerSubmit(@Valid @ModelAttribute("registerForm") RegisterForm registerForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(!registerForm.getUser().getPassword().equals(registerForm.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "Les mots de passe ne sont pas identiques");
         }
         if (bindingResult.hasErrors()){
-            return "register";
+            return Constant.REGISTER;
         }
 
         try{
@@ -59,7 +60,7 @@ public class UserController {
             } else {
                 bindingResult.rejectValue("user.username", "error.user.username", e.getMessage());
             }
-            return "register";
+            return Constant.REGISTER;
         }
         redirectAttributes.addAttribute("register", "true");
         return "redirect:/login";

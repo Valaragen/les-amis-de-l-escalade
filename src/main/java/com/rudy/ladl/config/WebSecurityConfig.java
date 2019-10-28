@@ -60,17 +60,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ;
     }
 
-//    @Override
-//    public void configure(WebSecurity web) {
-//        web
-//                .ignoring()
-//                .antMatchers("/user/register")
-//                .antMatchers("/","/index")
-//                .antMatchers("/css/**")
-//                .antMatchers("/js/**")
-//        ;
-//    }
-
     private PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
         tokenRepositoryImpl.setDataSource(dataSource);
