@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -31,14 +32,18 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/register")
+    @GetMapping("/register")
     public String registerForm(RegisterForm registerForm, BindingResult bindingResult){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
         return "register";
     }
 
-    //TODO handle error with a redirection and an error message on register
-    @PostMapping("/user/register")
-    public String registerSubmit(@Valid @ModelAttribute("registerForm") RegisterForm registerForm, BindingResult bindingResult) {
+    //TODO add green validation on correct fields and automatic Ajax check for email and username disponibility
+    @PostMapping("/register")
+    public String registerSubmit(@Valid @ModelAttribute("registerForm") RegisterForm registerForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(!registerForm.getUser().getPassword().equals(registerForm.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "Les mots de passe ne sont pas identiques");
         }
@@ -56,12 +61,11 @@ public class UserController {
             }
             return "register";
         }
-
-        return "result";
+        redirectAttributes.addAttribute("register", "true");
+        return "redirect:/login";
     }
 
-    //TODO remove
-    @GetMapping({"/users", "/user"})
+    @GetMapping("/users")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.findAll());
         return "users";
@@ -72,7 +76,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(!(authentication instanceof AnonymousAuthenticationToken)) {
-            return "index";
+            return "redirect:/";
         }
         return "login";
     }

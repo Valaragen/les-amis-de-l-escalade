@@ -1,44 +1,86 @@
 <!DOCTYPE HTML>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="includes/fragments :: head(~{::title},~{::link})">
-
+<html th:replace="includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
     <title>S'inscrire - Les amis de l'escalade</title>
-
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/custom.css}">
-
 </head>
 <body>
-<div th:replace="includes/fragments :: navbar"></div>
 <main role="main" class="container">
-    <h1>Créer un compte</h1>
-    <form action="#" th:action="@{/user/register}" th:object="${registerForm}" method="post">
+    <form class="my-5" th:action="@{/register}" th:object="${registerForm}" id="form-register" method="post">
+        <div class="text-center mb-3">
+            <img class="text-center mb-4" src="/image/logo_full.png" alt="les amis de l'escalade logo" width="300"
+                 height="168">
+            <h1 class="h1 font-weight-normal">Créer un compte</h1>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="lastName">Nom</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('user.lastName')} ? 'is-invalid' : ''"
+                       id="lastName" type="text" th:field="*{user.lastName}" placeholder="Nom"
+                       required>
+                <div th:if="${#fields.hasErrors('user.lastName')}" th:class="invalid-feedback"
+                     th:errors="*{user.lastName}">lastName Error
+                </div>
+            </div>
 
-        <label for="LastName">Nom : </label>
-        <input id="LastName" type="text" th:field="*{user.lastName}">
-        <span th:if="${#fields.hasErrors('user.lastName')}" th:errors="*{user.lastName}">lastName Error</span>
+            <div class="col-md-6 mb-3">
+                <label for="firstName">Prénom</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('user.firstName')} ? 'is-invalid' : ''"
+                       id="firstName" type="text" th:field="*{user.firstName}"
+                       placeholder="Prénom" required>
+                <div th:if="${#fields.hasErrors('user.firstName')}" th:class="invalid-feedback"
+                     th:errors="*{user.firstName}">firstName Error
+                </div>
+            </div>
+        </div>
 
-        <label for="firstName">Prénom : </label>
-        <input id="firstName" type="text" th:field="*{user.firstName}">
-        <td th:if="${#fields.hasErrors('user.firstName')}" th:errors="*{user.firstName}">firstName Error</td>
+        <div class="form-row">
+            <div class="col-md-5 mb-3">
+                <label for="username">Nom d'utilisateur</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('user.username')} ? 'is-invalid' : ''"
+                       id="username" type="text" th:field="*{user.username}"
+                       placeholder="Nom d'utilisateur" required>
+                <div th:if="${#fields.hasErrors('user.username')}" th:class="invalid-feedback"
+                     th:errors="*{user.username}">username Error
+                </div>
+            </div>
+            <div class="col-md-7 mb-3">
+                <label for="email">Adresse mail</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('user.email')} ? 'is-invalid' : ''"
+                       id="email" type="email" th:field="*{user.email}" placeholder="Adresse mail"
+                       required>
+                <div class="form-control" th:if="${#fields.hasErrors('user.email')}" th:class="invalid-feedback"
+                     th:errors="*{user.email}">email Error
+                </div>
+            </div>
+        </div>
 
-        <label for="email">Adresse mail : </label>
-        <input id="email" type="text" th:field="*{user.email}">
-        <td th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}">email Error</td>
 
-        <label for="username">Pseudo : </label>
-        <input id="username" type="text" th:field="*{user.username}">
-        <td th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}">username Error</td>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="password">Mot de passe</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('user.password')} ? 'is-invalid' : ''"
+                       id="password" type="password" th:field="*{user.password}"
+                       placeholder="Mot de passe" required>
+                <div th:if="${#fields.hasErrors('user.password')}" th:class="invalid-feedback"
+                     th:errors="*{user.password}">password Error
+                </div>
+            </div>
 
-        <label for="password">Mot de passe : </label>
-        <input id="password" type="password" th:field="*{user.password}">
-        <td th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">password Error</td>
+            <div class="col-md-6 mb-3">
+                <label for="confirmPassword">Confirmez votre mot de passe</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid' : ''"
+                       id="confirmPassword" type="password" th:field="*{confirmPassword}"
+                       placeholder="Confirmez votre mot de passe" required>
+                <div th:if="${#fields.hasErrors('confirmPassword')}" th:class="invalid-feedback"
+                     th:errors="*{confirmPassword}">password Error
+                </div>
+            </div>
 
-        <label for="confirmPassword">Confirmez votre mot de passe : </label>
-        <input id="confirmPassword" type="password" th:field="*{confirmPassword}">
-        <td th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">password Error</td>
-
-        <input type="submit" value="submit">
+        </div>
+        <div class="form-row align-items-center">
+            <input class="btn btn-cblue btn-lg col-sm-5 ml-auto mr-auto p-2" type="submit" value="S'inscrire">
+        </div>
     </form>
 </main>
 </body>

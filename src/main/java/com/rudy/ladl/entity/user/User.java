@@ -4,7 +4,6 @@ import com.rudy.ladl.entity.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -41,7 +40,7 @@ public class User extends AbstractEntity {
     @Column(length = 30, nullable = false)
     private String lastName;
 
-    @Email
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z]{2,}[.]{1}[A-Za-z]{2,}$", message = "L''email n''est pas valide")
     @Size(max = 50)
     @Column(nullable = false, unique = true, length = 50)
     private String email;

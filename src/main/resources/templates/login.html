@@ -1,32 +1,43 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-
-  <title>Se connecter - Les amis de l'escalade</title>
-
+    <title>Se connecter - Les amis de l'escalade</title>
 </head>
 
 <body>
-<div th:replace="/includes/fragments :: navbar"></div>
-<main role="main" class="container">
-  <form name="f" th:action="@{/login}" method="post">
-    <fieldset>
-      <legend>Please Login</legend>
-      <div th:if="${param.error}" class="alert alert-error">
-        Invalid username and password.
-      </div>
-      <div th:if="${param.logout}" class="alert alert-success">
-        You have been logged out.
-      </div>
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username"/>
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password"/>
-      <div class="form-actions">
-        <button type="submit" class="btn">Log in</button>
-      </div>
-    </fieldset>
-  </form>
+<main class="login-center container" role="main">
+    <form class="form-signin" name="loginForm" th:action="@{/login}" method="post" id="loginForm">
+        <div class="text-center mb-3">
+        <img class="text-center mb-4" th:src="@{/image/logo_full.png}" alt="les amis de l'escalade logo" width="300" height="168">
+        <h1 class="h1 font-weight-normal">Se connecter</h1>
+            <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                Nom d'utilisateur ou mot de passe incorrect.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-info" role="alert">
+                Vous avez été déconnecté.
+            </div>
+            <div th:if="${param.register}" class="alert alert-success" role="alert">
+                Votre compte à été crée avec succès.
+            </div>
+        </div>
+        <div class="form-label-group">
+            <label for="username" class="sr-only">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur"
+                   required autofocus/>
+        </div>
+        <div class="form-group">
+            <label for="password" class="sr-only">Mot de passe</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required/>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="text-light btn btn-cblue btn-lg btn-block">Connexion</button>
+        </div>
+        <p class="mt-4 mb-3 text-muted text-center">Vous n'avez pas encore de compte ? N'attendez plus et <a th:href="@{/register}">inscrivez vous</a> !</p>
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
+    </form>
 </main>
 </body>
 </html>
