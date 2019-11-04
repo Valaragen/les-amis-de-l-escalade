@@ -20,7 +20,6 @@ html, body {
     align-items: center;
     padding-top: 72px;
     padding-bottom: 72px;
-    background-color: #f5f5f5;
     height: 100%;
 }
 
@@ -84,12 +83,8 @@ html, body {
     object-fit: contain !important;
 }
 
-.maxw-800 {
+#error-box {
     max-width: 800px;
-}
-
-.maxw-100 {
-    max-width: 100px;
 }
 
 @media screen and (max-width: 768px) {

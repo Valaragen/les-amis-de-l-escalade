@@ -1,25 +1,32 @@
-<!DOCTYPE HTML>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Les amis de l'escalade</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Admin - Les amis de l'escalade</title>
 </head>
+
 <body>
-<h1>Liste des utilisateurs</h1>
-<table>
-    <tr>
-        <th>firstname</th>
-        <th>lastname</th>
-        <th>email</th>
-        <th>username</th>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.getFirstName()}">empty</td>
-        <td th:text="${user.lastName}">empty</td>
-        <td th:text="${user.getEmail()}">empty</td>
-        <td th:text="${user.getUsername()}">empty</td>
-        <td th:text="${user.getRoles()}">empty</td>
-    </tr>
-</table>
+<main role="main" class="container">
+
+    <h1>Liste des utilisateurs</h1>
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Email</th>
+            <th scope="col">Roles</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <th scope="row" th:text="${user.getUsername()}">empty</th>
+            <td th:text="${user.lastName}">empty</td>
+            <td th:text="${user.getFirstName()}">empty</td>
+            <td th:text="${user.getEmail()}">empty</td>
+            <td th:text="${user.getRoles()}">empty</td>
+        </tr>
+    </table>
+
+</main>
+
 </body>
 </html>
