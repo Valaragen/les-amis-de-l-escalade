@@ -1,4 +1,4 @@
-package com.rudy.ladl.controller.form;
+package com.rudy.ladl.controller.dto;
 
 import com.rudy.ladl.entity.user.User;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class RegisterForm {
+public class RegisterDTO {
     @Valid
     private User user;
     @NotBlank

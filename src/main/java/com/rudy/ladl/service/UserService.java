@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 ;
 
@@ -63,6 +64,17 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User findById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if(userOptional.isPresent()) {
+            return userOptional.get();
+        }
+
+        return null;
+
+//        return userRepository.findById(id).orElse(null);
     }
 
 }

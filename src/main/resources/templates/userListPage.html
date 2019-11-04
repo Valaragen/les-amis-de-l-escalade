@@ -9,20 +9,28 @@
 <main role="main" class="container">
 
     <h1>Liste des utilisateurs</h1>
-    <table class="table table-hover">
-        <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Lastname</th>
-            <th scope="col">Firstname</th>
+    <table class="table table-hover table-black">
+        <tr class="thead-dark">
+            <th scope="col">Nom d'utilisateur</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
             <th scope="col">Email</th>
             <th scope="col">Roles</th>
+            <th scope="col">Actions</th>
         </tr>
         <tr th:each="user : ${users}">
-            <th scope="row" th:text="${user.getUsername()}">empty</th>
-            <td th:text="${user.lastName}">empty</td>
-            <td th:text="${user.getFirstName()}">empty</td>
-            <td th:text="${user.getEmail()}">empty</td>
-            <td th:text="${user.getRoles()}">empty</td>
+            <th scope="row" th:text="${user.getUsername()}">vide</th>
+            <td th:text="${user.lastName}">vide</td>
+            <td th:text="${user.firstName}">vide</td>
+            <td th:text="${user.email}">vide</td>
+            <td th:text="${user.roles}">vide</td>
+            <td>
+                <a th:href="@{/users/{id}(id=${user.id})}"><i class="fas fa-eye"></i></a>
+
+                <i class="fas fa-edit"></i>
+
+                <i class="fas fa-trash"></i>
+            </td>
         </tr>
     </table>
 

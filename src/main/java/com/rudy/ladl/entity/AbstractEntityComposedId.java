@@ -8,8 +8,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.io.Serializable;
 
-@Getter(AccessLevel.PROTECTED)
-@Setter(AccessLevel.PROTECTED)
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class AbstractEntityComposedId implements Serializable {
     @Version

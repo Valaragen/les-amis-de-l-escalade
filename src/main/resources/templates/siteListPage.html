@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Les amis de l'escalade</title>
+</head>
+
+<body>
+<main role="main" class="container">
+
+    <h1>Liste des sites d'escalade</h1>
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Departement</th>
+            <th scope="col">Description</th>
+            <th scope="col">Type</th>
+            <th scope="col">Commune</th>
+            <th scope="col">Orientation</th>
+            <th scope="col">Infos d'accessibilité</th>
+        </tr>
+        <tr th:each="site : ${sites}">
+            <th scope="row" th:text="${site.name}">vide</th>
+            <td th:text="${site.department}">vide</td>
+            <td th:text="${site.description}">vide</td>
+            <td th:text="${site.type}">vide</td>
+            <td th:text="${site.township}">vide</td>
+            <td th:text="${site.orientation}">vide</td>
+            <td th:text="${site.access_info}">vide</td>
+        </tr>
+    </table>
+
+</main>
+
+</body>
+</html>

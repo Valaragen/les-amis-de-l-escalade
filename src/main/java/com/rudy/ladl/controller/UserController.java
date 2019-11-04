@@ -1,6 +1,6 @@
 package com.rudy.ladl.controller;
 
-import com.rudy.ladl.controller.form.RegisterForm;
+import com.rudy.ladl.controller.dto.RegisterDTO;
 import com.rudy.ladl.entity.user.User;
 import com.rudy.ladl.exception.EmailNotAvailableException;
 import com.rudy.ladl.exception.UsernameNotAvailableException;
@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping(Constant.REGISTRATION_PATH)
-    public String registerForm(RegisterForm registerForm, BindingResult bindingResult){
+    public String registerForm(RegisterDTO registerDTO, BindingResult bindingResult){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(!(authentication instanceof AnonymousAuthenticationToken)) {
             return Constant.REDIRECT + Constant.HOME_PATH;
@@ -44,8 +45,8 @@ public class UserController {
 
     //TODO add green validation on correct fields and automatic Ajax check for email and username disponibility
     @PostMapping(Constant.REGISTRATION_PATH)
-    public String registerSubmit(@Valid @ModelAttribute("registerForm") RegisterForm registerForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if(!registerForm.getUser().getPassword().equals(registerForm.getConfirmPassword())) {
+    public String registerSubmit(@Valid @ModelAttribute("registerForm") RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if(!registerDTO.getUser().getPassword().equals(registerDTO.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", Constant.ERROR_MSG_PASSWORD_MISMATCH);
         }
         if (bindingResult.hasErrors()){
@@ -53,7 +54,7 @@ public class UserController {
         }
 
         try{
-            userService.addUser(registerForm.getUser());
+            userService.addUser(registerDTO.getUser());
         } catch(EmailNotAvailableException | UsernameNotAvailableException e) {
             if (e instanceof EmailNotAvailableException) {
                 bindingResult.rejectValue("user.email", "error.user.email", e.getMessage());
@@ -66,19 +67,29 @@ public class UserController {
         return Constant.REDIRECT + Constant.LOGIN_PATH;
     }
 
-    @GetMapping(Constant.USER_LIST_PATH)
+    @GetMapping(Constant.USERS_PATH)
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.findAll());
         return Constant.USER_LIST_PAGE;
     }
 
     @GetMapping(Constant.LOGIN_PATH)
-    public String loginForm (User user) {
+    public String loginForm(User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(!(authentication instanceof AnonymousAuthenticationToken)) {
             return Constant.REDIRECT + Constant.HOME_PATH;
         }
         return Constant.LOGIN_PAGE;
+    }
+
+    @GetMapping(Constant.USERS_PATH + Constant.SLASHID_PATH)
+    public String goToUserDetail(@PathVariable("id") Long id, Model model) {
+        User user = userService.findById(id);
+        if (user != null) {
+            model.addAttribute("user", user);
+            return Constant.USER_DETAIL_PAGE;
+        }
+        return Constant.REDIRECT + Constant.USERS_PATH;
     }
 }
