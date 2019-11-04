@@ -1,5 +1,6 @@
 package com.rudy.ladl.controller;
 
+import com.rudy.ladl.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class NavigationController {
         model.addAttribute("datetime", new Date());
         model.addAttribute("username", "Valaragen");
         model.addAttribute("mode", appMode);
-        return "home";
+        return Constant.HOME_PAGE;
     }
 
     @GetMapping("/admin")

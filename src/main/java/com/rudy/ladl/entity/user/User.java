@@ -1,6 +1,7 @@
 package com.rudy.ladl.entity.user;
 
 import com.rudy.ladl.entity.AbstractEntity;
+import com.rudy.ladl.util.Constant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -19,12 +20,12 @@ import java.util.Set;
 public class User extends AbstractEntity {
 
     @Size(min = 3, max = 30)
-    @Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "Le pseudo ne peut pas contenir de caractère spéciaux")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = Constant.ERROR_MSG_USERNAME_INVALID_CHAR)
     @Column(length = 30, nullable = false, unique = true)
     private String username;
 
     @Size(min = 5, max = 40)
-    @Pattern(regexp = "^(?=.*[A-Z])[A-Za-z\\d]+$", message = "Le mot de passe doit contenir au moins une majuscule")
+    @Pattern(regexp = "^(?=.*[A-Z])[A-Za-z\\d]+$", message = Constant.ERROR_MSG_PASSWORD_NOT_COMPLETE)
     @Transient
     private String password;
 

@@ -33,23 +33,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(Constant.REGISTER_PATH)
+    @GetMapping(Constant.REGISTRATION_PATH)
     public String registerForm(RegisterForm registerForm, BindingResult bindingResult){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(!(authentication instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/";
+            return Constant.REDIRECT + Constant.HOME_PATH;
         }
-        return Constant.REGISTER;
+        return Constant.REGISTRATION_PAGE;
     }
 
     //TODO add green validation on correct fields and automatic Ajax check for email and username disponibility
-    @PostMapping(Constant.REGISTER_PATH)
+    @PostMapping(Constant.REGISTRATION_PATH)
     public String registerSubmit(@Valid @ModelAttribute("registerForm") RegisterForm registerForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(!registerForm.getUser().getPassword().equals(registerForm.getConfirmPassword())) {
-            bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "Les mots de passe ne sont pas identiques");
+            bindingResult.rejectValue("confirmPassword", "error.confirmPassword", Constant.ERROR_MSG_PASSWORD_MISMATCH);
         }
         if (bindingResult.hasErrors()){
-            return Constant.REGISTER;
+            return Constant.REGISTRATION_PAGE;
         }
 
         try{
@@ -60,25 +60,25 @@ public class UserController {
             } else {
                 bindingResult.rejectValue("user.username", "error.user.username", e.getMessage());
             }
-            return Constant.REGISTER;
+            return Constant.REGISTRATION_PAGE;
         }
         redirectAttributes.addAttribute("register", "true");
-        return "redirect:/login";
+        return Constant.REDIRECT + Constant.LOGIN_PATH;
     }
 
-    @GetMapping("/users")
+    @GetMapping(Constant.USER_LIST_PATH)
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.findAll());
-        return "users";
+        return Constant.USER_LIST_PAGE;
     }
 
-    @GetMapping("/login")
+    @GetMapping(Constant.LOGIN_PATH)
     public String loginForm (User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(!(authentication instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/";
+            return Constant.REDIRECT + Constant.HOME_PATH;
         }
-        return "login";
+        return Constant.LOGIN_PAGE;
     }
 }

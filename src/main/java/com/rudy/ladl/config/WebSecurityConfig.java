@@ -1,5 +1,6 @@
 package com.rudy.ladl.config;
 
+import com.rudy.ladl.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -49,10 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/admin**").hasRole("ADMIN")
-                .antMatchers("/login*", "/resources/**", "/image/**", "/css/**", "/js/**", "/", "/register").permitAll()
+                .antMatchers(Constant.LOGIN_PATH, "/resources/**", "/image/**", "/css/**", "/js/**", Constant.HOME_PATH, Constant.REGISTRATION_PATH).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error")
+                .formLogin().loginPage(Constant.LOGIN_PATH).defaultSuccessUrl(Constant.HOME_PATH).failureUrl(Constant.LOGIN_PATH + "?error")
                 .and()
                 .logout(logout ->
                         logout
