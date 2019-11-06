@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -75,6 +74,15 @@ public class User extends AbstractEntity {
 
     public void setEmail(String email){
         this.email = email.toLowerCase();
+    }
+
+    public String getRolesNamesAsFormattedString(){
+        StringBuilder roleFormatted = new StringBuilder();
+        for (Role role: roles) {
+            roleFormatted.append(role.getName().replaceAll("ROLE_", "")).append(", ");
+        }
+        roleFormatted.setLength(roleFormatted.length()-2);
+        return roleFormatted.toString();
     }
 
     public void addRole(Role role) {

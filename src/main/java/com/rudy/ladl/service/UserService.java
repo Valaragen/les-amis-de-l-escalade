@@ -67,14 +67,11 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if(userOptional.isPresent()) {
-            return userOptional.get();
-        }
+        return userRepository.findById(id).orElse(null);
+    }
 
-        return null;
-
-//        return userRepository.findById(id).orElse(null);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username.toLowerCase()).orElse(null);
     }
 
 }

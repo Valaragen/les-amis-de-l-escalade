@@ -26,6 +26,7 @@ public class Constant {
     public static final String SITE_ADD_PAGE = "siteAddPage";
 
     public static final String SLASHID_PATH = "/{id}";
+    public static final String SLASHUSERNAME_PATH = "/{username}";
 
 
 

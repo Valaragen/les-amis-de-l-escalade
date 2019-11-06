@@ -56,7 +56,7 @@
                 <a class="nav-link dropdown-toggle h5 d-inline" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false" sec:authentication="name">User</a>
                 <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Mon compte</a>
+                    <a class="dropdown-item" th:href="@{/users/{username}(username = ${#authentication.getName()})}">Mon compte</a>
                     <a sec:authorize="isAuthenticated()" class="dropdown-item"
                        th:href="@{/logout}" id="logoutBtn">Déconnexion</a>
                 </div>

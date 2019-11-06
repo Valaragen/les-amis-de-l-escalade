@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -50,14 +51,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/admin**","/users**").hasRole("ADMIN")
-                .antMatchers(Constant.LOGIN_PATH, "/resources/**", "/image/**", "/css/**", "/js/**", Constant.HOME_PATH, Constant.REGISTRATION_PATH).permitAll()
+                .antMatchers( Constant.LOGIN_PATH, "/resources/**", "/image/**", "/css/**", "/js/**", Constant.HOME_PATH, Constant.REGISTRATION_PATH).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage(Constant.LOGIN_PATH).defaultSuccessUrl(Constant.HOME_PATH).failureUrl(Constant.LOGIN_PATH + "?error")
+                .formLogin()
+                .loginPage(Constant.LOGIN_PATH)
+                .defaultSuccessUrl(Constant.HOME_PATH)
+                .failureUrl(Constant.LOGIN_PATH + "?error")
                 .and()
                 .logout(logout ->
                         logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")))
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID"))
+
+                .rememberMe().key("LADLRMBRKEY").tokenValiditySeconds(15 * 24 * 60 * 60)
         ;
     }
 
