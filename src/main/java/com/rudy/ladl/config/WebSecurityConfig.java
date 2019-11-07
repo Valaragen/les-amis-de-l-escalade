@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -50,18 +49,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin**","/users**").hasRole("ADMIN")
-                .antMatchers( Constant.LOGIN_PATH, "/resources/**", "/image/**", "/css/**", "/js/**", Constant.HOME_PATH, Constant.REGISTRATION_PATH).permitAll()
-                .anyRequest().authenticated()
-                .and()
+                    .mvcMatchers("/admin", "/users").hasRole("ADMIN")
+                    .mvcMatchers(Constant.LOGIN_PATH, "/resources/*", "/image/*", "/css/*", "/js/*", Constant.HOME_PATH, Constant.REGISTRATION_PATH).permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginPage(Constant.LOGIN_PATH)
-                .defaultSuccessUrl(Constant.HOME_PATH)
-                .failureUrl(Constant.LOGIN_PATH + "?error")
+                    .loginPage(Constant.LOGIN_PATH)
+                    .defaultSuccessUrl(Constant.HOME_PATH)
+                    .failureUrl(Constant.LOGIN_PATH + "?error")
                 .and()
-                .logout(logout ->
-                        logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID"))
+                    .logout(logout ->
+                            logout
+                                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID"))
 
                 .rememberMe().key("LADLRMBRKEY").tokenValiditySeconds(15 * 24 * 60 * 60)
         ;

@@ -64,7 +64,7 @@ html, body {
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: rgba(52, 58, 64, 0.76);
+    background-color: rgba(52, 58, 64, 0.35);
 }
 
 #homepage-searchForm {
@@ -81,6 +81,7 @@ html, body {
     left: 0;
     right: 0;
     object-fit: contain !important;
+    filter: opacity(0.5);
 }
 
 #error-box {

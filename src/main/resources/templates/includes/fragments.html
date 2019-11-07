@@ -41,11 +41,9 @@
                 <a class="nav-link" th:href="@{/}">Accueil <span th:if="${#httpServletRequest.getRequestURI() == '/'}"
                                                                  class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/sites' ? 'active':''}">
+                <a class="nav-link" th:href="@{/sites}">Sites d'escalade <span th:if="${#httpServletRequest.getRequestURI() == '/'}"
+                                                                               class="sr-only">(current)</span></a>
             </li>
         </ul>
         <a sec:authorize="isAnonymous()" class="btn btn-outline-lightblue d-inline my-2 my-lg-0 mr-2 text-white"
