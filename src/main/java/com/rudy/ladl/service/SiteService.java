@@ -23,4 +23,8 @@ public class SiteService {
         Page<Site> sites = siteRepository.findAll(PageRequest.of(0,10));
         return sites;
     }
+
+    public Site findByName(String name) {
+        return siteRepository.findByName(name.replace("_", " ")).orElse(null);
+    }
 }

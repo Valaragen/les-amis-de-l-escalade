@@ -17,16 +17,18 @@ public class Constant {
     public static final String USER_PATH = "/user";
 
     public static final String USER_LIST_PAGE = "userListPage";
-    public static final String USER_DETAIL_PAGE = "userDetailsPage";
+    public static final String USER_DETAILS_PAGE = "userDetailsPage";
 
-    public static final String SITE_LIST_PATH = "/sites";
+    public static final String SITES_PATH = "/sites";
+
     public static final String SITE_LIST_PAGE = "siteListPage";
+    public static final String SITE_DETAILS_PAGE = "siteDetailsPage";
 
-    public static final String SITE_ADD_PATH = "/sites/add";
+    public static final String SITE_ADD_PATH = SITES_PATH + "/add";
     public static final String SITE_ADD_PAGE = "siteAddPage";
 
     public static final String SLASHID_PATH = "/{id}";
-    public static final String SLASHUSERNAME_PATH = "/{username}";
+    public static final String SLASHSTRING_PATH = "/{string}";
 
 
 

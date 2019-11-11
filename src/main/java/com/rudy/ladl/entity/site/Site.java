@@ -22,13 +22,29 @@ public class Site extends AbstractEntity {
     @Column(length = 30)
     private String type;
     @Column(length = 5000)
-    private String access_info;
+    private String accessInfo;
     @Column(length = 20)
     private String orientation;
+    @Column(length = 5000)
+    private String additionalInfos;
+
+    @Column
+    private Integer cragsNumber;
+    @Column
+    private Integer bottomRoutesAltitude;
+    @Column
+    private Integer maxRoutesHeight;
+    @Column
+    private Integer routesNumber;
 
     @ManyToOne
+    private RockType rockType;
+    @ManyToOne
+    private Grade minGrade;
+    @ManyToOne
+    private Grade maxGrade;
+    @ManyToOne
     private Department department;
-
 
     @ManyToMany(mappedBy = "sites")
     @ToString.Exclude

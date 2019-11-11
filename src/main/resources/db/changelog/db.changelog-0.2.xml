@@ -6,6 +6,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="ladl-001" author="rudy Boinnard">
+        <comment>Insert two users</comment>
         <insert tableName="_user">
             <column name="first_name" value="rudy" />
             <column name="last_name" value="boinnard" />
@@ -26,7 +27,9 @@
             <column name="version" value="0" />
         </insert>
     </changeSet>
+
     <changeSet id="ladl-002" author="rudy boinnard">
+        <comment>insert roles</comment>
         <insert tableName="_role">
             <column name="name" value="ROLE_ADMIN" />
             <column name="description" value="administrator" />
@@ -37,6 +40,7 @@
             <column name="description" value="user" />
             <column name="version" value="0" />
         </insert>
+        <comment>Add admin role and user role to previously created users</comment>
         <insert tableName="user_role">
             <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
             <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_ADMIN')" />
@@ -48,33 +52,29 @@
     </changeSet>
 
     <changeSet id="ladl-003" author="Rudy boinnard">
-        <insert tableName="site_field">
-            <column name="version" value="0"/>
-            <column name="name" value="name"/>
-        </insert>
-        <insert tableName="site_field">
-            <column name="version" value="0"/>
-            <column name="name" value="access_info"/>
-        </insert>
-        <insert tableName="site_field">
-            <column name="version" value="0"/>
-            <column name="name" value="description"/>
-        </insert>
-        <insert tableName="site_field">
-            <column name="version" value="0"/>
-            <column name="name" value="orientation"/>
-        </insert>
-        <insert tableName="site_field">
-            <column name="version" value="0"/>
-            <column name="name" value="township"/>
-        </insert>
-        <insert tableName="site_field">
-            <column name="version" value="0"/>
-            <column name="name" value="type"/>
-        </insert>
+        <comment>Insert site alterable fields</comment>
+        <sql dbms="postgresql">
+            INSERT into site_field("name")
+            VALUES
+            ('name'),
+            ('acessInfo'),
+            ('description'),
+            ('orientation'),
+            ('township'),
+            ('type'),
+            ('additionalInfos'),
+            ('cragsNumber'),
+            ('bottomRoutesAltitude'),
+            ('maxRoutesHeight'),
+            ('routesNumber'),
+            ('rocktype'),
+            ('minGrade'),
+            ('maxGrade');
+        </sql>
     </changeSet>
 
     <changeSet id="ladl-004" author="Rudy boinnard">
+        <comment>Insert all french department in department</comment>
         <sql dbms="postgresql">
             INSERT INTO department (department_number, "name")
             VALUES
@@ -181,4 +181,101 @@
             ('974', 'reunion');
         </sql>
     </changeSet>
+
+    <changeSet id="ladl-005" author="Rudy Boinnard">
+        <comment>Insert selectable rocktypes</comment>
+        <sql dbms="postgresql">
+            INSERT into rock_type("name")
+            VALUES
+            ('Andésite'),
+            ('Ardoise'),
+            ('Basalte'),
+            ('Calcaire'),
+            ('Calcaire (Dolomie)'),
+            ('Calcaire (Molasse)'),
+            ('Calcaire (Pierre de castrie)'),
+            ('Cargneule'),
+            ('Composite'),
+            ('Conglomérat'),
+            ('Craie'),
+            ('Dacite'),
+            ('Diorite'),
+            ('Dolérite'),
+            ('Gabbro'),
+            ('Gneiss'),
+            ('Granite'),
+            ('Granulite'),
+            ('Grès'),
+            ('Grès armoricain'),
+            ('Gritstone'),
+            ('Marbre'),
+            ('Meulière'),
+            ('Micaschiste'),
+            ('Migmatite'),
+            ('Ophiolite'),
+            ('Paragneiss'),
+            ('Phonolithe'),
+            ('Porphyre'),
+            ('Quartz'),
+            ('Quartzite'),
+            ('Résine'),
+            ('Rhyolite'),
+            ('Roche volcanique'),
+            ('Schiste'),
+            ('Serpentine'),
+            ('Silex'),
+            ('Trachy-Andésite'),
+            ('Trachyte'),
+            ('Tuf'),
+            ('Verrucano'),
+            ('Autre');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-006" author="Rudy Boinnard">
+        <comment>Insert selectable grades</comment>
+        <sql dbms="postgresql">
+            INSERT into grade("name")
+            VALUES
+            ('3a'),
+            ('3b'),
+            ('3c'),
+            ('4a'),
+            ('4b'),
+            ('4c'),
+            ('5a'),
+            ('5b'),
+            ('5c'),
+            ('6a'),
+            ('6b'),
+            ('6c'),
+            ('7a'),
+            ('7b'),
+            ('7c'),
+            ('8a'),
+            ('8b'),
+            ('8c'),
+            ('9a'),
+            ('9b'),
+            ('9c');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-007" author="Rudy Boinnard">
+        <comment>Insert default site</comment>
+        <insert tableName="site">
+            <column name="name" value="la dent du lion"/>
+            <column name="township" value="Thonon-les-bains"/>
+            <column name="department_id" value="75"/>
+            <column name="description" value="Belle falaise pour débutant"/>
+        </insert>
+        <insert tableName="site">
+            <column name="name" value="la patte du loup"/>
+            <column name="township" value="Allinge"/>
+            <column name="department_id" value="75"/>
+            <column name="description" value="Petit bloc au bord de la route"/>
+        </insert>
+    </changeSet>
+
+
 </databaseChangeLog>

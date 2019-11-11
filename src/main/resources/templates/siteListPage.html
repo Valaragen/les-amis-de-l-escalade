@@ -9,26 +9,17 @@
 <main role="main" class="container">
 
     <h1>Liste des sites d'escalade</h1>
-    <table class="table table-hover table-black bg-white">
-        <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Departement</th>
-            <th scope="col">Description</th>
-            <th scope="col">Type</th>
-            <th scope="col">Commune</th>
-            <th scope="col">Orientation</th>
-            <th scope="col">Infos d'accessibilité</th>
-        </tr>
-        <tr th:each="site : ${sites}">
-            <th scope="row" th:text="${site.name}">vide</th>
-            <td th:text="${site.department}">vide</td>
-            <td th:text="${site.description}">vide</td>
-            <td th:text="${site.type}">vide</td>
-            <td th:text="${site.township}">vide</td>
-            <td th:text="${site.orientation}">vide</td>
-            <td th:text="${site.access_info}">vide</td>
-        </tr>
-    </table>
+    <div class="card bg-dark text-white mb-4" th:each="site : ${sites}" style="height: 300px">
+        <a class="text-white" th:href="@{/sites/{name}(name=${#strings.replace(site.name, ' ', '_')})}">
+            <img src="./image/defaultSiteImg.jpg" class="card-img" alt="image site d'escalade" style="object-fit: cover; object-position: 50% 50%; height: 300px; filter: brightness(50%)">
+            <div class="card-img-overlay">
+                <h5 class="card-title" th:text="${#strings.capitalize(site.name)}">Card title</h5>
+                <p class="card-text" th:text="${#strings.capitalize(site.department.getFormattedString())}">Vide</p>
+                <p class="card-text" th:text="${site.description}">Vide</p>
+                <p class="card-text" th:text="${site.township}">Vide</p>
+            </div>
+        </a>
+    </div>
 
 </main>
 

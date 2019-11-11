@@ -33,4 +33,8 @@ public class Department extends AbstractEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Site> sites = new HashSet<>();
+
+    public String getFormattedString() {
+        return name + "[" + departmentNumber + "]";
+    }
 }

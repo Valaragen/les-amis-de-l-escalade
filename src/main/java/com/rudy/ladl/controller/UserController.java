@@ -83,12 +83,12 @@ public class UserController {
         return Constant.LOGIN_PAGE;
     }
 
-    @GetMapping(Constant.USERS_PATH + Constant.SLASHUSERNAME_PATH)
-    public String goToUserDetailByUsername(@PathVariable("username") String username, Model model) {
+    @GetMapping(Constant.USERS_PATH + Constant.SLASHSTRING_PATH)
+    public String goToUserDetailByUsername(@PathVariable("string") String username, Model model) {
         User user = userService.findByUsername(username);
         if (user != null) {
             model.addAttribute("user", user);
-            return Constant.USER_DETAIL_PAGE;
+            return Constant.USER_DETAILS_PAGE;
         }
         return Constant.REDIRECT + Constant.USERS_PATH;
     }
