@@ -32,9 +32,8 @@ public class SiteController {
     }
 
     @GetMapping(Constant.SITE_ADD_PATH)
-    public String siteAddForm (Model model) {
-        model.addAttribute("departments", departmentService.findAll());
-        return Constant.SITE_LIST_PAGE;
+    public String siteAddForm(Model model) {
+        return Constant.SITE_ADD_PAGE;
     }
 
     @GetMapping(Constant.SITES_PATH + Constant.SLASHSTRING_PATH)
