@@ -32,7 +32,7 @@ public class SiteController {
     }
 
     @GetMapping(Constant.SITE_ADD_PATH)
-    public String siteAddForm(Model model) {
+    public String siteAddForm(Site site, Model model) {
         return Constant.SITE_ADD_PAGE;
     }
 

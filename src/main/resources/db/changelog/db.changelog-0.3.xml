@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="ladl-001" author="rudy Boinnard">
+        <comment>Insert two users</comment>
+        <insert tableName="_user">
+            <column name="first_name" value="rudy" />
+            <column name="last_name" value="boinnard" />
+            <column name="email" value="rudy@gmail.com" />
+            <column name="username" value="valaragen" />
+            <column name="encrypted_password"
+                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
+            <column name="version" value="0" />
+        </insert>
+
+        <insert tableName="_user">
+            <column name="first_name" value="thomas" />
+            <column name="last_name" value="gasmyr" />
+            <column name="email" value="gasmyrmougang@yahoo.fr" />
+            <column name="username" value="user" />
+            <column name="encrypted_password"
+                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
+            <column name="version" value="0" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="ladl-002" author="rudy boinnard">
+
+        <comment>Add admin role and user role to previously created users</comment>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_ADMIN')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='user')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="ladl-003" author="Rudy Boinnard">
+        <comment>Insert default site</comment>
+        <insert tableName="site">
+            <column name="name" value="la dent du lion"/>
+            <column name="township" value="Thonon-les-bains"/>
+            <column name="department_id" value="75"/>
+            <column name="description" value="Belle falaise pour débutant"/>
+            <column name="latitude" value="45.978705"/>
+            <column name="longitude" value="6.375981"/>
+        </insert>
+        <insert tableName="site">
+            <column name="name" value="la patte du loup"/>
+            <column name="township" value="Allinge"/>
+            <column name="department_id" value="75"/>
+            <column name="description" value="Petit bloc au bord de la route"/>
+            <column name="latitude" value="46.136957"/>
+            <column name="longitude" value="6.637464"/>
+        </insert>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>

@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{::link},~{::.additional-scripts})" lang="fr"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Admin - Les amis de l'escalade</title>
+    <title th:text="${#strings.capitalize(site.name)} + ' - Les amis de l\'escalade'"> - Les amis de l'escalade</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
 </head>
 
 <body>
@@ -15,17 +18,28 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h4 class="card-title" th:text="${site.name}">Username</h4>
+                    <h4 class="card-title" th:text="${#strings.capitalize(site.name)}">Username</h4>
                     <div class="row">
-                        <p class="card-text pl-3 pr-2 mb-0" th:text="${#strings.toUpperCase(site.department.getFormattedString())}">Lastname</p>
+                        <p class="card-text pl-3 pr-2 mb-0"
+                           th:text="${#strings.toUpperCase(site.department.getFormattedString())}">Lastname</p>
                         <p class="card-text" th:text="${#strings.capitalize(site.township)}">Firstname</p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row no-gutters">
+            <div id="mapid" style="height: 500px; width: 500px;" th:attr="data-lat=${site.latitude}, data-lon=${site.longitude}, data-name=${site.name}"></div>
+        </div>
     </div>
 
 </main>
+
+<div class="additional-scripts">
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+            integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+            crossorigin="" type="application/javascript"></script>
+    <script th:src="@{/js/siteDetailsMap.js}" type="application/javascript"></script>
+</div>
 
 </body>
 </html>

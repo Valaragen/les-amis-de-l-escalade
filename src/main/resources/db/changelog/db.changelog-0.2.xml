@@ -5,30 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="ladl-001" author="rudy Boinnard">
-        <comment>Insert two users</comment>
-        <insert tableName="_user">
-            <column name="first_name" value="rudy" />
-            <column name="last_name" value="boinnard" />
-            <column name="email" value="rudy@gmail.com" />
-            <column name="username" value="valaragen" />
-            <column name="encrypted_password"
-                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
-            <column name="version" value="0" />
-        </insert>
-
-        <insert tableName="_user">
-            <column name="first_name" value="thomas" />
-            <column name="last_name" value="gasmyr" />
-            <column name="email" value="gasmyrmougang@yahoo.fr" />
-            <column name="username" value="user" />
-            <column name="encrypted_password"
-                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
-            <column name="version" value="0" />
-        </insert>
-    </changeSet>
-
-    <changeSet id="ladl-002" author="rudy boinnard">
+    <changeSet id="ladl-001" author="Rudy boinnard">
         <comment>insert roles</comment>
         <insert tableName="_role">
             <column name="name" value="ROLE_ADMIN" />
@@ -40,18 +17,8 @@
             <column name="description" value="user" />
             <column name="version" value="0" />
         </insert>
-        <comment>Add admin role and user role to previously created users</comment>
-        <insert tableName="user_role">
-            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
-            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_ADMIN')" />
-        </insert>
-        <insert tableName="user_role">
-            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='user')" />
-            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
-        </insert>
     </changeSet>
-
-    <changeSet id="ladl-003" author="Rudy boinnard">
+    <changeSet id="ladl-002" author="Rudy boinnard">
         <comment>Insert site alterable fields</comment>
         <sql dbms="postgresql">
             INSERT into site_field("name")
@@ -73,7 +40,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="ladl-004" author="Rudy boinnard">
+    <changeSet id="ladl-003" author="Rudy boinnard">
         <comment>Insert all french department in department</comment>
         <sql dbms="postgresql">
             INSERT INTO department (department_number, "name")
@@ -182,7 +149,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="ladl-005" author="Rudy Boinnard">
+    <changeSet id="ladl-004" author="Rudy Boinnard">
         <comment>Insert selectable rocktypes</comment>
         <sql dbms="postgresql">
             INSERT into rock_type("name")
@@ -232,7 +199,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="ladl-006" author="Rudy Boinnard">
+    <changeSet id="ladl-005" author="Rudy Boinnard">
         <comment>Insert selectable grades</comment>
         <sql dbms="postgresql">
             INSERT into grade("name")
@@ -261,20 +228,61 @@
         </sql>
     </changeSet>
 
+    <changeSet id="ladl-006" author="Rudy Boinnard">
+        <comment>Insert selectable site types</comment>
+        <sql dbms="postgresql">
+            INSERT into site_type("name")
+            VALUES
+            ('Bloc'),
+            ('Voies d''une longueur'),
+            ('Voies de plusieurs longueurs'),
+            ('Psychobloc'),
+            ('Structure artificielles d''escalade');
+        </sql>
+    </changeSet>
+
     <changeSet id="ladl-007" author="Rudy Boinnard">
-        <comment>Insert default site</comment>
-        <insert tableName="site">
-            <column name="name" value="la dent du lion"/>
-            <column name="township" value="Thonon-les-bains"/>
-            <column name="department_id" value="75"/>
-            <column name="description" value="Belle falaise pour débutant"/>
-        </insert>
-        <insert tableName="site">
-            <column name="name" value="la patte du loup"/>
-            <column name="township" value="Allinge"/>
-            <column name="department_id" value="75"/>
-            <column name="description" value="Petit bloc au bord de la route"/>
-        </insert>
+        <comment>Insert selectable orientations</comment>
+        <sql dbms="postgresql">
+            INSERT into orientation("name")
+            VALUES
+            ('N'),
+            ('NE'),
+            ('E'),
+            ('SE'),
+            ('S'),
+            ('SO'),
+            ('O'),
+            ('NO'),
+            ('Toutes');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-008" author="Rudy Boinnard">
+        <comment>Insert selectable routes number</comment>
+        <sql dbms="postgresql">
+            INSERT into routes_number("name")
+            VALUES
+            ('Moins de 10 voies'),
+            ('Entre 10 et 25 voies'),
+            ('Entre 25 et 50 voies'),
+            ('Entre 50 et 100 voies'),
+            ('Entre 100 et 200 voies'),
+            ('Entre 200 et 500 voies'),
+            ('Plus de 500 voies');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-009" author="Rudy Boinnard">
+        <comment>Insert selectable level groups</comment>
+        <sql dbms="postgresql">
+            INSERT into level_group("name", min_grade_id, max_grade_id)
+            VALUES
+            ('Débutants', (SELECT id FROM grade WHERE name ='3a'), (SELECT id FROM grade WHERE name ='5c')),
+            ('Amateurs', (SELECT id FROM grade WHERE name ='6a'), (SELECT id FROM grade WHERE name ='6c')),
+            ('Confirmés', (SELECT id FROM grade WHERE name ='7a'), (SELECT id FROM grade WHERE name ='7c')),
+            ('Pros', (SELECT id FROM grade WHERE name ='8a'), null);
+        </sql>
     </changeSet>
 
 
