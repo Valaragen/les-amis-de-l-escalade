@@ -58,7 +58,7 @@ public class Site extends AbstractEntity {
     private Grade minGrade;
     @ManyToOne
     private Grade maxGrade;
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Department department;
 
     @ManyToMany

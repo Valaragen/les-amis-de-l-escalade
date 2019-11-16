@@ -88,6 +88,12 @@ html, body {
     max-width: 800px;
 }
 
+#addMarkerToMapInfo {
+    z-index: 1000;
+    top: 3px;
+    right: 3px;
+}
+
 @media screen and (max-width: 768px) {
     #carouselHomepage img {
         height: 200px;

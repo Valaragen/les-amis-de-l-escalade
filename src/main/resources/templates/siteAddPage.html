@@ -9,30 +9,44 @@
 </head>
 <body>
 <main role="main" class="container">
-    <form class="my-5" th:action="@{sites/add}" th:object="${site}" id="form-register" method="post">
-        <div class="form-row">
-            <div class="col-md-6 mb-3">
+    <form class="my-5" th:action="@{sites/add}" th:object="${site}" id="form-site" method="post">
+        <h1>Ajouter un site d'escalade</h1>
+        <div class="form-row mb-3">
+            <div class="col-md-6">
                 <label for="name">Nom du site</label>
-                <input class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
-                       id="name" type="text" th:field="*{name}" placeholder="Nom du site" th:value="*{name}"
-                       required>
+                <input class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''" id="name"
+                       type="text" th:field="*{name}" placeholder="Nom du site" th:value="*{name}" required>
                 <div th:if="${#fields.hasErrors('name')}" th:class="invalid-feedback"
                      th:errors="*{name}">name Error
                 </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="col-md-6 mb-3">
+        <div class="form-row mb-3">
+            <div class="col-sm-6">
                 <label for="township">Commune</label>
                 <input class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
                        id="township" type="text" th:field="*{township}" placeholder="Commune"
                        required>
-                <div th:if="${#fields.hasErrors('name')}" th:class="invalid-feedback"
+                <div th:if="${#fields.hasErrors('township')}" th:class="invalid-feedback"
                      th:errors="*{township}">name Error
                 </div>
             </div>
+            <div class="col-sm-3">
+                <label for="department">Departement</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                       id="department" type="text" th:field="*{department}" placeholder="Departement"
+                       required>
+                <div th:if="${#fields.hasErrors('department')}" th:class="invalid-feedback"
+                     th:errors="*{department}">name Error
+                </div>
+            </div>
         </div>
-        <div id="mapid" style="height: 500px;"></div>
+        <h4>Localiation du site</h4>
+        <input type="hidden" th:field="*{latitude}" required>
+        <input type="hidden" th:field="*{longitude}" required>
+        <input type="hidden" th:field="*{parkingLatitude}">
+        <input type="hidden" th:field="*{parkingLongitude}">
+        <div id="mapid" style="height: 500px;"><div id="addMarkerToMapInfo" class="alert alert-info position-absolute">Cliquez sur la carte pour ajouter la position du site</div></div>
     </form>
 </main>
 <div class="additional-scripts">
