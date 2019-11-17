@@ -94,6 +94,12 @@ html, body {
     right: 3px;
 }
 
+.select2-selection--single {
+    height: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
 @media screen and (max-width: 768px) {
     #carouselHomepage img {
         height: 200px;
