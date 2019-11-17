@@ -6,6 +6,7 @@ import com.rudy.ladl.exception.EmailNotAvailableException;
 import com.rudy.ladl.exception.UsernameNotAvailableException;
 import com.rudy.ladl.service.UserService;
 import com.rudy.ladl.util.Constant;
+import org.apache.tomcat.util.bcel.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,10 @@ public class UserController {
     }
 
     @GetMapping(Constant.REGISTRATION_PATH)
-    public String registerForm(RegisterDTO registerDTO, BindingResult bindingResult){
+    public String registerForm(Model model){
+        // Let's see what Spring MVC has put inside the Model already
+        System.out.println(model.asMap());
+        if(!model.containsAttribute("registerDTO")) model.addAttribute("registerDTO", new RegisterDTO());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(!(authentication instanceof AnonymousAuthenticationToken)) {
             return Constant.REDIRECT + Constant.HOME_PATH;
@@ -45,12 +49,17 @@ public class UserController {
 
     //TODO add green validation on correct fields and automatic Ajax check for email and username disponibility
     @PostMapping(Constant.REGISTRATION_PATH)
-    public String registerSubmit(@Valid @ModelAttribute("registerForm") RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String registerSubmit(@Valid @ModelAttribute("registerDTO") RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        // Let's see what Spring MVC has put inside the Model already
+        System.out.println(model.asMap());
+        System.out.println("stop");
         if(!registerDTO.getUser().getPassword().equals(registerDTO.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", Constant.ERROR_MSG_PASSWORD_MISMATCH);
         }
         if (bindingResult.hasErrors()){
-            return Constant.REGISTRATION_PAGE;
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerDTO", bindingResult);
+            redirectAttributes.addFlashAttribute("registerDTO", registerDTO);
+            return Constant.REDIRECT + Constant.REGISTRATION_PATH;
         }
 
         try{
@@ -61,6 +70,8 @@ public class UserController {
             } else {
                 bindingResult.rejectValue("user.username", "error.user.username", e.getMessage());
             }
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerDTO", bindingResult);
+            redirectAttributes.addFlashAttribute("registerDTO", registerDTO);
             return Constant.REGISTRATION_PAGE;
         }
         redirectAttributes.addAttribute("register", "true");

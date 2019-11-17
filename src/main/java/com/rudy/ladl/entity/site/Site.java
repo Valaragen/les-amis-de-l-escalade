@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,8 +16,10 @@ import java.util.Set;
 @Data
 @Entity
 public class Site extends AbstractEntity {
+    @Size(min = 3, max = 50)
     @Column(length = 50, nullable = false, unique = true)
     private String name;
+    @Size(min = 3, max = 30)
     @Column(length = 30, nullable = false)
     private String township;
     @Column(length = 5000)
@@ -24,8 +29,10 @@ public class Site extends AbstractEntity {
     @Column(length = 5000)
     private String additionalInfos;
 
+    @NotNull
     @Column(precision=9, scale=6, nullable = false)
     private Double latitude;
+    @NotNull
     @Column(precision=9, scale=6, nullable = false)
     private Double longitude;
 
@@ -100,4 +107,8 @@ public class Site extends AbstractEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Comment> comments = new HashSet<>();
+
+    public String getSearchName() {
+        return name.replace(" ", "_");
+    }
 }

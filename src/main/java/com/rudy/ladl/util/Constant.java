@@ -2,6 +2,7 @@ package com.rudy.ladl.util;
 
 public class Constant {
     public static final String REDIRECT = "redirect:";
+    public static final String SLASH = "/";
 
     public static final String HOME_PATH = "/";
     public static final String HOME_PAGE = "homePage";

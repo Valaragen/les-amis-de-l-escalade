@@ -5,6 +5,7 @@ import com.rudy.ladl.entity.site.Site;
 import com.rudy.ladl.service.DepartmentService;
 import com.rudy.ladl.service.SiteService;
 import com.rudy.ladl.util.Constant;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,19 +40,24 @@ public class SiteController {
     }
 
     @GetMapping(Constant.SITE_ADD_PATH)
-    public String siteAddForm(Site site, Model model) {
+    public String siteAddForm(Model model) {
+        if(!model.containsAttribute("site")){
+            model.addAttribute("site", new Site());
+        }
         model.addAttribute("departments", departmentService.findAll());
         return Constant.SITE_ADD_PAGE;
     }
 
     @PostMapping(Constant.SITE_ADD_PATH)
-    public String siteAddSubmit(@Valid @ModelAttribute("Site") Site site, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String siteAddSubmit(@Valid @ModelAttribute("Site") Site site, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()){
-            return Constant.REGISTRATION_PAGE;
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.site", bindingResult);
+            redirectAttributes.addFlashAttribute("site", site);
+            return Constant.REDIRECT + Constant.SITE_ADD_PATH;
         }
-        //Add service
+        site = siteService.addSite(site);
 
-        return Constant.REDIRECT + Constant.SITE_LIST_PAGE;
+        return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + site.getSearchName();
     }
 
     @GetMapping(Constant.SITES_PATH + Constant.SLASHSTRING_PATH)
