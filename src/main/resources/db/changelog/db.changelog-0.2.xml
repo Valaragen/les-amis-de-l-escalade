@@ -17,6 +17,11 @@
             <column name="description" value="user" />
             <column name="version" value="0" />
         </insert>
+        <insert tableName="_role">
+            <column name="name" value="ROLE_MEMBER" />
+            <column name="description" value="member" />
+            <column name="version" value="0" />
+        </insert>
     </changeSet>
     <changeSet id="ladl-002" author="Rudy boinnard">
         <comment>Insert site alterable fields</comment>
@@ -24,19 +29,28 @@
             INSERT into site_field("name")
             VALUES
             ('name'),
-            ('acessInfo'),
-            ('description'),
-            ('orientation'),
             ('township'),
-            ('type'),
+            ('description'),
+            ('acessInfo'),
             ('additionalInfos'),
+            ('latitude'),
+            ('longitude'),
+            ('parkingLatitude'),
+            ('kidsFriendly'),
+            ('kidsFriendlyInfo'),
             ('cragsNumber'),
             ('bottomRoutesAltitude'),
             ('maxRoutesHeight'),
+            ('nearestVillage'),
+            ('nearestBigCity'),
             ('routesNumber'),
-            ('rocktype'),
+            ('rockType'),
             ('minGrade'),
-            ('maxGrade');
+            ('maxGrade'),
+            ('department'),
+            ('levelGroups'),
+            ('orientations'),
+            ('siteTypes');
         </sql>
     </changeSet>
 

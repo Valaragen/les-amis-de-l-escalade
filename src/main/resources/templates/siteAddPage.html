@@ -26,7 +26,7 @@
         <div class="form-row mb-3">
             <div class="col-sm-6">
                 <label for="township">Commune</label>
-                <input class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                <input class="form-control" th:classappend="${#fields.hasErrors('township')} ? 'is-invalid' : ''"
                        id="township" type="text" th:field="*{township}" placeholder="Commune"
                        required>
                 <div th:if="${#fields.hasErrors('township')}" th:class="invalid-feedback"
@@ -46,12 +46,13 @@
             </div>
         </div>
         <h4>Localiation du site</h4>
+        <div th:if="${#fields.hasErrors('latitude')}" class="alert alert-danger">Vous devez ajouter la position du site d'escalade sur la carte</div>
         <input type="hidden" th:field="*{latitude}">
         <input type="hidden" th:field="*{longitude}">
         <input type="hidden" th:field="*{parkingLatitude}">
         <input type="hidden" th:field="*{parkingLongitude}">
-        <div id="mapid" style="height: 500px;">
-            <div id="addMarkerToMapInfo" class="alert alert-info position-absolute">Cliquez sur la carte pour ajouter la
+        <div id="mapid" style="height: 500px;" th:attr="data-lat=${site.latitude}, data-lon=${site.longitude}, data-plat=${site.parkingLatitude}, data-plon=${site.parkingLongitude}">
+            <div th:if="*{latitude == null}" id="addMarkerToMapInfo" class="alert alert-info position-absolute">Cliquez sur la carte pour ajouter la
                 position du site
             </div>
         </div>

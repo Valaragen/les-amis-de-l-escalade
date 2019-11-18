@@ -8,6 +8,9 @@ var mymap = L.map(mapId).setView([lat, lon], 13);
 // Nous ajoutons un marqueur
 var marker = L.marker([lat, lon]).addTo(mymap);
 marker.bindTooltip("<b>" + mapElem.data("name") + "</b>");
+if(mapElem.data("plat") &&  mapElem.data("plon")) {
+    L.marker([mapElem.data("plat"), mapElem.data("plon")]).addTo(mymap).bindTooltip("Parking");
+}
 
 L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     attribution: 'Données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - Rendu <a href="//openstreetmap.fr">OSM Humanitaire</a>',

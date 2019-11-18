@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .mvcMatchers("/admin", "/users").hasRole("ADMIN")
-                    .mvcMatchers(Constant.LOGIN_PATH, "/resources/*", "/image/*", "/css/*", "/js/*", Constant.HOME_PATH, Constant.REGISTRATION_PATH).permitAll()
+                    .mvcMatchers(Constant.LOGIN_PATH, "/resources/*", "/image/*", "/css/*", "/js/*", Constant.HOME_PATH, Constant.REGISTRATION_PATH, Constant.SITES_PATH, Constant.SITES_PATH + "/*").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

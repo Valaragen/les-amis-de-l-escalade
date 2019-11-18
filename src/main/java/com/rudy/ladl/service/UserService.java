@@ -74,4 +74,12 @@ public class UserService {
         return userRepository.findByUsername(username.toLowerCase()).orElse(null);
     }
 
+    public boolean isUsernameAvailable(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean isEmailAvailable(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }

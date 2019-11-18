@@ -2,6 +2,7 @@ var lat = 46.430455;
 var lon = 2.491927;
 
 var mapId = "mapid";
+var mapElem = $("#" + mapId);
 var latitudeInput = $("#latitude");
 var longitudeInput = $("#longitude");
 var parkingLatitudeInput = $("#parkingLatitude");
@@ -31,6 +32,13 @@ var carMarkerIcon = L.icon({
 
 var siteMarker = L.marker([0,0], {draggable: true});
 var parkingMarker = L.marker([0,0], {draggable: true}).setIcon(carMarkerIcon);
+
+if(mapElem.data("lat") &&  mapElem.data("lon")) {
+    siteMarker.setLatLng([mapElem.data("lat"), mapElem.data("lon")]).addTo(mymap).bindTooltip("Site");
+}
+if(mapElem.data("plat") &&  mapElem.data("plon")) {
+    parkingMarker.setLatLng([mapElem.data("plat"), mapElem.data("plon")]).addTo(mymap).bindTooltip("Parking");
+}
 
 var DELAY = 300, clicks = 0, timer = null;
 

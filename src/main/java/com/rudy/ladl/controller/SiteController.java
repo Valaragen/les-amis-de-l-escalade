@@ -2,11 +2,16 @@ package com.rudy.ladl.controller;
 
 import com.rudy.ladl.entity.site.Department;
 import com.rudy.ladl.entity.site.Site;
+import com.rudy.ladl.entity.user.User;
 import com.rudy.ladl.service.DepartmentService;
 import com.rudy.ladl.service.SiteService;
+import com.rudy.ladl.service.UserService;
 import com.rudy.ladl.util.Constant;
 import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,15 +31,17 @@ public class SiteController {
 
     private SiteService siteService;
     private DepartmentService departmentService;
+    private UserService userService;
 
     @Autowired
-    public SiteController(SiteService siteService, DepartmentService departmentService) {
+    public SiteController(SiteService siteService, DepartmentService departmentService, UserService userService) {
         this.departmentService = departmentService;
         this.siteService = siteService;
+        this.userService = userService;
     }
 
     @GetMapping(Constant.SITES_PATH)
-    public String getAllUsers(Model model) {
+    public String getAllSites(Model model) {
         model.addAttribute("sites", siteService.findAll());
         return Constant.SITE_LIST_PAGE;
     }
@@ -50,12 +57,21 @@ public class SiteController {
 
     @PostMapping(Constant.SITE_ADD_PATH)
     public String siteAddSubmit(@Valid @ModelAttribute("Site") Site site, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+        User user = userService.findByUsername(authentication.getName());
+
+
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.site", bindingResult);
             redirectAttributes.addFlashAttribute("site", site);
             return Constant.REDIRECT + Constant.SITE_ADD_PATH;
         }
-        site = siteService.addSite(site);
+
+        site = siteService.addSite(site, user);
 
         return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + site.getSearchName();
     }

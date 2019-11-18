@@ -9,13 +9,55 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 public class Site extends AbstractEntity {
+    public enum AlterableFieldEnum {
+        NAME("name"),
+        TOWNSHIP("township"),
+        DESCRIPTION("description"),
+        ACCESSINFO("accessInfo"),
+        ADDITIONALINFOS("additionalInfos"),
+        LATITUDE("latitude"),
+        LONGITUDE("longitude"),
+        PARKINGLATITUDE("parkingLatitude"),
+        PARKINGLONGITUDE("parkingLongitude"),
+        KIDSFRIENDLY("kidsFriendly"),
+        KIDSFRIENDLYINFO("kidsFriendlyInfo"),
+        CRAGSNUMBER("cragsNumber"),
+        BOTTOMROUTESALTITUDE("bottomRoutesAltitude"),
+        MAXROUTESHEIGHT("maxRoutesHeight"),
+        NEARESTVILLAGE("nearestVillage"),
+        NEARESTBIGCITY("nearestBigCity"),
+        ROUTESNUMBER("routesNumber"),
+        ROCKTYPE("rockType"),
+        MINGRADE("minGrade"),
+        MAXGRADE("maxGrade"),
+        DEPARTMENT("department"),
+        LEVELGROUPS("levelGroups"),
+        ORIENTATIONS("orientations"),
+        SITETYPES("siteTypes");
+
+        private String name;
+
+        AlterableFieldEnum(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
     @Size(min = 3, max = 50)
     @Column(length = 50, nullable = false, unique = true)
     private String name;
@@ -42,7 +84,7 @@ public class Site extends AbstractEntity {
     private Double parkingLongitude;
 
     @Column
-    private Boolean kidsFriendly = false;
+    private Boolean kidsFriendly;
     @Column(length = 5000)
     private String kidsFriendlyInfo;
 
@@ -110,5 +152,23 @@ public class Site extends AbstractEntity {
 
     public String getSearchName() {
         return name.replace(" ", "_");
+    }
+
+    public Set<String> getAllAddedFieldsName() {
+        Set<String> result = new HashSet<>();
+        PropertyDescriptor propertyDescriptor;
+        for (AlterableFieldEnum field : AlterableFieldEnum.values()) {
+            String fieldName = field.toString();
+            try {
+                propertyDescriptor = new PropertyDescriptor(fieldName, this.getClass());
+                Object fieldValue = propertyDescriptor.getReadMethod().invoke(this);
+                if(fieldValue != null && fieldValue.toString() != "[]") {
+                    result.add(fieldName);
+                }
+            } catch (IntrospectionException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 }

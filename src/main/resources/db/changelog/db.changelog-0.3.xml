@@ -26,6 +26,16 @@
                     value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
             <column name="version" value="0" />
         </insert>
+
+        <insert tableName="_user">
+            <column name="first_name" value="bob" />
+            <column name="last_name" value="gil" />
+            <column name="email" value="gilbob@yahoo.fr" />
+            <column name="username" value="member" />
+            <column name="encrypted_password"
+                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
+            <column name="version" value="0" />
+        </insert>
     </changeSet>
 
     <changeSet id="ladl-002" author="rudy boinnard">
@@ -34,6 +44,18 @@
         <insert tableName="user_role">
             <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
             <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_ADMIN')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='member')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_MEMBER')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='member')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
         </insert>
         <insert tableName="user_role">
             <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='user')" />

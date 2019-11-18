@@ -37,8 +37,6 @@ public class UserController {
 
     @GetMapping(Constant.REGISTRATION_PATH)
     public String registerForm(Model model){
-        // Let's see what Spring MVC has put inside the Model already
-        System.out.println(model.asMap());
         if(!model.containsAttribute("registerDTO")) model.addAttribute("registerDTO", new RegisterDTO());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -50,11 +48,14 @@ public class UserController {
     //TODO add green validation on correct fields and automatic Ajax check for email and username disponibility
     @PostMapping(Constant.REGISTRATION_PATH)
     public String registerSubmit(@Valid @ModelAttribute("registerDTO") RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-        // Let's see what Spring MVC has put inside the Model already
-        System.out.println(model.asMap());
-        System.out.println("stop");
         if(!registerDTO.getUser().getPassword().equals(registerDTO.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", Constant.ERROR_MSG_PASSWORD_MISMATCH);
+        }
+        if (!userService.isEmailAvailable(registerDTO.getUser().getEmail())) {
+            bindingResult.rejectValue("user.email", "error.user.email", Constant.ERROR_MSG_EMAIL_NOT_AVAILABLE);
+        }
+        if (!userService.isUsernameAvailable(registerDTO.getUser().getUsername())) {
+            bindingResult.rejectValue("user.username", "error.user.username", Constant.ERROR_MSG_USERNAME_NOT_AVAILABLE);
         }
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerDTO", bindingResult);
@@ -65,15 +66,13 @@ public class UserController {
         try{
             userService.addUser(registerDTO.getUser());
         } catch(EmailNotAvailableException | UsernameNotAvailableException e) {
-            if (e instanceof EmailNotAvailableException) {
-                bindingResult.rejectValue("user.email", "error.user.email", e.getMessage());
-            } else {
-                bindingResult.rejectValue("user.username", "error.user.username", e.getMessage());
-            }
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerDTO", bindingResult);
-            redirectAttributes.addFlashAttribute("registerDTO", registerDTO);
-            return Constant.REGISTRATION_PAGE;
+            redirectAttributes.addFlashAttribute("message", "Email or username not valid");
+            return Constant.REDIRECT + Constant.REGISTRATION_PATH;
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("message", "unhandled error");
+            return Constant.REDIRECT + Constant.REGISTRATION_PATH;
         }
+
         redirectAttributes.addAttribute("register", "true");
         return Constant.REDIRECT + Constant.LOGIN_PATH;
     }

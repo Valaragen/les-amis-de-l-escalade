@@ -352,9 +352,7 @@
     <changeSet author="Rudy (generated)" id="1573732869190-26">
         <createTable tableName="site_contribution">
             <column name="version" type="BIGINT"/>
-            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
-                <constraints nullable="false"/>
-            </column>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="field_id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="site_contribution_pkey"/>
             </column>
