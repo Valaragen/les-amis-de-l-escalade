@@ -10,30 +10,22 @@
 </head>
 
 <body>
-<main role="main" class="container">
-
-    <div class="card mb-3 bg-white">
-        <button type="button" sec:authorize="hasRole('ROLE_MEMBER')" >Tagger</button>
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <img src="/image/defaultSiteImg.jpg" class="card-img m-auto" alt="user icon">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h4 class="card-title" th:text="${#strings.capitalize(site.name)}">Username</h4>
-                    <div class="row">
-                        <p class="card-text pl-3 pr-2 mb-0"
-                           th:text="${#strings.toUpperCase(site.department.getFormattedString())}">Lastname</p>
-                        <p class="card-text" th:text="${#strings.capitalize(site.township)}">Firstname</p>
-                    </div>
-                </div>
-            </div>
+<main role="main" class="container bg-white mb-5 pb-3 mt-1">
+    <button type="button" sec:authorize="hasRole('ROLE_MEMBER')">Tagger</button>
+    <div class="row position-relative">
+        <img src="/image/defaultSiteImg.jpg" class="img-cover height-300 w-100" alt="user icon">
+        <div class="bg-dark px-3 py-2 text-white rounded-pill text-center" id="siteNameDetailWrapper">
+            <h1 class="h2" th:text="${#strings.capitalize(site.name)}">Site name</h1>
+            <p class="mb-0" th:text="${#strings.toUpperCase(site.department.getFormattedString())} + ' - ' + ${#strings.capitalize(site.township)}">Department-twonship</p>
         </div>
-        <div class="row no-gutters">
-            <div id="mapid" style="height: 500px; width: 500px;" th:attr="data-lat=${site.latitude}, data-lon=${site.longitude}, data-name=${site.name}"></div>
-        </div>
-        <button type="button" sec:authorize="hasRole('ROLE_USER')">Commenter</button>
     </div>
+    <h4>Localisation</h4>
+    <div class="row">
+        <div id="mapid" class="mx-3" style="height: 500px; width: 100%;"
+             th:attr="data-lat=${site.latitude}, data-lon=${site.longitude}, data-plat=${site.parkingLatitude}, data-plon=${site.parkingLongitude}, data-name=${site.name}"></div>
+    </div>
+    <h4>Commentaires</h4>
+    <button type="submit" sec:authorize="hasRole('ROLE_USER')">Commenter</button>
 
 </main>
 

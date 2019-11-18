@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
-      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Les sites - Les amis de l'escalade</title>
 </head>
 
 <body>
 <main role="main" class="container">
-
-    <h1>Liste des sites d'escalade</h1>
-    <div class="card bg-dark text-white mb-4" th:each="site : ${sites}" style="height: 300px">
-        <a class="text-white" th:href="@{/sites/{name}(name=${#strings.replace(site.name, ' ', '_')})}">
-            <img src="./image/defaultSiteImg.jpg" class="card-img" alt="image site d'escalade" style="object-fit: cover; object-position: 50% 50%; height: 300px; filter: brightness(50%)">
-            <div class="card-img-overlay">
-                <h5 class="card-title" th:text="${#strings.capitalize(site.name)}">Card title</h5>
-                <p class="card-text" th:text="${#strings.capitalize(site.department.getFormattedString())}">Vide</p>
-                <p class="card-text" th:text="${site.description}">Vide</p>
-                <p class="card-text" th:text="${site.township}">Vide</p>
+    <div class="row my-2">
+        <div class="col-auto mr-auto">
+            <h1>Liste des sites d'escalade</h1>
+        </div>
+        <div class="col-auto align-items-center d-flex align-items-center">
+            <a sec:authorize="isAuthenticated()" class="btn btn-lightblue" th:href="@{/sites/add}"
+               id="siteAddBtn">Ajouter
+                un site d'escalade</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-4 col-sm-6 col-lg-4 px-2" th:each="site : ${sites}">
+            <div class="card bg-dark text-white">
+                <a class="text-white" th:href="@{/sites/{name}(name=${#strings.replace(site.name, ' ', '_')})}">
+                    <img src="./image/defaultSiteImg.jpg" class="card-img" alt="image site d'escalade"
+                         style="object-fit: cover; object-position: 50% 50%; height: 300px; filter: brightness(50%)">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title" th:text="${#strings.capitalize(site.name)}">Card title</h5>
+                        <p class="card-text" th:text="${#strings.capitalize(site.department.getFormattedString())}">
+                            Vide</p>
+                        <p class="card-text" th:text="${site.description}">Vide</p>
+                        <p class="card-text" th:text="${site.township}">Vide</p>
+                    </div>
+                </a>
             </div>
-        </a>
+        </div>
     </div>
 
 </main>

@@ -47,6 +47,10 @@
         </insert>
         <insert tableName="user_role">
             <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_MEMBER')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
             <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
         </insert>
         <insert tableName="user_role">
@@ -67,7 +71,7 @@
         <comment>Insert default site</comment>
         <insert tableName="site">
             <column name="name" value="la dent du lion"/>
-            <column name="township" value="Thonon-les-bains"/>
+            <column name="township" value="thonon-les-bains"/>
             <column name="department_id" value="75"/>
             <column name="description" value="Belle falaise pour débutant"/>
             <column name="latitude" value="45.978705"/>
@@ -75,7 +79,7 @@
         </insert>
         <insert tableName="site">
             <column name="name" value="la patte du loup"/>
-            <column name="township" value="Allinge"/>
+            <column name="township" value="allinge"/>
             <column name="department_id" value="75"/>
             <column name="description" value="Petit bloc au bord de la route"/>
             <column name="latitude" value="46.136957"/>

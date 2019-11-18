@@ -150,6 +150,23 @@ public class Site extends AbstractEntity {
     @EqualsAndHashCode.Exclude
     private Set<Comment> comments = new HashSet<>();
 
+    public void setName(String name) {
+        this.name = name.toLowerCase();
+    }
+
+    public void setTownship(String township) {
+        this.township = township.toLowerCase();
+    }
+
+    public void setNearestVillage(String nearestVillage) {
+        this.nearestVillage = nearestVillage.toLowerCase();
+    }
+
+    public void setNearestBigCity(String nearestBigCity) {
+        this.nearestBigCity = nearestBigCity.toLowerCase();
+    }
+
+
     public String getSearchName() {
         return name.replace(" ", "_");
     }

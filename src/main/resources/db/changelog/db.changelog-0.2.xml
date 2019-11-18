@@ -35,6 +35,7 @@
             ('additionalInfos'),
             ('latitude'),
             ('longitude'),
+            ('parkingLongitude'),
             ('parkingLatitude'),
             ('kidsFriendly'),
             ('kidsFriendlyInfo'),
