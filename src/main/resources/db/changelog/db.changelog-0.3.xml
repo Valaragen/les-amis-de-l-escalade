@@ -76,6 +76,42 @@
             <column name="description" value="Belle falaise pour débutant"/>
             <column name="latitude" value="45.978705"/>
             <column name="longitude" value="6.375981"/>
+            <column name="additional_infos" value="Vous feriez mieux de bien vous équiper"/>
+            <column name="access_info" value="Garez vous près du village avant de débuter la marche à travers la forêt. Suivez le chemin vers 'départ dent du lion'"/>
+            <column name="kids_friendly" value="true"/>
+            <column name="kids_friendly_info" value="Plusieurs voies sont adaptées aux enfants" />
+            <column name="min_grade_id" value="3"/>
+            <column name="max_grade_id" value="13"/>
+            <column name="crags_number" value="2"/>
+            <column name="max_routes_height" value="100"/>
+            <column name="routes_number_id" value="4"/>
+            <column name="rock_type_id" value="3"/>
+        </insert>
+        <insert tableName="site_orientations">
+                <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+                <column name="orientations_id" valueComputed="(SELECT id FROM orientation WHERE name='N')" />
+        </insert>
+        <insert tableName="site_orientations">
+            <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+            <column name="orientations_id" valueComputed="(SELECT id FROM orientation WHERE name='NE')" />
+        </insert>
+        <insert tableName="site_site_types">
+            <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+            <column name="site_types_id" valueComputed="(SELECT id FROM site_type WHERE name='Bloc')" />
+        </insert>
+        <insert tableName="site_level_groups">
+            <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+            <column name="level_groups_id" valueComputed="(SELECT id FROM level_group WHERE name='Débutants')" />
+        </insert>
+        <insert tableName="site_level_groups">
+            <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+            <column name="level_groups_id" valueComputed="(SELECT id FROM level_group WHERE name='Amateurs')" />
+        </insert>
+        <insert tableName="comment">
+            <column name="site_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')"/>
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')"/>
+            <column name="description" value="Très beau site, je le recommande"/>
+            <column name="date" valueDate="2019-11-19T20:50:15"/>
         </insert>
         <insert tableName="site">
             <column name="name" value="la patte du loup"/>

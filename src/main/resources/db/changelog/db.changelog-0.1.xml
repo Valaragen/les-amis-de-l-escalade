@@ -318,7 +318,6 @@
             <column name="version" type="BIGINT"/>
             <column name="access_info" type="VARCHAR(5000)"/>
             <column name="additional_infos" type="VARCHAR(5000)"/>
-            <column name="bottom_routes_altitude" type="INTEGER"/>
             <column name="crags_number" type="INTEGER"/>
             <column name="description" type="VARCHAR(5000)"/>
             <column name="kids_friendly" type="BOOLEAN"/>
@@ -335,8 +334,6 @@
             <column name="name" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="nearest_big_city" type="VARCHAR(50)"/>
-            <column name="nearest_village" type="VARCHAR(50)"/>
             <column name="township" type="VARCHAR(30)">
                 <constraints nullable="false"/>
             </column>

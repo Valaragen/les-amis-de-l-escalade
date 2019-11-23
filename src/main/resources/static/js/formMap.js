@@ -103,10 +103,12 @@ siteMarker.on('dragend', onSiteMarkerDrag);
 $(document).on('click', '#addParkingMarkerBtn', onAddParkingMarkerBtnClick);
 parkingMarker.on('dragend', onParkingMarkerDrag);
 
-
 //SELECT2
 $(document).ready(function() {
     $('.js-example-basic').select2({
+        theme: "bootstrap"
+    });
+    $('.js-example-basic-multiple').select2({
         theme: "bootstrap"
     });
 });

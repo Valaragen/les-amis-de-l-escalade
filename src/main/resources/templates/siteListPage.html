@@ -14,12 +14,11 @@
         </div>
         <div class="col-auto align-items-center d-flex align-items-center">
             <a sec:authorize="isAuthenticated()" class="btn btn-lightblue" th:href="@{/sites/add}"
-               id="siteAddBtn">Ajouter
-                un site d'escalade</a>
+               id="siteAddBtn">Ajouter un site d'escalade</a>
         </div>
     </div>
     <div class="row">
-        <div class="mb-4 col-sm-6 col-lg-4 px-2" th:each="site : ${sites}">
+        <div class="mb-4 col-sm-6 col-lg-4 px-2 mx-auto" th:each="site : ${sites}">
             <div class="card bg-dark text-white">
                 <a class="text-white" th:href="@{/sites/{name}(name=${#strings.replace(site.name, ' ', '_')})}">
                     <img src="./image/defaultSiteImg.jpg" class="card-img" alt="image site d'escalade"
@@ -28,8 +27,7 @@
                         <h5 class="card-title" th:text="${#strings.capitalize(site.name)}">Card title</h5>
                         <p class="card-text" th:text="${#strings.capitalize(site.department.getFormattedString())}">
                             Vide</p>
-                        <p class="card-text" th:text="${site.description}">Vide</p>
-                        <p class="card-text" th:text="${site.township}">Vide</p>
+                        <p class="card-text" th:text="${#strings.capitalize(site.township)}">Vide</p>
                     </div>
                 </a>
             </div>

@@ -32,7 +32,9 @@ public class SiteService {
 
     public Site addSite(Site site, User user) {
         Site savedSite = siteRepository.saveAndFlush(site);
+        System.out.println(site.getAllAddedFieldsName());
         for (String field : site.getAllAddedFieldsName()) {
+            System.out.println(field);
             SiteContribution siteContribution = new SiteContribution();
 
             SiteField siteField = siteFieldRepository.findByName(field);

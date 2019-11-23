@@ -40,10 +40,7 @@
             ('kidsFriendly'),
             ('kidsFriendlyInfo'),
             ('cragsNumber'),
-            ('bottomRoutesAltitude'),
             ('maxRoutesHeight'),
-            ('nearestVillage'),
-            ('nearestBigCity'),
             ('routesNumber'),
             ('rockType'),
             ('minGrade'),
@@ -296,7 +293,7 @@
             ('Débutants', (SELECT id FROM grade WHERE name ='3a'), (SELECT id FROM grade WHERE name ='5c')),
             ('Amateurs', (SELECT id FROM grade WHERE name ='6a'), (SELECT id FROM grade WHERE name ='6c')),
             ('Confirmés', (SELECT id FROM grade WHERE name ='7a'), (SELECT id FROM grade WHERE name ='7c')),
-            ('Pros', (SELECT id FROM grade WHERE name ='8a'), null);
+            ('Pros', (SELECT id FROM grade WHERE name ='8a'), (SELECT id FROM grade WHERE name ='9c'));
         </sql>
     </changeSet>
 

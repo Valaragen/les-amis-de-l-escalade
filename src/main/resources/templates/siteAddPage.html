@@ -10,12 +10,13 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/select2-bootstrap.min.css}">
 </head>
 <body>
-<main role="main" class="container">
+<main role="main" class="container bg-white">
     <form class="mb-5 mt-2" th:action="@{/sites/add}" th:object="${site}" id="form-site" method="post">
-        <h1>Ajouter un site d'escalade</h1>
+        <h1 class="mb-4">Ajouter un site d'escalade</h1>
+        <h4>Le site<span class="text-danger">*</span></h4>
         <div class="form-row my-3">
             <div class="col-md-6">
-                <label for="name">Nom du site</label>
+                <label for="name">Nom du site<span class="text-danger">*</span></label>
                 <input class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''" id="name"
                        type="text" th:field="*{name}" placeholder="Nom du site" th:value="*{name}" required>
                 <div th:if="${#fields.hasErrors('name')}" th:class="invalid-feedback"
@@ -25,7 +26,7 @@
         </div>
         <div class="form-row mb-3">
             <div class="col-sm-6">
-                <label for="township">Commune</label>
+                <label for="township">Commune<span class="text-danger">*</span></label>
                 <input class="form-control" th:classappend="${#fields.hasErrors('township')} ? 'is-invalid' : ''"
                        id="township" type="text" th:field="*{township}" placeholder="Commune"
                        required>
@@ -34,28 +35,226 @@
                 </div>
             </div>
             <div class="col-sm-3">
-                <label for="department">Departement</label>
+                <label for="department">Departement<span class="text-danger">*</span></label>
                 <select class="form-control js-example-basic"
-                        th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                        th:classappend="${#fields.hasErrors('department')} ? 'is-invalid' : ''"
                         id="department" type="text" th:field="*{department}" required>
-                    <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.departmentNumber} + ' - ' + ${department.name}"></option>
+                    <option th:each="department : ${departments}" th:value="${department.id}"
+                            th:text="${department.departmentNumber} + ' - ' + ${department.name}"></option>
                 </select>
                 <div th:if="${#fields.hasErrors('department')}" th:class="invalid-feedback"
                      th:errors="*{department}">name Error
                 </div>
             </div>
         </div>
-        <h4>Localiation du site</h4>
-        <div th:if="${#fields.hasErrors('latitude')}" class="alert alert-danger">Vous devez ajouter la position du site d'escalade sur la carte</div>
+        <h4>Localiation du site<span class="text-danger">*</span></h4>
+        <div th:if="${#fields.hasErrors('latitude')}" class="alert alert-danger">
+            Vous devez ajouter la position du site d'escalade sur la carte
+        </div>
         <input type="hidden" th:field="*{latitude}">
         <input type="hidden" th:field="*{longitude}">
         <input type="hidden" th:field="*{parkingLatitude}">
         <input type="hidden" th:field="*{parkingLongitude}">
-        <div id="mapid" style="height: 500px;" th:attr="data-lat=${site.latitude}, data-lon=${site.longitude}, data-plat=${site.parkingLatitude}, data-plon=${site.parkingLongitude}">
-            <div th:if="*{latitude == null}" id="addMarkerToMapInfo" class="alert alert-info position-absolute">Cliquez sur la carte pour ajouter la
+        <div id="mapid" style="height: 500px;"
+             th:attr="data-lat=${site.latitude}, data-lon=${site.longitude}, data-plat=${site.parkingLatitude}, data-plon=${site.parkingLongitude}">
+            <div th:if="*{latitude == null}" id="addMarkerToMapInfo" class="alert alert-info position-absolute">Cliquez
+                sur la carte pour ajouter la
                 position du site
             </div>
         </div>
+
+
+        <h4 class="mt-3">Les informations</h4>
+        <div class="form-row my-3">
+            <div class="col-auto">
+                <label for="kidsFriendly">Site adapté aux enfants ?</label>
+                <select class="form-control js-example-basic"
+                        th:classappend="${#fields.hasErrors('kidsFriendly')} ? 'is-invalid' : ''"
+                        id="kidsFriendly" type="text" th:field="*{kidsFriendly}">
+                    <option th:value="${null}">(non renseigné)</option>
+                    <option th:value="${true}">Oui</option>
+                    <option th:value="${false}">Non</option>
+                </select>
+                <div th:if="${#fields.hasErrors('kidsFriendly')}" th:class="invalid-feedback"
+                     th:errors="*{kidsFriendly}">name Error
+                </div>
+            </div>
+        </div>
+        <div class="form-row my-3">
+            <div class="col-auto">
+                <label for="minGrade">Difficulté minimum</label>
+                <select class="form-control js-example-basic"
+                        th:classappend="${#fields.hasErrors('minGrade')} ? 'is-invalid' : ''"
+                        id="minGrade" type="text" th:field="*{minGrade}">
+                    <option th:value="${null}">(non renseigné)</option>
+                    <option th:each="grade : ${grades}" th:value="${grade.id}"
+                            th:text="${grade.name}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('minGrade')}" th:class="invalid-feedback"
+                     th:errors="*{minGrade}">name Error
+                </div>
+            </div>
+            <div class="col-auto">
+                <label for="maxGrade">Difficulté maximum</label>
+                <select class="form-control js-example-basic"
+                        th:classappend="${#fields.hasErrors('maxGrade')} ? 'is-invalid' : ''"
+                        id="maxGrade" type="text" th:field="*{maxGrade}">
+                    <option th:value="${null}">(non renseigné)</option>
+                    <option th:each="grade : ${grades}" th:value="${grade.id}"
+                            th:text="${grade.name}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('maxGrade')}" th:class="invalid-feedback"
+                     th:errors="*{maxGrade}">name Error
+                </div>
+            </div>
+
+            <div class="col-auto">
+                <label for="rockType">Type de roche</label>
+                <select class="form-control js-example-basic"
+                        th:classappend="${#fields.hasErrors('rockType')} ? 'is-invalid' : ''"
+                        id="rockType" type="text" th:field="*{rockType}">
+                    <option th:value="${null}">(non renseigné)</option>
+                    <option th:each="rockType : ${rockTypes}" th:value="${rockType.id}"
+                            th:text="${rockType.name}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('rockType')}" th:class="invalid-feedback"
+                     th:errors="*{rockType}">name Error
+                </div>
+            </div>
+
+            <div class="col-auto">
+                <label for="orientations">Orientations</label>
+                <select class="form-control js-example-basic-multiple"
+                        th:classappend="${#fields.hasErrors('orientations')} ? 'is-invalid' : ''"
+                        id="orientations" type="text" th:field="*{orientations}" multiple="multiple">
+                    <option th:each="orientation : ${orientations}" th:value="${orientation.id}"
+                            th:text="${orientation.name}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('orientations')}" th:class="invalid-feedback"
+                     th:errors="*{orientations}">name Error
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-row my-3">
+            <div class="col-sm-auto">
+                <label for="siteTypes">Types du site</label>
+                <select class="form-control js-example-basic-multiple"
+                        th:classappend="${#fields.hasErrors('siteTypes')} ? 'is-invalid' : ''"
+                        id="siteTypes" type="text" th:field="*{siteTypes}" multiple="multiple">
+                    <option th:each="siteType : ${siteTypes}" th:value="${siteType.id}"
+                            th:text="${siteType.name}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('siteTypes')}" th:class="invalid-feedback"
+                     th:errors="*{siteTypes}">name Error
+                </div>
+            </div>
+
+            <div class="col-sm-auto">
+                <label for="levelGroups">Niveaux recommandés</label>
+                <select class="form-control js-example-basic-multiple"
+                        th:classappend="${#fields.hasErrors('levelGroups')} ? 'is-invalid' : ''"
+                        id="levelGroups" type="text" th:field="*{levelGroups}" multiple="multiple">
+                    <option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.id}"
+                            th:text="${levelGroup.name + ' (suffisamment de voies de ' + levelGroup.minGrade.name + ' à ' + levelGroup.maxGrade.name} + ')'"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('levelGroups')}" th:class="invalid-feedback"
+                     th:errors="*{levelGroups}">name Error
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row my-3">
+            <div class="col-sm-auto">
+                <label for="routesNumber">Nombre de voies</label>
+                <select class="form-control js-example-basic"
+                        th:classappend="${#fields.hasErrors('routesNumber')} ? 'is-invalid' : ''"
+                        id="routesNumber" type="text" th:field="*{routesNumber}">
+                    <option th:value="${null}">(non renseigné)</option>
+                    <option th:each="routesNumberElem : ${routesNumbers}" th:value="${routesNumberElem.id}"
+                            th:text="${routesNumberElem.name}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('routesNumber')}" th:class="invalid-feedback"
+                     th:errors="*{routesNumber}">name Error
+                </div>
+            </div>
+            <div class="col-sm-auto">
+                <label for="maxRoutesHeight">Hauteur max (en m)</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('maxRoutesHeight')} ? 'is-invalid' : ''" id="maxRoutesHeight"
+                       type="text" th:field="*{maxRoutesHeight}" placeholder="Hauteur max en mètre" th:value="*{maxRoutesHeight}">
+                <div th:if="${#fields.hasErrors('maxRoutesHeight')}" th:class="invalid-feedback"
+                     th:errors="*{maxRoutesHeight}">name Error
+                </div>
+            </div>
+            <div class="col-sm-auto">
+                <label for="cragsNumber">Nombre de falaises</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('cragsNumber')} ? 'is-invalid' : ''" id="cragsNumber"
+                       type="text" th:field="*{cragsNumber}" placeholder="Nombre de falaises" th:value="*{cragsNumber}">
+                <div th:if="${#fields.hasErrors('cragsNumber')}" th:class="invalid-feedback"
+                     th:errors="*{cragsNumber}">name Error
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-row my-3">
+            <div class="col-12">
+                <label for="description">À propos du site</label>
+                <textarea class="form-control w-100 h-100 no-resize"
+                          th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''" id="description"
+                          type="text" th:field="*{description}" placeholder="Partagez des informations à propos du site"
+                          th:value="*{description}"></textarea>
+                <div th:if="${#fields.hasErrors('description')}" th:class="invalid-feedback"
+                     th:errors="*{description}">name Error
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row my-3">
+            <div class="col-12">
+                <label for="kidsFriendlyInfo">Praticabilité pour les enfants</label>
+                <textarea class="form-control w-100 h-100 no-resize"
+                          th:classappend="${#fields.hasErrors('kidsFriendlyInfo')} ? 'is-invalid' : ''"
+                          id="kidsFriendlyInfo"
+                          type="text" th:field="*{kidsFriendlyInfo}"
+                          placeholder="Partagez des informations sur les voies praticables par les enfants si il y en a..."
+                          th:value="*{kidsFriendlyInfo}"></textarea>
+                <div th:if="${#fields.hasErrors('kidsFriendlyInfo')}" th:class="invalid-feedback"
+                     th:errors="*{kidsFriendlyInfo}">name Error
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row my-3">
+            <div class="col-12">
+                <label for="additionalInfos">Infos complémentaires</label>
+                <textarea class="form-control w-100 h-100 no-resize"
+                          th:classappend="${#fields.hasErrors('additionalInfos')} ? 'is-invalid' : ''"
+                          id="additionalInfos"
+                          type="text" th:field="*{additionalInfos}"
+                          placeholder="Partagez ici des informations sur l'équipement à prendre, ou toutes autres informations complémentaires et conseils que vous souhaitez donner..."
+                          th:value="*{additionalInfos}"></textarea>
+                <div th:if="${#fields.hasErrors('additionalInfos')}" th:class="invalid-feedback"
+                     th:errors="*{additionalInfos}">name Error
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row my-3">
+            <div class="col-12">
+                <label for="accessInfo">Infos d'accès au site</label>
+                <textarea class="form-control w-100 h-100 no-resize"
+                          th:classappend="${#fields.hasErrors('accessInfo')} ? 'is-invalid' : ''" id="accessInfo"
+                          type="text" th:field="*{accessInfo}"
+                          placeholder="Partagez quelques infos vis à vis de l'accès au site"
+                          th:value="*{accessInfo}"></textarea>
+                <div th:if="${#fields.hasErrors('accessInfo')}" th:class="invalid-feedback"
+                     th:errors="*{accessInfo}">name Error
+                </div>
+            </div>
+        </div>
+
         <div class="form-row align-items-center">
             <input class="btn btn-blue btn-lg col-sm-5 ml-auto mr-auto p-2 mt-3" type="submit" value="Valider">
         </div>

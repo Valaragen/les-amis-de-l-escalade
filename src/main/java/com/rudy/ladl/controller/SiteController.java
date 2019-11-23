@@ -1,15 +1,11 @@
 package com.rudy.ladl.controller;
 
-import com.rudy.ladl.entity.site.Department;
+import com.rudy.ladl.entity.site.RoutesNumber;
 import com.rudy.ladl.entity.site.Site;
 import com.rudy.ladl.entity.user.User;
-import com.rudy.ladl.service.DepartmentService;
-import com.rudy.ladl.service.SiteService;
-import com.rudy.ladl.service.UserService;
+import com.rudy.ladl.service.*;
 import com.rudy.ladl.util.Constant;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,9 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 public class SiteController {
@@ -32,12 +25,26 @@ public class SiteController {
     private SiteService siteService;
     private DepartmentService departmentService;
     private UserService userService;
+    private GradeService gradeService;
+    private SiteTypeService siteTypeService;
+    private OrientationService orientationService;
+    private LevelGroupService levelGroupService;
+    private RockTypeService rockTypeService;
+    private RoutesNumberService routesNumberService;
 
     @Autowired
-    public SiteController(SiteService siteService, DepartmentService departmentService, UserService userService) {
+    public SiteController(SiteService siteService, DepartmentService departmentService, UserService userService,
+                          GradeService gradeService, SiteTypeService siteTypeService, OrientationService orientationService,
+                          LevelGroupService levelGroupService, RockTypeService rockTypeService, RoutesNumberService routesNumberService) {
         this.departmentService = departmentService;
         this.siteService = siteService;
         this.userService = userService;
+        this.gradeService = gradeService;
+        this.siteTypeService = siteTypeService;
+        this.orientationService = orientationService;
+        this.levelGroupService = levelGroupService;
+        this.rockTypeService = rockTypeService;
+        this.routesNumberService = routesNumberService;
     }
 
     @GetMapping(Constant.SITES_PATH)
@@ -48,10 +55,16 @@ public class SiteController {
 
     @GetMapping(Constant.SITE_ADD_PATH)
     public String siteAddForm(Model model) {
-        if(!model.containsAttribute("site")){
+        if (!model.containsAttribute("site")) {
             model.addAttribute("site", new Site());
         }
         model.addAttribute("departments", departmentService.findAll());
+        model.addAttribute("grades", gradeService.findAll());
+        model.addAttribute("siteTypes", siteTypeService.findAll());
+        model.addAttribute("orientations", orientationService.findAll());
+        model.addAttribute("levelGroups", levelGroupService.findAll());
+        model.addAttribute("rockTypes", rockTypeService.findAll());
+        model.addAttribute("routesNumbers", routesNumberService.findAll());
         return Constant.SITE_ADD_PAGE;
     }
 
@@ -59,13 +72,13 @@ public class SiteController {
     public String siteAddSubmit(@Valid @ModelAttribute("Site") Site site, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!authentication.isAuthenticated()) {
+        if (!authentication.isAuthenticated()) {
             return Constant.REDIRECT + Constant.LOGIN_PATH;
         }
         User user = userService.findByUsername(authentication.getName());
 
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.site", bindingResult);
             redirectAttributes.addFlashAttribute("site", site);
             return Constant.REDIRECT + Constant.SITE_ADD_PATH;

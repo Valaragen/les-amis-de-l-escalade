@@ -35,3 +35,13 @@ function onMapClick(e) {
 }
 
 mymap.on('click', onMapClick);
+
+$(document).on('click', '.contribute-desc', function() {
+    $("#descView").toggleClass("d-none");
+    $("#descViewModify").toggleClass("d-none");
+});
+
+$(document).on('click', '.contribute-info', function() {
+    $("#infoView").toggleClass("d-none");
+    $("#infoViewModify").toggleClass("d-none");
+});

@@ -6,15 +6,13 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -34,10 +32,7 @@ public class Site extends AbstractEntity {
         KIDSFRIENDLY("kidsFriendly"),
         KIDSFRIENDLYINFO("kidsFriendlyInfo"),
         CRAGSNUMBER("cragsNumber"),
-        BOTTOMROUTESALTITUDE("bottomRoutesAltitude"),
         MAXROUTESHEIGHT("maxRoutesHeight"),
-        NEARESTVILLAGE("nearestVillage"),
-        NEARESTBIGCITY("nearestBigCity"),
         ROUTESNUMBER("routesNumber"),
         ROCKTYPE("rockType"),
         MINGRADE("minGrade"),
@@ -91,13 +86,7 @@ public class Site extends AbstractEntity {
     @Column
     private Integer cragsNumber;
     @Column
-    private Integer bottomRoutesAltitude;
-    @Column
     private Integer maxRoutesHeight;
-    @Column(length = 50)
-    private String nearestVillage;
-    @Column(length = 50)
-    private String nearestBigCity;
 
     @ManyToOne
     private RoutesNumber routesNumber;
@@ -111,16 +100,19 @@ public class Site extends AbstractEntity {
     private Department department;
 
     @ManyToMany
+    @OrderBy
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<LevelGroup> levelGroups = new HashSet<>();
 
     @ManyToMany
+    @OrderBy
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Orientation> orientations = new HashSet<>();
 
     @ManyToMany
+    @OrderBy
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<SiteType> siteTypes = new HashSet<>();
@@ -158,15 +150,6 @@ public class Site extends AbstractEntity {
         this.township = township.toLowerCase();
     }
 
-    public void setNearestVillage(String nearestVillage) {
-        this.nearestVillage = nearestVillage.toLowerCase();
-    }
-
-    public void setNearestBigCity(String nearestBigCity) {
-        this.nearestBigCity = nearestBigCity.toLowerCase();
-    }
-
-
     public String getSearchName() {
         return name.replace(" ", "_");
     }
@@ -179,7 +162,25 @@ public class Site extends AbstractEntity {
             try {
                 propertyDescriptor = new PropertyDescriptor(fieldName, this.getClass());
                 Object fieldValue = propertyDescriptor.getReadMethod().invoke(this);
-                if(fieldValue != null && fieldValue.toString() != "[]") {
+                if(fieldValue != null && fieldValue.toString() != "[]" && fieldValue != "") {
+                    result.add(fieldName);
+                }
+            } catch (IntrospectionException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public Set<String> getNotFilledFieldsName() {
+        Set<String> result = new HashSet<>();
+        PropertyDescriptor propertyDescriptor;
+        for (AlterableFieldEnum field : AlterableFieldEnum.values()) {
+            String fieldName = field.toString();
+            try {
+                propertyDescriptor = new PropertyDescriptor(fieldName, this.getClass());
+                Object fieldValue = propertyDescriptor.getReadMethod().invoke(this);
+                if(fieldValue != null && fieldValue.toString() != "[]" && fieldValue != "") {
                     result.add(fieldName);
                 }
             } catch (IntrospectionException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
