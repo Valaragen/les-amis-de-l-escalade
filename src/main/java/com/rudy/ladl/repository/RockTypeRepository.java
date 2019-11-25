@@ -1,7 +1,6 @@
 package com.rudy.ladl.repository;
 
-import com.rudy.ladl.entity.site.Orientation;
-import com.rudy.ladl.entity.site.RockType;
+import com.rudy.ladl.core.site.RockType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

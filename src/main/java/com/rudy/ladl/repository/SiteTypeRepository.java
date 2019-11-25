@@ -1,7 +1,6 @@
 package com.rudy.ladl.repository;
 
-import com.rudy.ladl.entity.site.Grade;
-import com.rudy.ladl.entity.site.SiteType;
+import com.rudy.ladl.core.site.SiteType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

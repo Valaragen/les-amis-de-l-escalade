@@ -1,12 +1,11 @@
 package com.rudy.ladl.controller;
 
-import com.rudy.ladl.controller.dto.RegisterDTO;
-import com.rudy.ladl.entity.user.User;
+import com.rudy.ladl.core.dto.RegisterDTO;
+import com.rudy.ladl.core.user.User;
 import com.rudy.ladl.exception.EmailNotAvailableException;
 import com.rudy.ladl.exception.UsernameNotAvailableException;
 import com.rudy.ladl.service.UserService;
 import com.rudy.ladl.util.Constant;
-import org.apache.tomcat.util.bcel.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

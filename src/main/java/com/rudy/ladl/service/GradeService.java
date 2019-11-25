@@ -1,6 +1,6 @@
 package com.rudy.ladl.service;
 
-import com.rudy.ladl.entity.site.Grade;
+import com.rudy.ladl.core.site.Grade;
 import com.rudy.ladl.repository.GradeRepository;
 import org.springframework.stereotype.Service;
 

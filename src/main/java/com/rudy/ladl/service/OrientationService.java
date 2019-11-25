@@ -1,9 +1,7 @@
 package com.rudy.ladl.service;
 
-import com.rudy.ladl.entity.site.Orientation;
-import com.rudy.ladl.entity.site.SiteType;
+import com.rudy.ladl.core.site.Orientation;
 import com.rudy.ladl.repository.OrientationRepository;
-import com.rudy.ladl.repository.SiteTypeRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

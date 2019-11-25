@@ -70,7 +70,10 @@
     <changeSet id="ladl-003" author="Rudy Boinnard">
         <comment>Insert default site</comment>
         <insert tableName="site">
+            <column name="version" value="1"/>
             <column name="name" value="la dent du lion"/>
+            <column name="is_accept_contribution" value="false"/>
+            <column name="site_creator_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
             <column name="township" value="thonon-les-bains"/>
             <column name="department_id" value="75"/>
             <column name="description" value="Belle falaise pour débutant"/>
@@ -114,12 +117,15 @@
             <column name="date" valueDate="2019-11-19T20:50:15"/>
         </insert>
         <insert tableName="site">
+            <column name="version" value="1"/>
             <column name="name" value="la patte du loup"/>
+            <column name="is_accept_contribution" value="true"/>
             <column name="township" value="allinge"/>
             <column name="department_id" value="75"/>
             <column name="description" value="Petit bloc au bord de la route"/>
             <column name="latitude" value="46.136957"/>
             <column name="longitude" value="6.637464"/>
+            <column name="site_creator_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
         </insert>
     </changeSet>
 

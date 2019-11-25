@@ -1,5 +1,5 @@
 html, body {
-    height: 100%;
+    min-height: 100%;
     background-color: #f5f5f5;
 }
 
@@ -14,7 +14,6 @@ html, body {
 
 .login-center {
     z-index: 1;
-    top: -72px;
     position: relative;
     display: -ms-flexbox;
     display: flex;
@@ -100,6 +99,12 @@ html, body {
     position: absolute;
     bottom: 10px;
     left: 10px;
+}
+
+.siteTagButton {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 .img-cover {

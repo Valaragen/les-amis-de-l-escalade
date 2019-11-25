@@ -50,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .mvcMatchers("/admin", "/users").hasRole("ADMIN")
+                    .mvcMatchers(Constant.SITE_ADD_OFFICIAL_TAG_PATH).hasRole("MEMBER")
                     .mvcMatchers(Constant.LOGIN_PATH, "/resources/*", "/image/*", "/css/*", "/js/*", Constant.HOME_PATH, Constant.REGISTRATION_PATH, Constant.SITES_PATH, Constant.SITES_PATH + "/*").permitAll()
                     .anyRequest().authenticated()
                     .and()
@@ -63,6 +64,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID"))
 
                 .rememberMe().key("LADLRMBRKEY").tokenValiditySeconds(15 * 24 * 60 * 60)
+        .and()
+        .csrf().disable()
         ;
     }
 

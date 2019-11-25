@@ -1,8 +1,6 @@
 package com.rudy.ladl.service;
 
-import com.rudy.ladl.entity.site.Grade;
-import com.rudy.ladl.entity.site.LevelGroup;
-import com.rudy.ladl.repository.GradeRepository;
+import com.rudy.ladl.core.site.LevelGroup;
 import com.rudy.ladl.repository.LevelGroupRepository;
 import org.springframework.stereotype.Service;
 

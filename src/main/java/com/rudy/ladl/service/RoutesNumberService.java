@@ -1,6 +1,6 @@
 package com.rudy.ladl.service;
 
-import com.rudy.ladl.entity.site.RoutesNumber;
+import com.rudy.ladl.core.site.RoutesNumber;
 import com.rudy.ladl.repository.RoutesNumberRepository;
 import org.springframework.stereotype.Service;
 

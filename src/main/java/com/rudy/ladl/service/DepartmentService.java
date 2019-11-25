@@ -1,6 +1,6 @@
 package com.rudy.ladl.service;
 
-import com.rudy.ladl.entity.site.Department;
+import com.rudy.ladl.core.site.Department;
 import com.rudy.ladl.repository.DepartmentRepository;
 import org.springframework.stereotype.Service;
 

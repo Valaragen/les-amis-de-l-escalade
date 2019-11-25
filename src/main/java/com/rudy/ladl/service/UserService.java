@@ -1,8 +1,8 @@
 package com.rudy.ladl.service;
 
 import com.rudy.ladl.controller.UserController;
-import com.rudy.ladl.entity.user.Role;
-import com.rudy.ladl.entity.user.User;
+import com.rudy.ladl.core.user.Role;
+import com.rudy.ladl.core.user.User;
 import com.rudy.ladl.exception.EmailNotAvailableException;
 import com.rudy.ladl.exception.UsernameNotAvailableException;
 import com.rudy.ladl.repository.RoleRepository;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 ;
 

@@ -47,6 +47,16 @@
                 </div>
             </div>
         </div>
+        <div class="form-row my-3">
+            <div class="col-md-6">
+                <label for="isAcceptContribution">Autoriser la communauté à ajouter des informations</label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('isAcceptContribution')} ? 'is-invalid' : ''" id="isAcceptContribution"
+                       type="checkbox" th:field="*{isAcceptContribution}" th:value="*{isAcceptContribution}">
+                <div th:if="${#fields.hasErrors('isAcceptContribution')}" th:class="invalid-feedback"
+                     th:errors="*{isAcceptContribution}">name Error
+                </div>
+            </div>
+        </div>
         <h4>Localiation du site<span class="text-danger">*</span></h4>
         <div th:if="${#fields.hasErrors('latitude')}" class="alert alert-danger">
             Vous devez ajouter la position du site d'escalade sur la carte
@@ -62,6 +72,7 @@
                 position du site
             </div>
         </div>
+
 
 
         <h4 class="mt-3">Les informations</h4>
@@ -181,15 +192,18 @@
             </div>
             <div class="col-sm-auto">
                 <label for="maxRoutesHeight">Hauteur max (en m)</label>
-                <input class="form-control" th:classappend="${#fields.hasErrors('maxRoutesHeight')} ? 'is-invalid' : ''" id="maxRoutesHeight"
-                       type="text" th:field="*{maxRoutesHeight}" placeholder="Hauteur max en mètre" th:value="*{maxRoutesHeight}">
+                <input class="form-control" th:classappend="${#fields.hasErrors('maxRoutesHeight')} ? 'is-invalid' : ''"
+                       id="maxRoutesHeight"
+                       type="text" th:field="*{maxRoutesHeight}" placeholder="Hauteur max en mètre"
+                       th:value="*{maxRoutesHeight}">
                 <div th:if="${#fields.hasErrors('maxRoutesHeight')}" th:class="invalid-feedback"
                      th:errors="*{maxRoutesHeight}">name Error
                 </div>
             </div>
             <div class="col-sm-auto">
                 <label for="cragsNumber">Nombre de falaises</label>
-                <input class="form-control" th:classappend="${#fields.hasErrors('cragsNumber')} ? 'is-invalid' : ''" id="cragsNumber"
+                <input class="form-control" th:classappend="${#fields.hasErrors('cragsNumber')} ? 'is-invalid' : ''"
+                       id="cragsNumber"
                        type="text" th:field="*{cragsNumber}" placeholder="Nombre de falaises" th:value="*{cragsNumber}">
                 <div th:if="${#fields.hasErrors('cragsNumber')}" th:class="invalid-feedback"
                      th:errors="*{cragsNumber}">name Error
@@ -256,7 +270,7 @@
         </div>
 
         <div class="form-row align-items-center">
-            <input class="btn btn-blue btn-lg col-sm-5 ml-auto mr-auto p-2 mt-3" type="submit" value="Valider">
+            <input class="btn btn-blue btn-lg col-sm-5 ml-auto mr-auto p-2 my-3" type="submit" value="Valider">
         </div>
     </form>
 </main>

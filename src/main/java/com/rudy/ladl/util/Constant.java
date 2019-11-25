@@ -28,8 +28,18 @@ public class Constant {
     public static final String SITE_ADD_PATH = SITES_PATH + "/add";
     public static final String SITE_ADD_PAGE = "siteAddPage";
 
+    public static final String SITE_ADD_OFFICIAL_TAG_PATH = SITES_PATH + "/addOfficialTag";
+    public static final String SITE_REMOVE_OFFICIAL_TAG_PATH = SITES_PATH + "/removeOfficialTag";
+    public static final String SITE_ADD_COMMENT_PATH = SITES_PATH + "/addComment";
+    public static final String SITE_REMOVE_COMMENT_PATH = SITES_PATH + "/removeComment";
+
     public static final String SLASHID_PATH = "/{id}";
     public static final String SLASHSTRING_PATH = "/{string}";
+
+    public static final String TOPOS_PATH = "/topos";
+
+    public static final String TOPO_LIST_PAGE = "topoListPage";
+
 
 
 
@@ -38,6 +48,7 @@ public class Constant {
     public static final String ERROR_MSG_USERNAME_INVALID_CHAR = "Le nom d'utilisateur ne peut pas contenir de caractère spéciaux";
     public static final String ERROR_MSG_USERNAME_NOT_AVAILABLE = "Ce pseudo n'est pas disponible";
     public static final String ERROR_MSG_EMAIL_NOT_AVAILABLE = "Cet email n'est pas disponible";
+    public static final String ERROR_MSG_SITE_FIELD_ALREADY_FILLED = "Le champ de ce site à déjà une contribution";
 
     private Constant() {
 

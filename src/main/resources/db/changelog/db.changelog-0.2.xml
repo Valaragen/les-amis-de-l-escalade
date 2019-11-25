@@ -31,7 +31,7 @@
             ('name'),
             ('township'),
             ('description'),
-            ('acessInfo'),
+            ('accessInfo'),
             ('additionalInfos'),
             ('latitude'),
             ('longitude'),
@@ -294,6 +294,15 @@
             ('Amateurs', (SELECT id FROM grade WHERE name ='6a'), (SELECT id FROM grade WHERE name ='6c')),
             ('Confirmés', (SELECT id FROM grade WHERE name ='7a'), (SELECT id FROM grade WHERE name ='7c')),
             ('Pros', (SELECT id FROM grade WHERE name ='8a'), (SELECT id FROM grade WHERE name ='9c'));
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-010" author="Rudy Boinnard">
+        <comment>Insert usable tags</comment>
+        <sql dbms="postgresql">
+            INSERT into tag("name")
+            VALUES
+            ('Officiel - les amis de l''escalade');
         </sql>
     </changeSet>
 
