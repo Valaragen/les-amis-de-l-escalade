@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{::link},~{::.additional-scripts})" lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>S'inscrire - Les amis de l'escalade</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/select2.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/select2-bootstrap.min.css}">
+</head>
+<body>
+<main role="main" class="container bg-white">
+    <form class="mb-5 mt-2" th:action="@{/topos/add}" th:object="${topo}" id="form-site" method="post">
+        <h1 class="mb-4">Ajouter un site d'escalade</h1>
+        <h4>Le site<span class="text-danger">*</span></h4>
+        <div class="form-row my-3">
+            <div class="col-md-6">
+                <label for="name">Nom du topo<span class="text-danger">*</span></label>
+                <input class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''" id="name"
+                       type="text" th:field="*{name}" placeholder="Nom du site" th:value="*{name}" required>
+                <div th:if="${#fields.hasErrors('name')}" th:class="invalid-feedback"
+                     th:errors="*{name}">name Error
+                </div>
+            </div>
+        </div>
+        <div class="form-row my-3">
+            <div class="col-auto">
+                <label for="status">Rendre le topo disponible pour un prêt</label>
+                <select class="form-control js-example-basic"
+                        th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' : ''"
+                        id="status" type="text" th:field="*{status}">
+                    <option th:value="${true}">Oui</option>
+                    <option th:value="${false}">Non</option>
+                </select>
+                <div th:if="${#fields.hasErrors('status')}" th:class="invalid-feedback"
+                     th:errors="*{status}">name Error
+                </div>
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-sm-3">
+                <label for="department">Departement</label>
+                <select class="form-control js-example-basic"
+                        th:classappend="${#fields.hasErrors('department')} ? 'is-invalid' : ''"
+                        id="department" type="text" th:field="*{department}" required>
+                    <option th:each="department : ${departments}" th:value="${department.id}"
+                            th:text="${department.departmentNumber} + ' - ' + ${department.name}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('department')}" th:class="invalid-feedback"
+                     th:errors="*{department}">name Error
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row my-3">
+            <div class="col-12">
+                <label for="description">Description</label>
+                <textarea class="form-control w-100 h-100 no-resize"
+                          th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''" id="description"
+                          type="text" th:field="*{description}" placeholder="Partagez des informations à propos du site"
+                          th:value="*{description}"></textarea>
+                <div th:if="${#fields.hasErrors('description')}" th:class="invalid-feedback"
+                     th:errors="*{description}">name Error
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row align-items-center">
+            <input class="btn btn-blue btn-lg col-sm-5 ml-auto mr-auto p-2 my-3" type="submit" value="Valider">
+        </div>
+    </form>
+</main>
+<div class="additional-scripts">
+    <script th:src="@{/js/select2.full.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/topoForm.js}" type="application/javascript"></script>
+</div>
+</body>
+</html>

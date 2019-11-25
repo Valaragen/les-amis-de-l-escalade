@@ -25,4 +25,17 @@ public  class TopoService {
     public List<Topo> findAll() {
         return topoRepository.findAll();
     }
+
+    public Topo addTopo(Topo topo, User user) {
+        topo.setOwner(user);
+        return topoRepository.saveAndFlush(topo);
+    }
+
+    public Topo findByName(String name) {
+        return topoRepository.findByName(name.replace("_", " ")).orElse(null);
+    }
+
+    public List<Topo> findAllByOwner(User user) {
+        return topoRepository.findAllByOwner(user);
+    }
 }

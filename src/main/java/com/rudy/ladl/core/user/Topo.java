@@ -36,4 +36,8 @@ public class Topo extends AbstractEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<User> bookingAskers = new HashSet<>();
+
+    public String getSearchName() {
+        return name.replace(" ", "_");
+    }
 }

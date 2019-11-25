@@ -37,8 +37,13 @@ public class Constant {
     public static final String SLASHSTRING_PATH = "/{string}";
 
     public static final String TOPOS_PATH = "/topos";
+    public static final String TOPO_ADD_PATH = TOPOS_PATH + "/add";
+    public static final String TOPO_ADD_PAGE = "topoAddPage";
 
     public static final String TOPO_LIST_PAGE = "topoListPage";
+    public static final String USER_TOPO_LIST_PAGE = "myTopoListPage";
+    public static final String USER_TOPO_LIST_PATH = TOPOS_PATH + "/myTopos";
+    public static final String TOPO_DETAILS_PAGE = "topoDetailsPage";
 
 
 

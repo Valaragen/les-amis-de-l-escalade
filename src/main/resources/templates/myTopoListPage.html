@@ -3,14 +3,14 @@
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Les topos - Les amis de l'escalade</title>
+    <title>Mes topos - Les amis de l'escalade</title>
 </head>
 
 <body>
 <main role="main" class="container">
     <div class="row my-2">
         <div class="col-auto mr-auto">
-            <h1>Liste des topos disponibles</h1>
+            <h1>Liste des vos topos</h1>
         </div>
         <div class="col-auto align-items-center d-flex align-items-center">
             <a sec:authorize="isAuthenticated()" class="btn btn-lightblue" th:href="@{/topos/add}"
@@ -18,10 +18,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="mb-4 col-sm-6 col-lg-4 px-2 mx-auto" th:each="topo : ${topos}" th:if="${topo.status}">
+        <div class="mb-4 col-sm-6 col-lg-4 px-2 mx-auto" th:each="topo : ${topos}">
             <div class="card bg-dark text-white">
                 <a class="text-white" th:href="@{/topos/{name}(name=${#strings.replace(topo.name, ' ', '_')})}">
-                    <img src="./image/defaultTopoImg.jpg" class="card-img" alt="image site d'escalade"
+                    <img th:src="@{/image/defaultTopoImg.jpg}" class="card-img" alt="image site d'escalade"
                          style="object-fit: cover; object-position: 50% 50%; height: 300px; filter: brightness(50%)">
                     <div class="card-img-overlay">
                         <h5 class="card-title" th:text="${#strings.capitalize(topo.name)}">Card title</h5>
