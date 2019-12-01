@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface SiteRepository extends JpaRepository<Site, Long> {
+public interface SiteRepository extends JpaRepository<Site, Long>, SiteRepositoryCustom {
     Optional<Site> findByName(String name);
 }

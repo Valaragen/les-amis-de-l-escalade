@@ -1,10 +1,10 @@
 package com.rudy.ladl.service;
 
+import com.rudy.ladl.core.SiteSearch;
 import com.rudy.ladl.core.dto.SiteContributionDTO;
 import com.rudy.ladl.core.site.Site;
 import com.rudy.ladl.core.site.SiteContribution;
 import com.rudy.ladl.core.site.SiteField;
-import com.rudy.ladl.core.site.Tag;
 import com.rudy.ladl.core.site.embeddable.SiteContributionId;
 import com.rudy.ladl.core.user.User;
 import com.rudy.ladl.exception.SiteFieldAlreadyFilledException;
@@ -14,10 +14,10 @@ import com.rudy.ladl.repository.SiteRepository;
 import com.rudy.ladl.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 @Service
@@ -68,9 +68,12 @@ public class SiteService {
         }
     }
 
-    public Page<Site> findAll() {
-        Page<Site> sites = siteRepository.findAll(PageRequest.of(0,10));
-        return sites;
+    public List<Site> findAll() {
+        return siteRepository.findAll();
+    }
+
+    public List<Site> search(SiteSearch siteSearch) {
+        return siteRepository.findAllBySearch(siteSearch);
     }
 
     public Site findByName(String name) {

@@ -48,10 +48,10 @@
             </div>
         </div>
         <div class="form-row my-3">
-            <div class="col-md-6">
-                <label for="isAcceptContribution">Autoriser la communauté à ajouter des informations</label>
-                <input class="form-control" th:classappend="${#fields.hasErrors('isAcceptContribution')} ? 'is-invalid' : ''" id="isAcceptContribution"
+            <div class="col-md-6 form-group custom-control custom-checkbox ml-5">
+                <input class="custom-control-input" th:classappend="${#fields.hasErrors('isAcceptContribution')} ? 'is-invalid' : ''" id="isAcceptContribution"
                        type="checkbox" th:field="*{isAcceptContribution}" th:value="*{isAcceptContribution}">
+                <label class="custom-control-label" for="isAcceptContribution">Autoriser la communauté à ajouter des informations</label>
                 <div th:if="${#fields.hasErrors('isAcceptContribution')}" th:class="invalid-feedback"
                      th:errors="*{isAcceptContribution}">name Error
                 </div>

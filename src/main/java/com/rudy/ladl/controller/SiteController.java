@@ -1,5 +1,6 @@
 package com.rudy.ladl.controller;
 
+import com.rudy.ladl.core.SiteSearch;
 import com.rudy.ladl.core.dto.SiteContributionDTO;
 import com.rudy.ladl.core.site.Comment;
 import com.rudy.ladl.core.site.Site;
@@ -57,8 +58,14 @@ public class SiteController {
     }
 
     @GetMapping(Constant.SITES_PATH)
-    public String getAllSites(Model model) {
-        model.addAttribute("sites", siteService.findAll());
+    public String getAllSites(@ModelAttribute("siteSearch") SiteSearch siteSearch, Model model) {
+        if(!model.containsAttribute("siteSearch")) {
+            model.addAttribute("siteSearch", new SiteSearch());
+        }
+
+        model.addAttribute("sites", siteService.search(siteSearch));
+
+        loadEntityModelAttribute(model);
         return Constant.SITE_LIST_PAGE;
     }
 
@@ -160,7 +167,6 @@ public class SiteController {
         return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + site.getSearchName();
     }
 
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
     @PostMapping(Constant.SITE_ADD_COMMENT_PATH + Constant.SLASHSTRING_PATH)
     public String addComment(@PathVariable("string") String name, @ModelAttribute("Comment") Comment comment, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

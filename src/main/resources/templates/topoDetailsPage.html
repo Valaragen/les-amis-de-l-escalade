@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{::link},~{::.additional-scripts})" lang="fr"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+>>
 <head>
     <title th:text="${#strings.capitalize(topo.name)} + ' - Les amis de l\'escalade'"> - Les amis de l'escalade</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
@@ -32,14 +32,28 @@
 
 
     <div class="m-1 mt-3 p-3 bg-light position-relative">
-            <div th:if="${!#strings.isEmpty(topo.description)}">
-                <h4>À propos du topo</h4>
-                <div class="row">
-                    <p class="col" th:text="${topo.description}">Description</p>
-                </div>
+        <div th:if="${!#strings.isEmpty(topo.description)}">
+            <h4>À propos du topo</h4>
+            <div class="row">
+                <p class="col" th:text="${topo.description}">Description</p>
             </div>
         </div>
     </div>
+
+    <div class="m-1 mt-3 p-3 bg-light position-relative" th:if="${topo.status}">
+        <div>
+            <h4>Contact</h4>
+            <div class="row">
+                <b class="col-auto">Nom d'utilisateur :</b>
+                <p class="col" th:text="${topo.owner.username}">Description</p>
+            </div>
+            <div class="row">
+                <b class="col-auto">Email :</b>
+                <p class="col" th:text="${topo.owner.email}">Description</p>
+            </div>
+        </div>
+    </div>
+
 
 </main>
 
@@ -48,7 +62,6 @@
             integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
             crossorigin="" type="application/javascript"></script>
     <script th:src="@{/js/select2.full.min.js}" type="application/javascript"></script>
-    <script th:src="@{/js/siteDetailsMap.js}" type="application/javascript"></script>
 </div>
 
 </body>

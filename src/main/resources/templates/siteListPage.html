@@ -1,22 +1,139 @@
 <!DOCTYPE html>
-<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{::link},~{::.additional-scripts})" lang="fr"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Les sites - Les amis de l'escalade</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/select2.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/select2-bootstrap.min.css}">
 </head>
 
 <body>
 <main role="main" class="container">
     <div class="row my-2">
         <div class="col-auto mr-auto">
-            <h1>Liste des sites d'escalade</h1>
+            <h1>Les sites d'escalade</h1>
         </div>
         <div class="col-auto align-items-center d-flex align-items-center">
             <a sec:authorize="isAuthenticated()" class="btn btn-lightblue" th:href="@{/sites/add}"
                id="siteAddBtn">Ajouter un site d'escalade</a>
         </div>
     </div>
+
+    <h4>Rechercher</h4>
+    <div>
+        <form class="my-2 px-3 pt-3 border rounded" action="/sites" method="GET" th:object="${siteSearch}">
+            <div class="form-row">
+                <div class="col-6 form-group">
+                    <label class="sr-only" for="name">Nom du site</label>
+                    <input class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                           id="name"
+                           type="text" th:field="*{name}" placeholder="Nom du site" th:value="*{name}">
+                    <div th:if="${#fields.hasErrors('name')}" th:class="invalid-feedback"
+                         th:errors="*{name}">name Error
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-lightblue d-block" type="submit">Rechercher</button>
+                </div>
+                <div class="col-auto form-group">
+                    <button class="btn btn-warning d-block" type="button" data-toggle="collapse"
+                            data-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">Filtrer  <i
+                            class="fas fa-chevron-down"></i></button>
+                </div>
+
+
+            </div>
+
+            <div class="collapse" th:classappend="${#request.getParameter('name') != null ? 'show' : ''}" id="collapseFilter">
+                <h6>Filtrer par : </h6>
+                <div class="form-row">
+                    <div class="col-auto form-group custom-control custom-checkbox pl-2 ml-4">
+                        <input type="checkbox" class="custom-control-input"
+                               th:classappend="${#fields.hasErrors('kidsFriendly')} ? 'is-invalid' : ''"
+                               id="kidsFriendly" th:field="*{kidsFriendly}">
+                        <label class="custom-control-label" for="kidsFriendly">Site adapté aux enfants ?</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-auto form-group">
+                        <label for="departmentId">Departement</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('departmentId')} ? 'is-invalid' : ''"
+                                id="departmentId" type="text" th:field="*{departmentId}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="department : ${departments}" th:value="${department.id}"
+                                    th:text="${department.departmentNumber} + ' - ' + ${department.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-auto form-group">
+                        <label for="gradeId">Difficulté</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('gradeId')} ? 'is-invalid' : ''"
+                                id="gradeId" type="text" th:field="*{gradeId}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="grade : ${grades}" th:value="${grade.id}"
+                                    th:text="${grade.name}"></option>
+                        </select>
+                    </div>
+
+                    <div class="col-auto form-group">
+                        <label for="siteTypeId">Type du site</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('siteTypeId')} ? 'is-invalid' : ''"
+                                id="siteTypeId" type="text" th:field="*{siteTypeId}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="siteType : ${siteTypes}" th:value="${siteType.id}"
+                                    th:text="${siteType.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-6 form-group">
+                        <label for="levelGroupId">Niveau recommandé</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('levelGroupId')} ? 'is-invalid' : ''"
+                                id="levelGroupId" type="text" th:field="*{levelGroupId}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.id}"
+                                    th:text="${levelGroup.name + ' (suffisamment de voies de ' + levelGroup.minGrade.name + ' à ' + levelGroup.maxGrade.name} + ')'"></option>
+                        </select>
+                    </div>
+
+                    <div class="col-3 form-group">
+                        <label for="routesNumberId">Nombre de voies</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('routesNumberId')} ? 'is-invalid' : ''"
+                                id="routesNumberId" type="text" th:field="*{routesNumberId}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="routesNumberElem : ${routesNumbers}" th:value="${routesNumberElem.id}"
+                                    th:text="${routesNumberElem.name}"></option>
+                        </select>
+                    </div>
+
+                    <div class="col-3 form-group">
+                        <label for="minRouteHeight">Hauteur minimum (en m)</label>
+                        <input class="form-control"
+                               th:classappend="${#fields.hasErrors('minRouteHeight')} ? 'is-invalid' : ''"
+                               id="minRouteHeight"
+                               type="text" th:field="*{minRouteHeight}" placeholder="Hauteur minimum en mètre"
+                               th:value="*{minRouteHeight}">
+                        <div th:if="${#fields.hasErrors('minRouteHeight')}" th:class="invalid-feedback"
+                             th:errors="*{minRouteHeight}">name Error
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
     <div class="row">
         <div class="mb-4 col-sm-6 col-lg-4 px-2 mx-auto" th:each="site : ${sites}">
             <div class="card bg-dark text-white">
@@ -35,6 +152,10 @@
     </div>
 
 </main>
+<div class="additional-scripts">
+    <script th:src="@{/js/select2.full.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/siteList.js}" type="application/javascript"></script>
+</div>
 
 </body>
 </html>

@@ -32,6 +32,7 @@ public class Constant {
     public static final String SITE_REMOVE_OFFICIAL_TAG_PATH = SITES_PATH + "/removeOfficialTag";
     public static final String SITE_ADD_COMMENT_PATH = SITES_PATH + "/addComment";
     public static final String SITE_REMOVE_COMMENT_PATH = SITES_PATH + "/removeComment";
+    public static final String SITE_SEARCH_PATH = SITES_PATH + "/search";
 
     public static final String SLASHID_PATH = "/{id}";
     public static final String SLASHSTRING_PATH = "/{string}";
