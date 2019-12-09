@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html th:fragment="basicLayout(title,content,customCss,customScripts)"
+      lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/includes/fragments :: head(${title},${customCss})">
+
+</head>
+<body>
+<div th:replace="/includes/fragments :: navbar"></div>
+<main role="main" class="container" th:replace="${content}">
+
+    <div class="starter-template">
+        <h1>Basic layout</h1>
+        <p class="lead">layout content</p>
+    </div>
+
+</main>
+<footer>
+
+</footer>
+<th:block th:replace="/includes/fragments :: scripts(${customScripts})"/>
+</body>
+</html>

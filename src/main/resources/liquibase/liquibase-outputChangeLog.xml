@@ -1,8 +1,661 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
-                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="Rudy (generated)" id="1574652597480-1">
+        <createTable tableName="_role">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="_role_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-2">
+        <createTable tableName="_user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="_user_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="email" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="encrypted_password" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-3">
+        <createTable tableName="added_tag">
+            <column name="version" type="BIGINT"/>
+            <column name="tag_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="added_tag_pkey"/>
+            </column>
+            <column name="site_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="added_tag_pkey"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-4">
+        <createTable tableName="area">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="area_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="site_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-5">
+        <createTable tableName="area_contribution">
+            <column name="version" type="BIGINT"/>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="area_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="area_contribution_pkey"/>
+            </column>
+            <column name="field_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="area_contribution_pkey"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-6">
+        <createTable tableName="area_field">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="area_field_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-7">
+        <createTable tableName="comment">
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints primaryKey="true" primaryKeyName="comment_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="description" type="VARCHAR(3000)"/>
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="comment_pkey"/>
+            </column>
+            <column name="site_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="comment_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-8">
+        <createTable tableName="department">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="department_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="department_number" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-9">
+        <createTable tableName="grade">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="grade_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-10">
+        <createTable tableName="level_group">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="level_group_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_grade_id" type="BIGINT"/>
+            <column name="min_grade_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-11">
+        <createTable tableName="orientation">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="orientation_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-12">
+        <createTable tableName="photo">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="path" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-13">
+        <createTable tableName="photo_areas">
+            <column name="photos_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_areas_pkey"/>
+            </column>
+            <column name="areas_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_areas_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-14">
+        <createTable tableName="photo_pitches">
+            <column name="photos_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_pitches_pkey"/>
+            </column>
+            <column name="pitches_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_pitches_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-15">
+        <createTable tableName="photo_routes">
+            <column name="photos_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_routes_pkey"/>
+            </column>
+            <column name="routes_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_routes_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-16">
+        <createTable tableName="photo_sites">
+            <column name="photos_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_sites_pkey"/>
+            </column>
+            <column name="sites_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="photo_sites_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-17">
+        <createTable tableName="pitch">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pitch_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="height" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remark" type="VARCHAR(300)"/>
+            <column name="grade_id" type="BIGINT"/>
+            <column name="route_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-18">
+        <createTable tableName="pitch_contribution">
+            <column name="version" type="BIGINT"/>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pitch_contribution_pkey"/>
+            </column>
+            <column name="pitch_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pitch_contribution_pkey"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-19">
+        <createTable tableName="pitch_field">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pitch_field_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-20">
+        <createTable tableName="rock_type">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="rock_type_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-21">
+        <createTable tableName="route">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="route_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="height" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)"/>
+            <column name="number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remark" type="VARCHAR(300)"/>
+            <column name="area_id" type="BIGINT"/>
+            <column name="grade_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-22">
+        <createTable tableName="route_contribution">
+            <column name="version" type="BIGINT"/>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="route_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="route_contribution_pkey"/>
+            </column>
+            <column name="field_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="route_contribution_pkey"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-23">
+        <createTable tableName="route_field">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="route_field_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-24">
+        <createTable tableName="routes_number">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="routes_number_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-25">
+        <createTable tableName="site">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="access_info" type="VARCHAR(5000)"/>
+            <column name="additional_infos" type="VARCHAR(5000)"/>
+            <column name="crags_number" type="INTEGER"/>
+            <column name="description" type="VARCHAR(5000)"/>
+            <column name="is_accept_contribution" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="kids_friendly" type="BOOLEAN"/>
+            <column name="kids_friendly_info" type="VARCHAR(5000)"/>
+            <column name="latitude" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_routes_height" type="INTEGER"/>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parking_latitude" type="FLOAT8"/>
+            <column name="parking_longitude" type="FLOAT8"/>
+            <column name="township" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_grade_id" type="BIGINT"/>
+            <column name="min_grade_id" type="BIGINT"/>
+            <column name="rock_type_id" type="BIGINT"/>
+            <column name="routes_number_id" type="BIGINT"/>
+            <column name="site_creator_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-26">
+        <createTable tableName="site_contribution">
+            <column name="version" type="BIGINT"/>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="field_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_contribution_pkey"/>
+            </column>
+            <column name="site_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_contribution_pkey"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-27">
+        <createTable tableName="site_field">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_field_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-28">
+        <createTable tableName="site_level_groups">
+            <column name="sites_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_level_groups_pkey"/>
+            </column>
+            <column name="level_groups_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_level_groups_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-29">
+        <createTable tableName="site_orientations">
+            <column name="sites_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_orientations_pkey"/>
+            </column>
+            <column name="orientations_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_orientations_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-30">
+        <createTable tableName="site_site_types">
+            <column name="sites_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_site_types_pkey"/>
+            </column>
+            <column name="site_types_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_site_types_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-31">
+        <createTable tableName="site_type">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="site_type_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-32">
+        <createTable tableName="tag">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="tag_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-33">
+        <createTable tableName="topo">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="topo_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_id" type="BIGINT"/>
+            <column name="owner_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-34">
+        <createTable tableName="topo_booking">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="topo_booking_pkey"/>
+            </column>
+            <column name="topo_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="topo_booking_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-35">
+        <createTable tableName="user_role">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="user_role_pkey"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="user_role_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-36">
+        <addUniqueConstraint columnNames="name" constraintName="uk_1wdpsed5kna2y38hnbgrnhi5b" tableName="tag"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-37">
+        <addUniqueConstraint columnNames="name" constraintName="uk_6typf6pnyh8rtf4c5dkq87p7a" tableName="routes_number"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-38">
+        <addUniqueConstraint columnNames="name" constraintName="uk_avhs44y1lop8dik71aajpq9n1" tableName="rock_type"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-39">
+        <addUniqueConstraint columnNames="name" constraintName="uk_axov1w6rbfwlgpn9knj037mu3" tableName="level_group"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-40">
+        <addUniqueConstraint columnNames="name" constraintName="uk_d6dkh99xnliqj2eg1gsidoyji" tableName="grade"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-41">
+        <addUniqueConstraint columnNames="path" constraintName="uk_f1xcbrfny2pgd4v1yystqep2a" tableName="photo"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-42">
+        <addUniqueConstraint columnNames="name" constraintName="uk_f9iil6uu8d9ohutpr2irlpvio" tableName="site"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-43">
+        <addUniqueConstraint columnNames="name" constraintName="uk_guo7lt2tikx5f9kr1ln7n7ajh" tableName="site_type"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-44">
+        <addUniqueConstraint columnNames="name" constraintName="uk_ie6hi5cwdc7dcvmwvaaaay9vl" tableName="_role"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-45">
+        <addUniqueConstraint columnNames="email" constraintName="uk_k11y3pdtsrjgy8w9b6q4bjwrx" tableName="_user"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-46">
+        <addUniqueConstraint columnNames="username" constraintName="uk_nlcolwbx8ujaen5h0u2kr2bn2" tableName="_user"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-47">
+        <addUniqueConstraint columnNames="name" constraintName="uk_r13hmxu3uyyxc283q08jhxn6j" tableName="orientation"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-48">
+        <addUniqueConstraint columnNames="department_number" constraintName="uk_tla1ploey343n23i9lemldt4t" tableName="department"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-49">
+        <addUniqueConstraint columnNames="id, area_id" constraintName="uks076udmq8drhsb0jnwsdm5qnp" tableName="route"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-50">
+        <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="pitch" constraintName="fk15it2bvimnj76r2cobiplwqbo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="route" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-51">
+        <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="added_tag" constraintName="fk1prlxcub34fm3dlg6xe54feuj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tag" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-52">
+        <addForeignKeyConstraint baseColumnNames="field_id" baseTableName="route_contribution" constraintName="fk20tunlxegk4xksddc56n8kma7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="route_field" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-53">
+        <addForeignKeyConstraint baseColumnNames="site_id" baseTableName="site_contribution" constraintName="fk28rbeffdtpgx6dhhuwv2rr3t8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-54">
+        <addForeignKeyConstraint baseColumnNames="field_id" baseTableName="pitch_contribution" constraintName="fk2i13nqiwrwpfvfo2euelw4eqb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="pitch_field" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-55">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="photo" constraintName="fk2v2ghihjntwccuwbj0hbs7f36" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-56">
+        <addForeignKeyConstraint baseColumnNames="pitch_id" baseTableName="pitch_contribution" constraintName="fk2w43ex6h67hg9nuuptdrufrfb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="pitch" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-57">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role" constraintName="fk36bn0uqhhjgh8fsg5xnit88dh" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_role" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-58">
+        <addForeignKeyConstraint baseColumnNames="routes_id" baseTableName="photo_routes" constraintName="fk3lhv2ttjns15mhtowmh2divof" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="route" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-59">
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="topo" constraintName="fk3wmeoyxkoqsmmyjanh58yyqmw" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="department" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-60">
+        <addForeignKeyConstraint baseColumnNames="routes_number_id" baseTableName="site" constraintName="fk664478uhfinhhp1vrmp5hp2u7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="routes_number" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-61">
+        <addForeignKeyConstraint baseColumnNames="sites_id" baseTableName="photo_sites" constraintName="fk6g2pmdgty7xqwrrd3idkuds8j" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-62">
+        <addForeignKeyConstraint baseColumnNames="site_id" baseTableName="comment" constraintName="fk6jl05pq36bj9wvqvsoq3xbncg" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-63">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="site_contribution" constraintName="fk7g8m3d7014o8jr65nymh8bet6" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-64">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="topo_booking" constraintName="fk8a1hw3mqfnwghs77d8g2mtgf" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="topo" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-65">
+        <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="route_contribution" constraintName="fk8hhne0vhfd7r3954qhynncfri" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="route" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-66">
+        <addForeignKeyConstraint baseColumnNames="site_id" baseTableName="added_tag" constraintName="fk93873oh0y1wc6oujic9y3hvb9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-67">
+        <addForeignKeyConstraint baseColumnNames="area_id" baseTableName="area_contribution" constraintName="fk96bxkj2xq4dh5yrgvdmceom0p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="area" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-68">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="route_contribution" constraintName="fk9aftkleoei6gj8wao4wja0npy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-69">
+        <addForeignKeyConstraint baseColumnNames="photos_id" baseTableName="photo_pitches" constraintName="fk9o54g2gqvk0qyfofhcwdaa2fr" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="photo" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-70">
+        <addForeignKeyConstraint baseColumnNames="field_id" baseTableName="area_contribution" constraintName="fka2yvhv1rk2sc5x9hxlmmpiwav" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="area_field" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-71">
+        <addForeignKeyConstraint baseColumnNames="sites_id" baseTableName="site_level_groups" constraintName="fkb5lui89nq5u1k693ojn7bamqc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-72">
+        <addForeignKeyConstraint baseColumnNames="site_types_id" baseTableName="site_site_types" constraintName="fkbl1mi2o8kfi89kio5nsyqkw49" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site_type" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-73">
+        <addForeignKeyConstraint baseColumnNames="photos_id" baseTableName="photo_routes" constraintName="fkcnb85akae2uuw2eppxi8ymons" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="photo" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-74">
+        <addForeignKeyConstraint baseColumnNames="site_creator_id" baseTableName="site" constraintName="fkd0ufbvpkudfgnowlcsgwn5hng" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-75">
+        <addForeignKeyConstraint baseColumnNames="area_id" baseTableName="route" constraintName="fkdqpmhq6eyg9y2a25pn0empl4e" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="area" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-76">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="pitch_contribution" constraintName="fkfpkbnv2gs3wy6w8cry5n5dwy8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-77">
+        <addForeignKeyConstraint baseColumnNames="pitches_id" baseTableName="photo_pitches" constraintName="fkfyidtpuqi7ya6e1opq19yadcs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="pitch" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-78">
+        <addForeignKeyConstraint baseColumnNames="grade_id" baseTableName="pitch" constraintName="fkglovkcqwalnkno9q5wd63hje5" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="grade" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-79">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="topo" constraintName="fkgswxrfxjm33db09j22pxkl4sh" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-80">
+        <addForeignKeyConstraint baseColumnNames="sites_id" baseTableName="site_site_types" constraintName="fkgwqprkh8t2sdp93oxlafibeg3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-81">
+        <addForeignKeyConstraint baseColumnNames="min_grade_id" baseTableName="site" constraintName="fkhvstxhubipkfesm9jibvt1495" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="grade" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-82">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="area_contribution" constraintName="fkj6x5ev7tt93q9u6r741675bj0" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-83">
+        <addForeignKeyConstraint baseColumnNames="max_grade_id" baseTableName="site" constraintName="fkj9q3ddb46ci5kw23kn6j183ko" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="grade" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-84">
+        <addForeignKeyConstraint baseColumnNames="topo_id" baseTableName="topo_booking" constraintName="fkk7krubcs3pg3uvggqid2rf4mo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-85">
+        <addForeignKeyConstraint baseColumnNames="orientations_id" baseTableName="site_orientations" constraintName="fkk7nsfac8bo8bx9siot78hmi42" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="orientation" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-86">
+        <addForeignKeyConstraint baseColumnNames="field_id" baseTableName="site_contribution" constraintName="fkkj3klnsdkqsd4as3dbgsf2y8b" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site_field" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-87">
+        <addForeignKeyConstraint baseColumnNames="photos_id" baseTableName="photo_areas" constraintName="fkkl0t0p3ckcp15g14h5i79q2sw" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="photo" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-88">
+        <addForeignKeyConstraint baseColumnNames="photos_id" baseTableName="photo_sites" constraintName="fkkmamoductt48oit7b2pxb4u2o" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="photo" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-89">
+        <addForeignKeyConstraint baseColumnNames="level_groups_id" baseTableName="site_level_groups" constraintName="fkkx01idl31sls3kumigw8e0cbs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="level_group" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-90">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="site" constraintName="fklid8ruaeww7rgt6fhmrhsno5f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-91">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role" constraintName="fkniaqoclrvx138sjw9hsollqav" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-92">
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="site" constraintName="fkochmdxpmmrt6v4q6qx8sa43md" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="department" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-93">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="comment" constraintName="fkoo5phijy22unidgkw0sipcs74" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-94">
+        <addForeignKeyConstraint baseColumnNames="max_grade_id" baseTableName="level_group" constraintName="fkpag99sx5ubtdwid4nbrxtppjm" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="grade" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-95">
+        <addForeignKeyConstraint baseColumnNames="site_id" baseTableName="area" constraintName="fkqi8fhnmfptwx8k68xxmw2wx8a" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-96">
+        <addForeignKeyConstraint baseColumnNames="areas_id" baseTableName="photo_areas" constraintName="fkqys82wibhktu3uhwwtii716rb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="area" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-97">
+        <addForeignKeyConstraint baseColumnNames="min_grade_id" baseTableName="level_group" constraintName="fkro3sc0ga1cvlcpmt8sqt055mv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="grade" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-98">
+        <addForeignKeyConstraint baseColumnNames="grade_id" baseTableName="route" constraintName="fks84votkipgqxkwmjcqtku6dcm" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="grade" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-99">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="added_tag" constraintName="fksdi6gaiqtah4i8a4h1e3p8g38" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-100">
+        <addForeignKeyConstraint baseColumnNames="sites_id" baseTableName="site_orientations" constraintName="fkslkkoj85qjsgk69ku9eqklii" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="site" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1574652597480-101">
+        <addForeignKeyConstraint baseColumnNames="rock_type_id" baseTableName="site" constraintName="fksvpuswu9qtg80rbkulctxbk8p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="rock_type" validate="true"/>
+    </changeSet>
 </databaseChangeLog>

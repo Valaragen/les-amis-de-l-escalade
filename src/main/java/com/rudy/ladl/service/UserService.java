@@ -1,8 +1,8 @@
 package com.rudy.ladl.service;
 
 import com.rudy.ladl.controller.UserController;
-import com.rudy.ladl.entity.user.Role;
-import com.rudy.ladl.entity.user.User;
+import com.rudy.ladl.core.user.Role;
+import com.rudy.ladl.core.user.User;
 import com.rudy.ladl.exception.EmailNotAvailableException;
 import com.rudy.ladl.exception.UsernameNotAvailableException;
 import com.rudy.ladl.repository.RoleRepository;
@@ -46,9 +46,11 @@ public class UserService {
         Role role = roleRepository.getByName("ROLE_USER");
         user.addRole(role);
         user.setEncryptedPassword(passwordEncoder.encode(user.getPassword()));
-        user = userRepository.save(user);
-        return user;
+
+        return userRepository.save(user);
     }
+
+    //TODO modification
 
 
     public void delete(Long id) {
@@ -61,6 +63,22 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username.toLowerCase()).orElse(null);
+    }
+
+    public boolean isUsernameAvailable(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean isEmailNotAvailable(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 }

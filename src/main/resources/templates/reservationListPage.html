@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Les amis de l'escalade</title>
+</head>
+
+<body>
+<main role="main" class="container">
+
+    <h2 class="mt-3 font-weight-bold">En attente</h2>
+    <div class="p-3">
+        <h3>Mes demandes</h3>
+        <table class="table table-hover table-black bg-white" th:if="${!#lists.isEmpty(topos)}">
+            <tr class="thead-dark">
+                <th scope="col">Nom</th>
+                <th scope="col">Appartient à</th>
+                <th scope="col">Actions</th>
+            </tr>
+            <tr th:each="topo : ${topos}">
+                <th scope="row" th:text="${topo.getName()}">vide</th>
+                <td th:text="${topo.getOwner().getFirstName()}">vide</td>
+
+                <td>
+                    <a th:href="@{/topos/{id}(id=${topo.id})}">
+                        <button class="btn btn-light text-primary"><i class="fas fa-eye"></i></button>
+                    </a>
+
+                    <form class="d-inline" th:object="${topoReservationDTO}" action="/topos/removeReservation"
+                          method="post">
+                        <input type="hidden" th:value="${topo.id}" name="topo.id">
+                        <input type="hidden" th:value="${currentUser.id}" name="user.id">
+                        <button class="btn btn-light text-danger" type="submit"><i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <p th:if="${#lists.isEmpty(topos)}">
+            Aucune demande en attente
+        </p>
+
+        <h3>Les demandes d'autres utilisateurs</h3>
+
+        <table class="table table-hover table-black bg-white" th:if="${!#lists.isEmpty(toposAskers)}">
+            <tr class="thead-dark">
+                <th scope="col">Nom</th>
+                <th scope="col">Demandé par</th>
+            </tr>
+            <tr th:each="topoAsked : ${toposAskers}">
+                <th scope="row" th:text="${topoAsked.getName()}">-</th>
+                <td>
+                    <table class="w-100">
+                        <tr th:each="bookingAsker : ${topoAsked.getBookingAskers()}">
+                            <td th:text="*{bookingAsker.getFirstName()}"></td>
+                            <td>
+                                <form class="d-inline" th:object="${topoReservationDTO}"
+                                      action="/topos/acceptReservation"
+                                      method="post">
+                                    <input type="hidden" th:value="${topoAsked.id}" name="topo.id">
+                                    <input type="hidden" th:value="${bookingAsker.id}" name="user.id">
+                                    <button class="btn btn-light text-primary" type="submit"><i
+                                            class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                                <form class="d-inline" th:object="${topoReservationDTO}"
+                                      action="/topos/removeReservation"
+                                      method="post">
+                                    <input type="hidden" th:value="${topoAsked.id}" name="topo.id">
+                                    <input type="hidden" th:value="${bookingAsker.id}" name="user.id">
+                                    <button class="btn btn-light text-danger" type="submit"><i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+        </table>
+        <p th:if="${#lists.isEmpty(toposAskers)}">
+            Aucune demande d'autres utilisateurs en attente
+        </p>
+    </div>
+
+
+    <h2 class="mt-3 font-weight-bold">En cours</h2>
+
+    <div class="p-3">
+        <h3>Mes prêts</h3>
+        <table class="table table-hover table-black bg-white" th:if="${!#lists.isEmpty(toposLent)}">
+            <tr class="thead-dark">
+                <th scope="col">Nom</th>
+                <th scope="col">Prêté à</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+            <tr th:each="topoLent : ${toposLent}">
+                <th scope="row" th:text="${topoLent.getName()}">vide</th>
+                <td th:text="${topoLent.getBookingAskers()[0].getFirstName()}">vide</td>
+                <td th:text="${topoLent.getBookingAskers()[0].getEmail()}">vide</td>
+
+                <td>
+                    <a th:href="@{/topos/{id}(id=${topoLent.id})}">
+                        <button class="btn btn-light text-primary"><i class="fas fa-eye"></i></button>
+                    </a>
+
+                    <form class="d-inline" th:object="${topoReservationDTO}" action="/topos/removeReservation"
+                          method="post">
+                        <input type="hidden" th:value="${topoLent.id}" name="topo.id">
+                        <input type="hidden" th:value="${topoLent.getBookingAskers()[0].id}" name="user.id">
+                        <button class="btn btn-light text-danger" type="submit"><i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <p th:if="${#lists.isEmpty(toposLent)}">
+            Aucun prêt en cours
+        </p>
+
+        <h3>Mes empreints</h3>
+
+        <table class="table table-hover table-black bg-white" th:if="${!#lists.isEmpty(toposBorrowed)}">
+            <tr class="thead-dark">
+                <th scope="col">Nom</th>
+                <th scope="col">Prêté par</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+            <tr th:each="topoBorrowed : ${toposBorrowed}">
+                <th scope="row" th:text="${topoBorrowed.getName()}">vide</th>
+                <td th:text="${topoBorrowed.owner.getFirstName()}">vide</td>
+                <td th:text="${topoBorrowed.owner.getEmail()}">vide</td>
+
+                <td>
+                    <a th:href="@{/topos/{id}(id=${topoBorrowed.id})}">
+                        <button class="btn btn-light text-primary"><i class="fas fa-eye"></i></button>
+                    </a>
+
+                    <form class="d-inline" th:object="${topoReservationDTO}" action="/topos/removeReservation"
+                          method="post">
+                        <input type="hidden" th:value="${topoBorrowed.id}" name="topo.id">
+                        <input type="hidden" th:value="${currentUser.id}" name="user.id">
+                        <button class="btn btn-light text-danger" type="submit"><i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <p th:if="${#lists.isEmpty(toposBorrowed)}">
+            Aucun emprunt en cours
+        </p>
+
+    </div>
+</main>
+
+</body>
+</html>

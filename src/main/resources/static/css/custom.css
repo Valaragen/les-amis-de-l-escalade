@@ -1,0 +1,152 @@
+html, body {
+    min-height: 100%;
+    background-color: #f5f5f5;
+}
+
+
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.login-center {
+    z-index: 1;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 72px;
+    height: 100%;
+}
+
+#customNavbar {
+    z-index: 1500;
+}
+
+.form-signin input {
+    position: relative;
+    padding: 12px;
+    height: auto;
+}
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+#form-register {
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#carouselHomepage img {
+    object-fit: cover;
+    object-position: 50% 50%;
+    height: 300px;
+}
+
+.opacity-gray {
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(52, 58, 64, 0.35);
+}
+
+#homepage-searchForm {
+    z-index: 3;
+    left: 0;
+    right: 0;
+    height: 100%;
+}
+#homepage-logo {
+    position: absolute;
+    z-index: 2;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    object-fit: contain !important;
+    filter: opacity(0.5);
+}
+
+#error-box {
+    max-width: 800px;
+}
+
+#addMarkerToMapInfo {
+    z-index: 1000;
+    top: 3px;
+    right: 3px;
+}
+
+#siteNameDetailWrapper {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.siteTagButton {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.img-cover {
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.h-500 {
+    height: 500px !important;
+}
+
+.h-300 {
+    height: 300px !important;
+}
+
+.h-100 {
+    height: 100px !important;
+}
+
+.no-resize {
+    resize: none;
+}
+
+.mw-800 {
+    max-width: 800px !important;
+}
+
+.contribute-button {
+    top: 20px;
+    right: 10px;
+}
+
+.select2-selection--single {
+    height: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+@media screen and (max-width: 768px) {
+    #carouselHomepage img {
+        height: 200px;
+    }
+}
+
+

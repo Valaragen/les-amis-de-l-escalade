@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{::link},~{::.additional-scripts})" lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${#strings.capitalize(site.name)} + ' - Les amis de l\'escalade'"> - Les amis de l'escalade</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/select2.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/select2-bootstrap.min.css}">
+</head>
+
+<body>
+<main role="main" class="container bg-white mb-5 pb-3 mt-1">
+    <div class="row position-relative">
+        <form sec:authorize="hasRole('ROLE_MEMBER')" th:if="${#lists.isEmpty(site.addedTags)}"
+              action="/sites/addOfficialTag" method="POST" th:object="${site}">
+            <input type="hidden" name="id" th:field="*{name}" th:value="${site.name}">
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+            <button class="btn btn-success siteTagButton" type="submit">Tagger</button>
+        </form>
+        <form sec:authorize="hasRole('ROLE_MEMBER')" th:if="${!#lists.isEmpty(site.addedTags)}"
+              action="/sites/removeOfficialTag" method="POST" th:object="${site}">
+            <input type="hidden" name="id" th:field="*{name}" th:value="${site.name}">
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+            <button class="btn btn-danger siteTagButton" type="submit">Retirer tag</button>
+        </form>
+        <img src="/image/defaultSiteImg.jpg" class="img-cover h-300 w-100" alt="user icon">
+        <div class="bg-dark px-3 py-2 text-white rounded-pill text-center" id="siteNameDetailWrapper">
+            <h1 class="h2" th:text="${#strings.capitalize(site.name)}">Site name</h1>
+            <p class="mb-0"
+               th:text="${#strings.toUpperCase(site.department.getFormattedString())} + ' - ' + ${#strings.capitalize(site.township)}">
+                Department-twonship</p>
+        </div>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(site.addedTags)}" class="row">
+        <p class="my-3 mx-3 col-auto bg-success text-white h5 rounded-lg" th:each="addedTag : ${site.addedTags}"
+           th:text="${addedTag.id.tag.name}"></p>
+    </div>
+
+    <div class="m-1 mt-3 p-3 bg-light position-relative">
+        <h2>Informations</h2>
+        <div id="infoView">
+            <button sec:authorize="isAuthenticated()"
+                    class="btn btn-outline-primary position-absolute contribute-button rounded-pill contribute-info">
+                + Contribuer aux
+                informations
+            </button>
+            <div class="row mb-3" th:if="${site.kidsFriendly}">
+                <p class="ml-3 col-auto badge badge-success my-auto">Site adapté aux enfants</p>
+            </div>
+            <div class="row mb-3" th:if="${!#lists.isEmpty(site.siteTypes)}">
+                <b class="col-auto">Type : </b>
+                <p class="col-auto mr-1 my-auto" th:each="siteType : ${site.siteTypes}"
+                   th:text="${siteType.name}"></p>
+            </div>
+
+            <div class="row mb-3" th:if="${site.rockType}">
+                <b class="col-auto">Type de roche : </b>
+                <p class="col-auto mr-1 my-auto" th:text="${site.rockType.name}">Texte</p>
+            </div>
+            <div class="row mb-3" th:if="${!#strings.isEmpty(site.minGrade) || !#strings.isEmpty(site.maxGrade)}">
+                <b class="col-auto">Difficulté : </b>
+                <p class="badge badge-pill badge-warning col-auto mr-2 my-auto"
+                   th:if="${!#strings.isEmpty(site.minGrade)}"
+                   th:text="${'A partir de ' + site.minGrade.name}"></p>
+                <p class="badge badge-pill badge-warning col-auto my-auto" th:if="${!#strings.isEmpty(site.maxGrade)}"
+                   th:text="${'jusqu''à ' + site.maxGrade.name}"></p>
+            </div>
+
+            <div class="row mb-3" th:if="${!#lists.isEmpty(site.levelGroups)}">
+                <b class="col-auto">Recommandé pour : </b>
+                <p class="col-auto mr-1 my-auto" th:each="levelGroup : ${site.levelGroups}"
+                   th:text="${levelGroup.name + '(de ' + levelGroup.minGrade.name + ' à ' + levelGroup.maxGrade.name + ')'}"></p>
+            </div>
+
+            <div class="row mb-3" th:if="${site.cragsNumber}">
+                <b class="col-auto">Nombre de falaises : </b>
+                <p class="col-auto my-auto" th:text="${site.cragsNumber}">Texte</p>
+            </div>
+
+            <div class="row mb-3" th:if="${site.routesNumber}">
+                <b class="col-auto">Nombre de voies : </b>
+                <p class="col-auto my-auto" th:text="${site.routesNumber.name}">Texte</p>
+            </div>
+
+            <div class="row mb-3" th:if="${site.maxRoutesHeight}">
+                <b class="col-auto">Hauteur max : </b>
+                <p class="col-auto my-auto" th:text="${site.maxRoutesHeight + 'm'}">Texte</p>
+            </div>
+
+            <div class="row mb-3" th:if="${!#lists.isEmpty(site.orientations)}">
+                <b class="col-auto">Orientations : </b>
+                <p class="col-auto mr-1 my-auto" th:each="orientation : ${site.orientations}"
+                   th:text="${orientation.name}"></p>
+            </div>
+        </div>
+        <!---->
+        <div id="infoViewModify" class="d-none" sec:authorize="isAuthenticated()">
+            <button class="btn btn-outline-primary position-absolute contribute-button rounded-pill contribute-info">
+                Annuler
+            </button>
+            <form th:action="${'/sites/' + site.getSearchName()}" th:object="${siteContributionDTO}" method="POST">
+
+                <div th:if="${#strings.isEmpty(site.kidsFriendly)}" class="form-row my-3">
+                    <div class="col-auto">
+                        <label for="kidsFriendly">Site adapté aux enfants ?</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('kidsFriendly')} ? 'is-invalid' : ''"
+                                id="kidsFriendly" type="text" th:field="*{kidsFriendly}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:value="${true}">Oui</option>
+                            <option th:value="${false}">Non</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('kidsFriendly')}" th:class="invalid-feedback"
+                             th:errors="*{kidsFriendly}">name Error
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row my-3">
+                    <div th:if="${#strings.isEmpty(site.minGrade)}" class="col-auto">
+                        <label for="minGrade">Difficulté minimum</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('minGrade')} ? 'is-invalid' : ''"
+                                id="minGrade" type="text" th:field="*{minGrade}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="grade : ${grades}" th:value="${grade.id}"
+                                    th:text="${grade.name}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('minGrade')}" th:class="invalid-feedback"
+                             th:errors="*{minGrade}">name Error
+                        </div>
+                    </div>
+                    <div th:if="${#strings.isEmpty(site.maxGrade)}" class="col-auto">
+                        <label for="maxGrade">Difficulté maximum</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('maxGrade')} ? 'is-invalid' : ''"
+                                id="maxGrade" type="text" th:field="*{maxGrade}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="grade : ${grades}" th:value="${grade.id}"
+                                    th:text="${grade.name}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('maxGrade')}" th:class="invalid-feedback"
+                             th:errors="*{maxGrade}">name Error
+                        </div>
+                    </div>
+
+                    <div th:if="${#strings.isEmpty(site.rockType)}" class="col-auto">
+                        <label for="rockType">Type de roche</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('rockType')} ? 'is-invalid' : ''"
+                                id="rockType" type="text" th:field="*{rockType}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="rockType : ${rockTypes}" th:value="${rockType.id}"
+                                    th:text="${rockType.name}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('rockType')}" th:class="invalid-feedback"
+                             th:errors="*{rockType}">name Error
+                        </div>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(site.orientations)}" class="col-auto">
+                        <label for="orientations">Orientations</label>
+                        <select class="form-control js-example-basic-multiple"
+                                th:classappend="${#fields.hasErrors('orientations')} ? 'is-invalid' : ''"
+                                id="orientations" type="text" th:field="*{orientations}" multiple="multiple">
+                            <option th:each="orientation : ${orientations}" th:value="${orientation.id}"
+                                    th:text="${orientation.name}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('orientations')}" th:class="invalid-feedback"
+                             th:errors="*{orientations}">name Error
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-row my-3">
+                    <div th:if="${#lists.isEmpty(site.siteTypes)}" class="col-sm-auto">
+                        <label for="siteTypes">Types du site</label>
+                        <select class="form-control js-example-basic-multiple"
+                                th:classappend="${#fields.hasErrors('siteTypes')} ? 'is-invalid' : ''"
+                                id="siteTypes" type="text" th:field="*{siteTypes}" multiple="multiple">
+                            <option th:each="siteType : ${siteTypes}" th:value="${siteType.id}"
+                                    th:text="${siteType.name}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('siteTypes')}" th:class="invalid-feedback"
+                             th:errors="*{siteTypes}">name Error
+                        </div>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(site.levelGroups)}" class="col-sm-auto">
+                        <label for="levelGroups">Niveaux recommandés</label>
+                        <select class="form-control js-example-basic-multiple"
+                                th:classappend="${#fields.hasErrors('levelGroups')} ? 'is-invalid' : ''"
+                                id="levelGroups" type="text" th:field="*{levelGroups}" multiple="multiple">
+                            <option th:each="levelGroup : ${levelGroups}" th:value="${levelGroup.id}"
+                                    th:text="${levelGroup.name + ' (suffisamment de voies de ' + levelGroup.minGrade.name + ' à ' + levelGroup.maxGrade.name} + ')'"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('levelGroups')}" th:class="invalid-feedback"
+                             th:errors="*{levelGroups}">name Error
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row my-3">
+                    <div th:if="${#strings.isEmpty(site.routesNumber)}" class="col-sm-auto">
+                        <label for="routesNumber">Nombre de voies</label>
+                        <select class="form-control js-example-basic"
+                                th:classappend="${#fields.hasErrors('routesNumber')} ? 'is-invalid' : ''"
+                                id="routesNumber" type="text" th:field="*{routesNumber}">
+                            <option th:value="${null}">(non renseigné)</option>
+                            <option th:each="routesNumberElem : ${routesNumbers}" th:value="${routesNumberElem.id}"
+                                    th:text="${routesNumberElem.name}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('routesNumber')}" th:class="invalid-feedback"
+                             th:errors="*{routesNumber}">name Error
+                        </div>
+                    </div>
+                    <div th:if="${#strings.isEmpty(site.maxRoutesHeight)}" class="col-sm-auto">
+                        <label for="maxRoutesHeight">Hauteur max (en m)</label>
+                        <input class="form-control"
+                               th:classappend="${#fields.hasErrors('maxRoutesHeight')} ? 'is-invalid' : ''"
+                               id="maxRoutesHeight"
+                               type="text" th:field="*{maxRoutesHeight}" placeholder="Hauteur max en mètre"
+                               th:value="*{maxRoutesHeight}">
+                        <div th:if="${#fields.hasErrors('maxRoutesHeight')}" th:class="invalid-feedback"
+                             th:errors="*{maxRoutesHeight}">name Error
+                        </div>
+                    </div>
+                    <div th:if="${#lists.isEmpty(site.cragsNumber)}" class="col-sm-auto">
+                        <label for="cragsNumber">Nombre de falaises</label>
+                        <input class="form-control"
+                               th:classappend="${#fields.hasErrors('cragsNumber')} ? 'is-invalid' : ''" id="cragsNumber"
+                               type="text" th:field="*{cragsNumber}" placeholder="Nombre de falaises"
+                               th:value="*{cragsNumber}">
+                        <div th:if="${#fields.hasErrors('cragsNumber')}" th:class="invalid-feedback"
+                             th:errors="*{cragsNumber}">name Error
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row align-items-center">
+                    <input class="btn btn-blue btn-lg col-sm-5 ml-auto mr-auto p-2 mt-3" type="submit" value="Valider">
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="m-1 mt-3 p-3 bg-light position-relative">
+        <h2>Descriptions</h2>
+        <div id="descView">
+            <button sec:authorize="isAuthenticated()"
+                    class="btn btn-outline-primary position-absolute contribute-button rounded-pill contribute-desc">+
+                Contribuer aux
+                descriptions
+            </button>
+            <div th:if="${!#strings.isEmpty(site.description)}">
+                <h4>À propos du site</h4>
+                <div class="row">
+                    <p class="col" th:text="${site.description}">Description</p>
+                </div>
+            </div>
+            <div th:if="${!#strings.isEmpty(site.kidsFriendlyInfo)}">
+                <h4>Praticabilité pour les enfants</h4>
+                <div class="row">
+                    <p class="col" th:text="${site.kidsFriendlyInfo}">Texte</p>
+                </div>
+            </div>
+
+            <div th:if="${!#strings.isEmpty(site.additionalInfos)}">
+                <h4>Infos complémentaires</h4>
+                <div class="row">
+                    <p class="col" th:text="${site.additionalInfos}">Texte</p>
+                </div>
+            </div>
+
+            <div th:if="${!#strings.isEmpty(site.accessInfo)}">
+                <h4>Infos d'accès au site</h4>
+                <div class="row">
+                    <p class="col" th:text="${site.accessInfo}">Texte</p>
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div id="descViewModify" class="d-none" sec:authorize="isAuthenticated()">
+            <button class="btn btn-outline-primary position-absolute contribute-button rounded-pill contribute-desc">
+                Annuler
+            </button>
+            <form th:action="${'/sites/' + site.getSearchName()}" th:object="${siteContributionDTO}" method="POST">
+
+                <div th:if="${#strings.isEmpty(site.description)}">
+                    <label class="h4" for="description">À propos du site</label>
+                    <textarea class="form-control w-100 h-100 no-resize"
+                              th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''" id="description"
+                              type="text" th:field="*{description}"
+                              placeholder="Partagez des informations à propos du site"
+                              th:value="*{description}"></textarea>
+                    <div th:if="${#fields.hasErrors('description')}" th:class="invalid-feedback"
+                         th:errors="*{description}">name Error
+                    </div>
+                </div>
+                <div th:if="${#strings.isEmpty(site.kidsFriendlyInfo)}">
+                    <label class="h4" for="kidsFriendlyInfo">Praticabilité pour les enfants</label>
+                    <textarea class="form-control w-100 h-100 no-resize"
+                              th:classappend="${#fields.hasErrors('kidsFriendlyInfo')} ? 'is-invalid' : ''"
+                              id="kidsFriendlyInfo"
+                              type="text" th:field="*{kidsFriendlyInfo}"
+                              placeholder="Partagez des informations sur les voies praticables par les enfants si il y en a..."
+                              th:value="*{kidsFriendlyInfo}"></textarea>
+                    <div th:if="${#fields.hasErrors('kidsFriendlyInfo')}" th:class="invalid-feedback"
+                         th:errors="*{kidsFriendlyInfo}">name Error
+                    </div>
+                </div>
+
+                <div th:if="${#strings.isEmpty(site.additionalInfos)}">
+                    <label class="h4" for="additionalInfos">Infos complémentaires</label>
+                    <textarea class="form-control w-100 h-100 no-resize"
+                              th:classappend="${#fields.hasErrors('additionalInfos')} ? 'is-invalid' : ''"
+                              id="additionalInfos"
+                              type="text" th:field="*{additionalInfos}"
+                              placeholder="Partagez ici des informations sur l'équipement à prendre, ou toutes autres informations complémentaires et conseils que vous souhaitez donner..."
+                              th:value="*{additionalInfos}"></textarea>
+                    <div th:if="${#fields.hasErrors('additionalInfos')}" th:class="invalid-feedback"
+                         th:errors="*{additionalInfos}">name Error
+                    </div>
+                </div>
+
+                <div th:if="${#strings.isEmpty(site.accessInfo)}">
+                    <label class="h4" for="accessInfo">Infos d'accès au site</label>
+                    <textarea class="form-control w-100 h-100 no-resize"
+                              th:classappend="${#fields.hasErrors('accessInfo')} ? 'is-invalid' : ''" id="accessInfo"
+                              type="text" th:field="*{accessInfo}"
+                              placeholder="Partagez quelques infos vis à vis de l'accès au site"
+                              th:value="*{accessInfo}"></textarea>
+                    <div th:if="${#fields.hasErrors('accessInfo')}" th:class="invalid-feedback"
+                         th:errors="*{accessInfo}">name Error
+                    </div>
+                </div>
+                <div class="form-row align-items-center">
+                    <input class="btn btn-blue btn-lg col-sm-5 ml-auto mr-auto p-2 mt-3" type="submit" value="Valider">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="m-1 mt-3 p-3 bg-light position-relative">
+        <h2>Localisation</h2>
+        <div class="row">
+            <div id="mapid" class="mx-3" style="height: 500px; width: 100%;"
+                 th:attr="data-lat=${site.latitude}, data-lon=${site.longitude}, data-plat=${site.parkingLatitude}, data-plon=${site.parkingLongitude}, data-name=${site.name}"></div>
+        </div>
+    </div>
+
+    <h4 class="mt-3">Commentaires</h4>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="${'/sites/addComment/' + site.name}" method="POST" th:object="${comment}">
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="commentTextArea">Ajouter un commentaire</label>
+                    <textarea id="commentTextArea" class="form-control w-100 h-100 no-resize" th:field="*{description}"
+                              placeholder="Votre commentaire..."></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 ml-auto mt-1">
+                    <input class="btn btn-lightblue w-100" type="submit" sec:authorize="hasRole('ROLE_USER')"
+                           value="Ajouter un commentaire"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="m-1 mt-3 p-3 bg-light">
+        <div th:if="${!#lists.isEmpty(site.comments)}">
+            <div th:each="comment: ${site.comments}" class="row">
+                <div class="col-11">
+                    <div class="col-auto">
+                        <b th:text="${#strings.capitalize(comment.id.user.username)}">Texte</b>
+                    </div>
+                    <div class="col-auto">
+                        <p class="text-secondary mb-0" th:text="${#dates.format(comment.id.date, 'dd/MM/yyyy HH:mm')}"></p>
+                    </div>
+                    <div class="col-12 pl-4">
+                        <p th:text="${comment.description}">Texte</p>
+                    </div>
+                </div>
+                <div th:if="${currentUser.equals(comment.id.user)}" class="col-1 d-flex">
+                    <button type="button" class="btn btn-primary text-white m-auto d-block" data-toggle="modal"
+                            th:data-target="${'#comment' + comment.id.user + #dates.format(comment.id.date, 'yyyyMMddHHmmss')}">
+                        <i class="fas fa-edit"></i></button>
+                </div>
+                <div sec:authorize="hasRole('ROLE_MEMBER')" th:if="${!currentUser.equals(comment.id.user)}" class="col-1 d-flex">
+                    <button type="button" class="btn btn-primary text-white m-auto d-block" data-toggle="modal"
+                            th:data-target="${'#comment' + comment.id.user + #dates.format(comment.id.date, 'yyyyMMddHHmmss')}">
+                        <i class="fas fa-edit"></i></button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade"
+                     th:id="${'comment' + comment.id.user + #dates.format(comment.id.date, 'yyyyMMddHHmmss')}"
+                     tabindex="-1" role="dialog"
+                     th:aria-labelledby="${'#comment' + comment.id.user + #dates.format(comment.id.date, 'yyyyMMddHHmmss') + 'title'}"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-800">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modifier le commentaire</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:object="${comment}" th:action="@{/sites/modifyComment}" method="POST" th:id="${'commentFormMod' + comment.id.user + #dates.format(comment.id.date, 'yyyyMMddHHmmss')}">
+                                    <input type="hidden" th:name="id.user.id" th:value="${comment.id.user.id}">
+                                    <input type="hidden" th:name="id.date" th:value="${#dates.format(comment.id.date, 'yyyy-MM-dd HH:mm:ss.SSS')}">
+                                    <input type="hidden" th:name="id.site.id" th:value="${comment.id.site.id}">
+                                    <textarea class="form-control w-100 h-100 no-resize" type="text" th:name="description" th:text="${comment.description}"></textarea>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <form class="mr-auto" th:object="${comment}" th:action="@{/sites/deleteComment}" method="POST">
+                                    <input type="hidden" th:name="id.user.id" th:value="${comment.id.user.id}">
+                                    <input type="hidden" th:name="id.date" th:value="${#dates.format(comment.id.date, 'yyyy-MM-dd HH:mm:ss.SSS')}">
+                                    <input type="hidden" th:name="id.site.id" th:value="${comment.id.site.id}">
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary" th:form="${'commentFormMod' + comment.id.user + #dates.format(comment.id.date, 'yyyyMMddHHmmss')}">Modifier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(site.comments)}">
+            <p>Aucun commentaire pour ce site</p>
+        </div>
+    </div>
+
+</main>
+
+<div class="additional-scripts">
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+            integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+            crossorigin="" type="application/javascript"></script>
+    <script th:src="@{/js/select2.full.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/siteDetailsMap.js}" type="application/javascript"></script>
+</div>
+
+</body>
+</html>

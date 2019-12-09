@@ -5,28 +5,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="ladl-001" author="rudy Boinnard">
-        <insert tableName="_user">
-            <column name="first_name" value="rudy" />
-            <column name="last_name" value="boinnard" />
-            <column name="email" value="rudy@gmail.com" />
-            <column name="username" value="valaragen" />
-            <column name="encrypted_password"
-                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
-            <column name="version" value="0" />
-        </insert>
-
-        <insert tableName="_user">
-            <column name="first_name" value="thomas" />
-            <column name="last_name" value="gasmyr" />
-            <column name="email" value="gasmyrmougang@yahoo.fr" />
-            <column name="username" value="user" />
-            <column name="encrypted_password"
-                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
-            <column name="version" value="0" />
-        </insert>
-    </changeSet>
-    <changeSet id="ladl-002" author="rudy boinnard">
+    <changeSet id="ladl-001" author="Rudy boinnard">
+        <comment>insert roles</comment>
         <insert tableName="_role">
             <column name="name" value="ROLE_ADMIN" />
             <column name="description" value="administrator" />
@@ -37,13 +17,294 @@
             <column name="description" value="user" />
             <column name="version" value="0" />
         </insert>
-        <insert tableName="user_role">
-            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
-            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_ADMIN')" />
-        </insert>
-        <insert tableName="user_role">
-            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='user')" />
-            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
+        <insert tableName="_role">
+            <column name="name" value="ROLE_MEMBER" />
+            <column name="description" value="member" />
+            <column name="version" value="0" />
         </insert>
     </changeSet>
+    <changeSet id="ladl-002" author="Rudy boinnard">
+        <comment>Insert site alterable fields</comment>
+        <sql dbms="postgresql">
+            INSERT into site_field("name")
+            VALUES
+            ('name'),
+            ('township'),
+            ('description'),
+            ('accessInfo'),
+            ('additionalInfos'),
+            ('latitude'),
+            ('longitude'),
+            ('parkingLongitude'),
+            ('parkingLatitude'),
+            ('kidsFriendly'),
+            ('kidsFriendlyInfo'),
+            ('cragsNumber'),
+            ('maxRoutesHeight'),
+            ('routesNumber'),
+            ('rockType'),
+            ('minGrade'),
+            ('maxGrade'),
+            ('department'),
+            ('levelGroups'),
+            ('orientations'),
+            ('siteTypes');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-003" author="Rudy boinnard">
+        <comment>Insert all french department in department</comment>
+        <sql dbms="postgresql">
+            INSERT INTO department (department_number, "name")
+            VALUES
+            ('01', 'ain'),
+            ('02', 'aisne'),
+            ('03', 'allier'),
+            ('05', 'hautes-alpes'),
+            ('04', 'alpes-de-haute-provence'),
+            ('06', 'alpes-maritimes'),
+            ('07', 'ardeche'),
+            ('08', 'ardennes'),
+            ('09', 'ariege'),
+            ('10', 'aube'),
+            ('11', 'aude'),
+            ('12', 'aveyron'),
+            ('13', 'bouches-du-rhone'),
+            ('14', 'calvados'),
+            ('15', 'cantal'),
+            ('16', 'charente'),
+            ('17', 'charente-maritime'),
+            ('18', 'cher'),
+            ('19', 'correze'),
+            ('2a', 'corse-du-sud'),
+            ('2b', 'haute-corse'),
+            ('21', 'cote-dor'),
+            ('22', 'cotes-darmor'),
+            ('23', 'creuse'),
+            ('24', 'dordogne'),
+            ('25', 'doubs'),
+            ('26', 'drome'),
+            ('27', 'eure'),
+            ('28', 'eure-et-loir'),
+            ('29', 'finistere'),
+            ('30', 'gard'),
+            ('31', 'haute-garonne'),
+            ('32', 'gers'),
+            ('33', 'gironde'),
+            ('34', 'herault'),
+            ('35', 'ile-et-vilaine'),
+            ('36', 'indre'),
+            ('37', 'indre-et-loire'),
+            ('38', 'isere'),
+            ('39', 'jura'),
+            ('40', 'landes'),
+            ('41', 'loir-et-cher'),
+            ('42', 'loire'),
+            ('43', 'haute-loire'),
+            ('44', 'loire-atlantique'),
+            ('45', 'loiret'),
+            ('46', 'lot'),
+            ('47', 'lot-et-garonne'),
+            ('48', 'lozere'),
+            ('49', 'maine-et-loire'),
+            ('50', 'manche'),
+            ('51', 'marne'),
+            ('52', 'haute-marne'),
+            ('53', 'mayenne'),
+            ('54', 'meurthe-et-moselle'),
+            ('55', 'meuse'),
+            ('56', 'morbihan'),
+            ('57', 'moselle'),
+            ('58', 'nievre'),
+            ('59', 'nord'),
+            ('60', 'oise'),
+            ('61', 'orne'),
+            ('62', 'pas-de-calais'),
+            ('63', 'puy-de-dome'),
+            ('64', 'pyrenees-atlantiques'),
+            ('65', 'hautes-pyrenees'),
+            ('66', 'pyrenees-orientales'),
+            ('67', 'bas-rhin'),
+            ('68', 'haut-rhin'),
+            ('69', 'rhone'),
+            ('70', 'haute-saone'),
+            ('71', 'saone-et-loire'),
+            ('72', 'sarthe'),
+            ('73', 'savoie'),
+            ('74', 'haute-savoie'),
+            ('75', 'paris'),
+            ('76', 'seine-maritime'),
+            ('77', 'seine-et-marne'),
+            ('78', 'yvelines'),
+            ('79', 'deux-sevres'),
+            ('80', 'somme'),
+            ('81', 'tarn'),
+            ('82', 'tarn-et-garonne'),
+            ('83', 'var'),
+            ('84', 'vaucluse'),
+            ('85', 'vendee'),
+            ('86', 'vienne'),
+            ('87', 'haute-vienne'),
+            ('88', 'vosges'),
+            ('89', 'yonne'),
+            ('90', 'territoire-de-belfort'),
+            ('91', 'essonne'),
+            ('92', 'hauts-de-seine'),
+            ('93', 'seine-saint-denis'),
+            ('94', 'val-de-marne'),
+            ('95', 'val-doise'),
+            ('976', 'mayotte'),
+            ('971', 'guadeloupe'),
+            ('973', 'guyane'),
+            ('972', 'martinique'),
+            ('974', 'reunion');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-004" author="Rudy Boinnard">
+        <comment>Insert selectable rocktypes</comment>
+        <sql dbms="postgresql">
+            INSERT into rock_type("name")
+            VALUES
+            ('Andésite'),
+            ('Ardoise'),
+            ('Basalte'),
+            ('Calcaire'),
+            ('Calcaire (Dolomie)'),
+            ('Calcaire (Molasse)'),
+            ('Calcaire (Pierre de castrie)'),
+            ('Cargneule'),
+            ('Composite'),
+            ('Conglomérat'),
+            ('Craie'),
+            ('Dacite'),
+            ('Diorite'),
+            ('Dolérite'),
+            ('Gabbro'),
+            ('Gneiss'),
+            ('Granite'),
+            ('Granulite'),
+            ('Grès'),
+            ('Grès armoricain'),
+            ('Gritstone'),
+            ('Marbre'),
+            ('Meulière'),
+            ('Micaschiste'),
+            ('Migmatite'),
+            ('Ophiolite'),
+            ('Paragneiss'),
+            ('Phonolithe'),
+            ('Porphyre'),
+            ('Quartz'),
+            ('Quartzite'),
+            ('Résine'),
+            ('Rhyolite'),
+            ('Roche volcanique'),
+            ('Schiste'),
+            ('Serpentine'),
+            ('Silex'),
+            ('Trachy-Andésite'),
+            ('Trachyte'),
+            ('Tuf'),
+            ('Verrucano'),
+            ('Autre');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-005" author="Rudy Boinnard">
+        <comment>Insert selectable grades</comment>
+        <sql dbms="postgresql">
+            INSERT into grade("name")
+            VALUES
+            ('3a'),
+            ('3b'),
+            ('3c'),
+            ('4a'),
+            ('4b'),
+            ('4c'),
+            ('5a'),
+            ('5b'),
+            ('5c'),
+            ('6a'),
+            ('6b'),
+            ('6c'),
+            ('7a'),
+            ('7b'),
+            ('7c'),
+            ('8a'),
+            ('8b'),
+            ('8c'),
+            ('9a'),
+            ('9b'),
+            ('9c');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-006" author="Rudy Boinnard">
+        <comment>Insert selectable site types</comment>
+        <sql dbms="postgresql">
+            INSERT into site_type("name")
+            VALUES
+            ('Bloc'),
+            ('Voies d''une longueur'),
+            ('Voies de plusieurs longueurs'),
+            ('Psychobloc'),
+            ('Structure artificielles d''escalade');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-007" author="Rudy Boinnard">
+        <comment>Insert selectable orientations</comment>
+        <sql dbms="postgresql">
+            INSERT into orientation("name")
+            VALUES
+            ('N'),
+            ('NE'),
+            ('E'),
+            ('SE'),
+            ('S'),
+            ('SO'),
+            ('O'),
+            ('NO'),
+            ('Toutes');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-008" author="Rudy Boinnard">
+        <comment>Insert selectable routes number</comment>
+        <sql dbms="postgresql">
+            INSERT into routes_number("name")
+            VALUES
+            ('Moins de 10 voies'),
+            ('Entre 10 et 25 voies'),
+            ('Entre 25 et 50 voies'),
+            ('Entre 50 et 100 voies'),
+            ('Entre 100 et 200 voies'),
+            ('Entre 200 et 500 voies'),
+            ('Plus de 500 voies');
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-009" author="Rudy Boinnard">
+        <comment>Insert selectable level groups</comment>
+        <sql dbms="postgresql">
+            INSERT into level_group("name", min_grade_id, max_grade_id)
+            VALUES
+            ('Débutants', (SELECT id FROM grade WHERE name ='3a'), (SELECT id FROM grade WHERE name ='5c')),
+            ('Amateurs', (SELECT id FROM grade WHERE name ='6a'), (SELECT id FROM grade WHERE name ='6c')),
+            ('Confirmés', (SELECT id FROM grade WHERE name ='7a'), (SELECT id FROM grade WHERE name ='7c')),
+            ('Pros', (SELECT id FROM grade WHERE name ='8a'), (SELECT id FROM grade WHERE name ='9c'));
+        </sql>
+    </changeSet>
+
+    <changeSet id="ladl-010" author="Rudy Boinnard">
+        <comment>Insert usable tags</comment>
+        <sql dbms="postgresql">
+            INSERT into tag("name")
+            VALUES
+            ('Officiel - les amis de l''escalade');
+        </sql>
+    </changeSet>
+
+
 </databaseChangeLog>

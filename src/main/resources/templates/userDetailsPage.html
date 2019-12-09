@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html th:replace="/includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Les amis de l'escalade</title>
+</head>
+
+<body>
+<main role="main" class="container">
+
+    <div class="card mb-3 bg-white">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="/image/user-icon.jpg" class="card-img m-auto" alt="user icon">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h4 class="card-title" th:text="${user.username}">Username</h4>
+                    <div class="row">
+                        <p class="card-text pl-3 pr-2 mb-0" th:text="${#strings.toUpperCase(user.lastName)}">Lastname</p>
+                        <p class="card-text" th:text="${#strings.capitalize(user.firstName)}">Firstname</p>
+                    </div>
+                    <div class="row">
+                        <div class="pl-3 pr-1">
+                            <i class="far fa-envelope"></i>
+                        </div>
+                        <p class="card-text pl-0" th:text="${user.email}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

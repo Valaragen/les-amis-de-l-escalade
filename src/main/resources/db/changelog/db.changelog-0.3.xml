@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="ladl-001" author="rudy Boinnard">
+        <comment>Insert two users</comment>
+        <insert tableName="_user">
+            <column name="first_name" value="rudy" />
+            <column name="last_name" value="boinnard" />
+            <column name="email" value="rudy@gmail.com" />
+            <column name="username" value="valaragen" />
+            <column name="encrypted_password"
+                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
+            <column name="version" value="0" />
+        </insert>
+
+        <insert tableName="_user">
+            <column name="first_name" value="thomas" />
+            <column name="last_name" value="gasmyr" />
+            <column name="email" value="gasmyrmougang@yahoo.fr" />
+            <column name="username" value="user" />
+            <column name="encrypted_password"
+                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
+            <column name="version" value="0" />
+        </insert>
+
+        <insert tableName="_user">
+            <column name="first_name" value="bob" />
+            <column name="last_name" value="gil" />
+            <column name="email" value="gilbob@yahoo.fr" />
+            <column name="username" value="member" />
+            <column name="encrypted_password"
+                    value="$2a$10$3Yftm0X5p5kfGK74Vq5I4.uU6q/8XMfs.YOa2Ch0pKW5j7qQDFLCW" />
+            <column name="version" value="0" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="ladl-002" author="rudy boinnard">
+
+        <comment>Add admin role and user role to previously created users</comment>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_ADMIN')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_MEMBER')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='member')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_MEMBER')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='member')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='user')" />
+            <column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="ladl-003" author="Rudy Boinnard">
+        <comment>Insert default site</comment>
+        <insert tableName="site">
+            <column name="version" value="1"/>
+            <column name="name" value="la dent du lion"/>
+            <column name="is_accept_contribution" value="false"/>
+            <column name="site_creator_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
+            <column name="township" value="thonon-les-bains"/>
+            <column name="department_id" value="75"/>
+            <column name="description" value="Belle falaise pour débutant"/>
+            <column name="latitude" value="45.978705"/>
+            <column name="longitude" value="6.375981"/>
+            <column name="additional_infos" value="Vous feriez mieux de bien vous équiper"/>
+            <column name="access_info" value="Garez vous près du village avant de débuter la marche à travers la forêt. Suivez le chemin vers 'départ dent du lion'"/>
+            <column name="kids_friendly" value="true"/>
+            <column name="kids_friendly_info" value="Plusieurs voies sont adaptées aux enfants" />
+            <column name="min_grade_id" value="3"/>
+            <column name="max_grade_id" value="13"/>
+            <column name="crags_number" value="2"/>
+            <column name="max_routes_height" value="100"/>
+            <column name="routes_number_id" value="4"/>
+            <column name="rock_type_id" value="3"/>
+        </insert>
+        <insert tableName="site_orientations">
+                <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+                <column name="orientations_id" valueComputed="(SELECT id FROM orientation WHERE name='N')" />
+        </insert>
+        <insert tableName="site_orientations">
+            <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+            <column name="orientations_id" valueComputed="(SELECT id FROM orientation WHERE name='NE')" />
+        </insert>
+        <insert tableName="site_site_types">
+            <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+            <column name="site_types_id" valueComputed="(SELECT id FROM site_type WHERE name='Bloc')" />
+        </insert>
+        <insert tableName="site_level_groups">
+            <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+            <column name="level_groups_id" valueComputed="(SELECT id FROM level_group WHERE name='Débutants')" />
+        </insert>
+        <insert tableName="site_level_groups">
+            <column name="sites_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')" />
+            <column name="level_groups_id" valueComputed="(SELECT id FROM level_group WHERE name='Amateurs')" />
+        </insert>
+        <insert tableName="comment">
+            <column name="site_id" valueComputed="(SELECT id FROM site WHERE name='la dent du lion')"/>
+            <column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')"/>
+            <column name="description" value="Très beau site, je le recommande"/>
+            <column name="date" valueDate="2019-11-19T20:50:15"/>
+        </insert>
+        <insert tableName="site">
+            <column name="version" value="1"/>
+            <column name="name" value="la patte du loup"/>
+            <column name="is_accept_contribution" value="true"/>
+            <column name="township" value="allinge"/>
+            <column name="department_id" value="75"/>
+            <column name="description" value="Petit bloc au bord de la route"/>
+            <column name="latitude" value="46.136957"/>
+            <column name="longitude" value="6.637464"/>
+            <column name="site_creator_id" valueComputed="(SELECT id FROM _user WHERE username='valaragen')" />
+        </insert>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>

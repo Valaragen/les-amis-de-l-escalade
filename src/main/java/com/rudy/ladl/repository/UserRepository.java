@@ -1,6 +1,6 @@
 package com.rudy.ladl.repository;
 
-import com.rudy.ladl.entity.user.User;
+import com.rudy.ladl.core.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

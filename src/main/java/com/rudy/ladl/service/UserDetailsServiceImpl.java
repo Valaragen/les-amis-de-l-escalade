@@ -1,7 +1,7 @@
 package com.rudy.ladl.service;
 
-import com.rudy.ladl.entity.user.Role;
-import com.rudy.ladl.entity.user.User;
+import com.rudy.ladl.core.user.Role;
+import com.rudy.ladl.core.user.User;
 import com.rudy.ladl.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username.toLowerCase())
                 .orElseThrow(() -> new UsernameNotFoundException("Email " + username + " not found"));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getEncryptedPassword(), true, true,
                 true, true, getAuthorities(user.getRoles()));
