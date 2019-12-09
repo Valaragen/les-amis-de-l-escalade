@@ -77,7 +77,7 @@ public class UserService {
         return userRepository.existsByUsername(username);
     }
 
-    public boolean isEmailAvailable(String email) {
+    public boolean isEmailNotAvailable(String email) {
         return userRepository.existsByEmail(email);
     }
 

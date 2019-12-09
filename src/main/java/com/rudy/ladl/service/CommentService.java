@@ -23,4 +23,24 @@ public  class CommentService {
         comment.setId(commentId);
         commentRepository.save(comment);
     }
+
+    public Comment findById(CommentId id) {
+        return commentRepository.findById(id).orElse(null);
+    }
+
+    public Boolean modifyComment(Comment comment, User user, Boolean isMember) {
+        if(user == comment.getId().getUser() || isMember) {
+            commentRepository.save(comment);
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean deleteComment(Comment comment, User user, Boolean isMember) {
+        if(user == comment.getId().getUser() || isMember) {
+            commentRepository.delete(comment);
+            return true;
+        }
+        return false;
+    }
 }

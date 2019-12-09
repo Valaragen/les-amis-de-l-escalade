@@ -439,6 +439,7 @@
             <column name="status" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
+            <column name="parution_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="department_id" type="BIGINT"/>
             <column name="owner_id" type="BIGINT"/>
         </createTable>

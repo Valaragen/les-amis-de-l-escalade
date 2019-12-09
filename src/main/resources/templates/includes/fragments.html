@@ -60,6 +60,7 @@
                 <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdown01">
                     <a class="dropdown-item" th:href="@{/users/{username}(username = ${#authentication.getName()})}">Mon compte</a>
                     <a class="dropdown-item" th:href="@{/topos/myTopos}">Mes topos</a>
+                    <a class="dropdown-item" th:href="@{/topos/myReservations}">Mes reservations</a>
                     <a sec:authorize="isAuthenticated()" class="dropdown-item"
                        th:href="@{/logout}" id="logoutBtn">Déconnexion</a>
                 </div>

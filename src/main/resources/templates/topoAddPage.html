@@ -49,6 +49,15 @@
                      th:errors="*{department}">name Error
                 </div>
             </div>
+            <div class="col-sm-3">
+                <label for="parutionDate">Date de parution</label>
+                <input class="form-control"
+                       th:classappend="${#fields.hasErrors('parutionDate')} ? 'is-invalid' : ''"
+                       id="parutionDate" type="date" th:field="*{parutionDate}"/>
+                <div th:if="${#fields.hasErrors('parutionDate')}" th:class="invalid-feedback"
+                     th:errors="*{parutionDate}">name Error
+                </div>
+            </div>
         </div>
 
         <div class="form-row my-3">
@@ -56,7 +65,8 @@
                 <label for="description">Description</label>
                 <textarea class="form-control w-100 h-100 no-resize"
                           th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''" id="description"
-                          type="text" th:field="*{description}" placeholder="Partagez des informations à propos du site"
+                          type="text" th:field="*{description}"
+                          placeholder="Partagez des informations à propos du site"
                           th:value="*{description}"></textarea>
                 <div th:if="${#fields.hasErrors('description')}" th:class="invalid-feedback"
                      th:errors="*{description}">name Error

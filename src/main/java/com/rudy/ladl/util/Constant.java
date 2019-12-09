@@ -31,7 +31,8 @@ public class Constant {
     public static final String SITE_ADD_OFFICIAL_TAG_PATH = SITES_PATH + "/addOfficialTag";
     public static final String SITE_REMOVE_OFFICIAL_TAG_PATH = SITES_PATH + "/removeOfficialTag";
     public static final String SITE_ADD_COMMENT_PATH = SITES_PATH + "/addComment";
-    public static final String SITE_REMOVE_COMMENT_PATH = SITES_PATH + "/removeComment";
+    public static final String SITE_MODIFY_COMMENT_PATH = SITES_PATH + "/modifyComment";
+    public static final String SITE_DELETE_COMMENT_PATH = SITES_PATH + "/deleteComment";
     public static final String SITE_SEARCH_PATH = SITES_PATH + "/search";
 
     public static final String SLASHID_PATH = "/{id}";
@@ -41,9 +42,17 @@ public class Constant {
     public static final String TOPO_ADD_PATH = TOPOS_PATH + "/add";
     public static final String TOPO_ADD_PAGE = "topoAddPage";
 
+    public static final String TOPO_ADD_RESERVATION_PATH = TOPOS_PATH + "/addReservation";
+    public static final String TOPO_REMOVE_RESERVATION_PATH = TOPOS_PATH + "/removeReservation";
+    public static final String TOPO_ACCEPT_RESERVATION_PATH = TOPOS_PATH + "/acceptReservation";
+    public static final String TOPO_SET_AVAILABLE_PATH = TOPOS_PATH + "/setAvailable";
+    public static final String TOPO_SET_NOT_AVAILABLE_PATH = TOPOS_PATH + "/setNotAvailable";
+
     public static final String TOPO_LIST_PAGE = "topoListPage";
     public static final String USER_TOPO_LIST_PAGE = "myTopoListPage";
+    public static final String USER_TOPO_RESERVATIONS_LIST_PAGE = "reservationListPage";
     public static final String USER_TOPO_LIST_PATH = TOPOS_PATH + "/myTopos";
+    public static final String USER_TOPO_RESERVATIONS_LIST_PATH = TOPOS_PATH + "/myReservations";
     public static final String TOPO_DETAILS_PAGE = "topoDetailsPage";
 
 

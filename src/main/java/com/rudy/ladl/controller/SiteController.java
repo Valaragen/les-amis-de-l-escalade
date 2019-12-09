@@ -4,6 +4,7 @@ import com.rudy.ladl.core.SiteSearch;
 import com.rudy.ladl.core.dto.SiteContributionDTO;
 import com.rudy.ladl.core.site.Comment;
 import com.rudy.ladl.core.site.Site;
+import com.rudy.ladl.core.site.embeddable.CommentId;
 import com.rudy.ladl.core.user.User;
 import com.rudy.ladl.exception.SiteFieldAlreadyFilledException;
 import com.rudy.ladl.service.*;
@@ -12,6 +13,8 @@ import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
 public class SiteController {
@@ -101,6 +105,7 @@ public class SiteController {
 
     @GetMapping(Constant.SITES_PATH + Constant.SLASHSTRING_PATH)
     public String goToSiteDetailByName(@PathVariable("string") String name, SiteContributionDTO siteContributionDTO, Comment comment, Model model) {
+        addCurrentUserToModel(model);
         Site site = siteService.findByName(name);
         loadEntityModelAttribute(model);
         if (site != null) {
@@ -182,6 +187,50 @@ public class SiteController {
         return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + site.getSearchName();
     }
 
+    @PostMapping(Constant.SITE_MODIFY_COMMENT_PATH )
+    public String modifyComment(@ModelAttribute("comment") Comment comment, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        User user = userService.findByUsername(authentication.getName());
+
+        User commentOwner = userService.findById(comment.getId().getUser().getId());
+        Site site = siteService.findById(comment.getId().getSite().getId());
+        System.out.println(comment.getId().getDate());
+        Comment newComment = commentService.findById(new CommentId(site, commentOwner, comment.getId().getDate()));
+        newComment.setDescription(comment.getDescription());
+
+        commentService.modifyComment(newComment, user, authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")));
+
+        return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + site.getSearchName();
+    }
+
+    @PostMapping(Constant.SITE_DELETE_COMMENT_PATH )
+    public String deleteComment(@ModelAttribute("comment") Comment comment, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        User user = userService.findByUsername(authentication.getName());
+
+        User commentOwner = userService.findById(comment.getId().getUser().getId());
+        Site site = siteService.findById(comment.getId().getSite().getId());
+        comment = commentService.findById(new CommentId(site, commentOwner, comment.getId().getDate()));
+
+        commentService.deleteComment(comment, user, authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")));
+
+        return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + site.getSearchName();
+    }
+
 
     private void loadEntityModelAttribute(Model model) {
         model.addAttribute("departments", departmentService.findAll());
@@ -191,6 +240,17 @@ public class SiteController {
         model.addAttribute("levelGroups", levelGroupService.findAll());
         model.addAttribute("rockTypes", rockTypeService.findAll());
         model.addAttribute("routesNumbers", routesNumberService.findAll());
+    }
+
+    private void addCurrentUserToModel(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByUsername(authentication.getName());
+
+        if(user != null) {
+            model.addAttribute("currentUser", user);
+        } else {
+            model.addAttribute("currentUser", new User());
+        }
     }
 
 }

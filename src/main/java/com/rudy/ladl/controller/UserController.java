@@ -50,10 +50,10 @@ public class UserController {
         if(!registerDTO.getUser().getPassword().equals(registerDTO.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", Constant.ERROR_MSG_PASSWORD_MISMATCH);
         }
-        if (!userService.isEmailAvailable(registerDTO.getUser().getEmail())) {
+        if (userService.isEmailNotAvailable(registerDTO.getUser().getEmail())) {
             bindingResult.rejectValue("user.email", "error.user.email", Constant.ERROR_MSG_EMAIL_NOT_AVAILABLE);
         }
-        if (!userService.isUsernameAvailable(registerDTO.getUser().getUsername())) {
+        if (userService.isUsernameAvailable(registerDTO.getUser().getUsername())) {
             bindingResult.rejectValue("user.username", "error.user.username", Constant.ERROR_MSG_USERNAME_NOT_AVAILABLE);
         }
         if (bindingResult.hasErrors()){

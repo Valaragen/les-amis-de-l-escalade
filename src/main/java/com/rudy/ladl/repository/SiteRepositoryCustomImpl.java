@@ -30,7 +30,7 @@ public class SiteRepositoryCustomImpl implements SiteRepositoryCustom {
 
 
         if (siteSearch.getName() != null) {
-            predicates.add(cb.like(namePath, siteSearch.getName() + "%"));
+            predicates.add(cb.like(namePath, "%" + siteSearch.getName() + "%"));
         } else {
             predicates.add(cb.like(namePath, "%"));
         }

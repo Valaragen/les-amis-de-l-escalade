@@ -79,4 +79,8 @@ public class SiteService {
     public Site findByName(String name) {
         return siteRepository.findByName(name.replace("_", " ")).orElse(null);
     }
+
+    public Site findById(Long id) {
+        return siteRepository.findById(id).orElse(null);
+    }
 }

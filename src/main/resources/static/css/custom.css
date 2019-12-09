@@ -128,6 +128,10 @@ html, body {
     resize: none;
 }
 
+.mw-800 {
+    max-width: 800px !important;
+}
+
 .contribute-button {
     top: 20px;
     right: 10px;

@@ -1,6 +1,8 @@
 package com.rudy.ladl.controller;
 
+import com.rudy.ladl.core.dto.RegisterDTO;
 import com.rudy.ladl.core.dto.SiteContributionDTO;
+import com.rudy.ladl.core.dto.TopoReservationDTO;
 import com.rudy.ladl.core.site.Comment;
 import com.rudy.ladl.core.site.Site;
 import com.rudy.ladl.core.user.Topo;
@@ -41,7 +43,6 @@ public class TopoController {
         return Constant.TOPO_LIST_PAGE;
     }
 
-    //TODO user_id in URI
     @GetMapping(Constant.USER_TOPO_LIST_PATH)
     public String getAllUserTopos(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -81,17 +82,135 @@ public class TopoController {
 
         topo = topoService.addTopo(topo, user);
 
-        return Constant.REDIRECT + Constant.TOPOS_PATH + Constant.SLASH + topo.getSearchName();
+        return Constant.REDIRECT + Constant.TOPOS_PATH + Constant.SLASH + topo.getId();
     }
 
-    @GetMapping(Constant.TOPOS_PATH + Constant.SLASHSTRING_PATH)
-    public String goToTopoDetailByName(@PathVariable("string") String name, Comment comment, Model model) {
-        Topo topo = topoService.findByName(name);
+    @GetMapping(Constant.TOPOS_PATH + Constant.SLASHID_PATH)
+    public String goToTopoDetailById(@PathVariable("id") Long id, Model model) {
+        if(!model.containsAttribute("topoReservationDTO")) model.addAttribute("topoReservationDTO", new TopoReservationDTO());
+        addCurrentUserToModel(model);
+
+        Topo topo = topoService.findById(id);
         if (topo != null) {
             model.addAttribute("topo", topo);
             return Constant.TOPO_DETAILS_PAGE;
         }
         return Constant.REDIRECT + Constant.TOPOS_PATH;
+    }
+
+    @PostMapping(Constant.TOPO_ADD_RESERVATION_PATH)
+    public String addReservation(Topo topo, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+
+        User user = userService.findByUsername(authentication.getName());
+        topo = topoService.findById(topo.getId());
+
+        topoService.addReservation(topo, user);
+
+        return Constant.REDIRECT + Constant.TOPOS_PATH + Constant.SLASH + topo.getId();
+    }
+
+    @GetMapping(Constant.USER_TOPO_RESERVATIONS_LIST_PATH)
+    public String getAllUserReservation(Model model) {
+        if(!model.containsAttribute("topoReservationDTO")) model.addAttribute("topoReservationDTO", new TopoReservationDTO());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+        User user = userService.findByUsername(authentication.getName());
+
+        model.addAttribute("currentUser", user);
+        model.addAttribute("topos", topoService.findAllReservationsFromUser(user));
+        model.addAttribute("toposAskers", topoService.findAllReservationsToUser(user));
+        model.addAttribute("toposLent", topoService.findAllLendToUser(user));
+        model.addAttribute("toposBorrowed", topoService.findAllLendFromUser(user));
+        return Constant.USER_TOPO_RESERVATIONS_LIST_PAGE;
+    }
+
+    @PostMapping(Constant.TOPO_REMOVE_RESERVATION_PATH)
+    public String removeUserReservation(TopoReservationDTO topoReservationDTO, Model model) {
+        if (topoReservationDTO.getTopo().getId() == null || topoReservationDTO.getUser().getId() == null) {
+            return Constant.REDIRECT + Constant.USER_TOPO_RESERVATIONS_LIST_PATH;
+        }
+        Topo topo = topoService.findById(topoReservationDTO.getTopo().getId());
+        User user = userService.findById(topoReservationDTO.getUser().getId());
+        if(topo == null || user == null) {
+            return Constant.REDIRECT + Constant.USER_TOPO_RESERVATIONS_LIST_PATH;
+        }
+
+        topoService.removeReservationFromUser(topo, user);
+
+        return Constant.REDIRECT + Constant.USER_TOPO_RESERVATIONS_LIST_PATH;
+    }
+
+    @PostMapping(Constant.TOPO_ACCEPT_RESERVATION_PATH)
+    public String acceptUserReservation(TopoReservationDTO topoReservationDTO, Model model) {
+        if (topoReservationDTO.getTopo().getId() == null || topoReservationDTO.getUser().getId() == null) {
+            return Constant.REDIRECT + Constant.USER_TOPO_RESERVATIONS_LIST_PATH;
+        }
+        Topo topo = topoService.findById(topoReservationDTO.getTopo().getId());
+        User user = userService.findById(topoReservationDTO.getUser().getId());
+        if(topo == null || user == null) {
+            return Constant.REDIRECT + Constant.USER_TOPO_RESERVATIONS_LIST_PATH;
+        }
+
+        topoService.acceptReservationFromUser(topo, user);
+
+        return Constant.REDIRECT + Constant.USER_TOPO_RESERVATIONS_LIST_PATH;
+    }
+
+    @PostMapping(Constant.TOPO_SET_AVAILABLE_PATH)
+    public String setTopoAvailable(Topo topo, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+
+        topo = topoService.findById(topo.getId());
+        User user = userService.findByUsername(authentication.getName());
+        if(topo == null || user == null) {
+            return Constant.REDIRECT + Constant.USER_TOPO_LIST_PATH;
+        }
+
+        topoService.setTopoAvailable(topo, user);
+
+        return Constant.REDIRECT + Constant.TOPOS_PATH + Constant.SLASH + topo.getId();
+    }
+
+    @PostMapping(Constant.TOPO_SET_NOT_AVAILABLE_PATH)
+    public String setTopoNotAvailable(Topo topo, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+
+        topo = topoService.findById(topo.getId());
+        User user = userService.findByUsername(authentication.getName());
+        if(topo == null || user == null) {
+            return Constant.REDIRECT + Constant.USER_TOPO_LIST_PATH;
+        }
+
+        topoService.setTopoNotAvailable(topo, user);
+
+        return Constant.REDIRECT + Constant.TOPOS_PATH + Constant.SLASH + topo.getId();
+    }
+
+    private void addCurrentUserToModel(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByUsername(authentication.getName());
+
+        if(user != null) {
+            model.addAttribute("currentUser", user);
+        } else {
+            model.addAttribute("currentUser", new User());
+        }
     }
 
 }
