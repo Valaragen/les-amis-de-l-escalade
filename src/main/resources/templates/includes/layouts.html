@@ -2,11 +2,11 @@
 <html th:fragment="basicLayout(title,content,customCss,customScripts)"
       lang="fr" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/includes/fragments :: head(${title},${customCss})">
+<head th:replace="includes/fragments :: head(${title},${customCss})">
 
 </head>
 <body>
-<div th:replace="/includes/fragments :: navbar"></div>
+<div th:replace="includes/fragments :: navbar"></div>
 <main role="main" class="container" th:replace="${content}">
 
     <div class="starter-template">
@@ -18,6 +18,6 @@
 <footer>
 
 </footer>
-<th:block th:replace="/includes/fragments :: scripts(${customScripts})"/>
+<th:block th:replace="includes/fragments :: scripts(${customScripts})"/>
 </body>
 </html>
