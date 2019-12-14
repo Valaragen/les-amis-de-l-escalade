@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@Configuration
+//@Configuration
 public class HerokuConfig {
-    @Bean
+//    @Bean
     public javax.sql.DataSource dataSource() throws URISyntaxException {
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
         String username = dbUri.getUserInfo().split(":")[0];
