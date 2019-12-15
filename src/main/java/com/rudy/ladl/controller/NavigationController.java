@@ -1,5 +1,6 @@
 package com.rudy.ladl.controller;
 
+import com.rudy.ladl.core.SiteSearch;
 import com.rudy.ladl.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -21,7 +22,9 @@ public class NavigationController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("datetime", new Date());
-        model.addAttribute("username", "Valaragen");
+        if(!model.containsAttribute("siteSearch")) {
+            model.addAttribute("siteSearch", new SiteSearch());
+        }
         model.addAttribute("mode", appMode);
         return Constant.HOME_PAGE;
     }
