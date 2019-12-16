@@ -9,6 +9,7 @@ Site permettant à la communauté de référencer, donner des infos et commenter
 ### Installation
 1. **Téléchargez** [la dernière version du site](https://github.com/Valaragen/les-amis-de-l-escalade/releases) et [le jeu de données](https://github.com/Valaragen/les-amis-de-l-escalade/releases)
 2. Lancez pgAdmin et créez une nouvelle base de données nommée **LADL_DB** appartenant à l'utilisateur **postgres**.
+> Le jeu de donnée est disponible à titre indicatif, il est ajouté automatiquement au premier lancement de l'application
 3. Déposez le fichier .war dans **/webapps** de apache tomcat
 4. Depuis votre **console de commande**, placez vous dans le dossier **/bin** de apache-tomcatet executez
     - **catalina.bat** run (sur Windows)
