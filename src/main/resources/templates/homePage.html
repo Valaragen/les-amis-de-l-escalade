@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html th:replace="includes/layouts :: basicLayout(~{::title},~{::main},~{},~{})" lang="fr"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Accueil - Les amis de l'escalade</title>
 </head>
@@ -10,8 +11,10 @@
 
     <div id="carouselHomepage" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000"
          data-pause="false">
-        <img class="col-6 col-sm-5 col-lg-3" th:src="@{/image/logo.png}" alt="les amis de l'escalade logo" id="homepage-logo">
-        <form class="position-absolute col-10 col-sm-9 col-md-7 col-lg-6 m-auto form-inline my-2 my-lg-0" id="homepage-searchForm" action="/sites" method="GET" th:object="${siteSearch}">
+        <img class="col-6 col-sm-5 col-lg-3" th:src="@{/image/logo.png}" alt="les amis de l'escalade logo"
+             id="homepage-logo">
+        <form class="position-absolute col-10 col-sm-9 col-md-7 col-lg-6 m-auto form-inline my-2 my-lg-0"
+              id="homepage-searchForm" action="/sites" method="GET" th:object="${siteSearch}">
             <input class="form-control col-9" id="name"
                    type="text" th:field="*{name}" placeholder="Nom du site" th:value="*{name}" aria-label="Search">
             <button class="btn btn-lightblue col-3" type="submit">Rechercher</button>
@@ -32,9 +35,38 @@
     </div>
 
     <div class="text-center mb-3">
-        <img class="text-center mb-4" src="/image/logo_full.png" alt="les amis de l'escalade logo" width="300"
-             height="168">
-        <h2 class="h1 font-weight-normal">Bienvenue</h2>
+        <h2 class="h1 font-weight-normal my-3">Bienvenue à toi grimpeur</h2>
+        <div class="row">
+            <div class="col-sm-6 col-md-5 col-lg-4 ml-auto">
+                <div class="card">
+                    <img class="card-img-top" src="/image/climbingarea.jpg" alt="Card image climbing area">
+                    <div class="card-body">
+                        <h5 class="card-title">Trouve un site d'escalade</h5>
+                        <p class="card-text">Ajoute un site d'escalade ou cherche parmis ceux qui ont été référencés par les autres grimpeurs.</p>
+                        <a th:href="@{/sites}" class="btn btn-primary">Trouver un site</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-5 col-lg-4 mr-auto">
+                <div sec:authorize="isAuthenticated()" class="card">
+                    <img class="card-img-top" src="/image/climbingtopo.png" alt="Card image topo">
+                    <div class="card-body">
+                        <h5 class="card-title">Trouve un topo</h5>
+                        <p class="card-text">Enregistre tes topos personnels, prête ou emprunte un topo à un autre grimpeur.</p>
+                        <a th:href="@{/topos}" class="btn btn-primary">Trouver un topo</a>
+                    </div>
+                </div>
+                <div sec:authorize="!isAuthenticated()" class="card">
+                    <img class="card-img-top" src="/image/login.png" alt="Card image login">
+                    <div class="card-body">
+                        <h5 class="card-title">Inscris-toi gratuitement</h5>
+                        <p class="card-text">Rejoins la communauté en t'inscrivant gratuitement.</p>
+                        <a th:href="@{/register}" class="btn btn-primary">S'inscrire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </main>
