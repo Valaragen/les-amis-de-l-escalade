@@ -1,5 +1,8 @@
 # Les amis de l'escalade
+## Description
 Site permettant à la communauté de référencer, donner des infos et commenter des sites d'escalade.
+
+*Projet géré avec **apache maven**, compilé sous **java 8**, SGBDR **postgresql***
 
 ## Comment faire tourner le site en local ?
 ### Prérequis
@@ -15,3 +18,9 @@ Site permettant à la communauté de référencer, donner des infos et commenter
     - **catalina.bat** run (sur Windows)
     - **catalina.sh** run (sur Linux)
 5. Depuis votre navigateur connectez vous à **localhost:8080/ladl-{version_du_site}**
+
+## Aperçus
+
+![](https://github.com/Valaragen/les-amis-de-l-escalade/blob/master/homepage.JPG)  
+  
+![](https://github.com/Valaragen/les-amis-de-l-escalade/blob/master/sites.JPG)
