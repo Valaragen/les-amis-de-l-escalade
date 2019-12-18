@@ -30,7 +30,7 @@
                    value="${_csrf.token}"/>
             <button class="btn btn-danger siteTagButton" type="submit">Retirer tag</button>
         </form>
-        <img src="/image/defaultSiteImg.jpg" class="img-cover h-300 w-100" alt="user icon">
+        <img th:src="@{/image/defaultSiteImg.jpg}" class="img-cover h-300 w-100" alt="user icon">
         <div class="bg-dark px-3 py-2 text-white rounded-pill text-center" id="siteNameDetailWrapper">
             <h1 class="h2" th:text="${#strings.capitalize(site.name)}">Site name</h1>
             <p class="mb-0"

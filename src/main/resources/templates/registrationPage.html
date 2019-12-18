@@ -8,7 +8,7 @@
 <main role="main" class="container">
     <form class="my-5" th:action="@{/register}" th:object="${registerDTO}" id="form-register" method="post">
         <div class="text-center mb-3">
-            <img class="text-center mb-4" src="/image/logo_full.png" alt="les amis de l'escalade logo" width="300"
+            <img class="text-center mb-4" th:src="@{/image/logo_full.png}" alt="les amis de l'escalade logo" width="300"
                  height="168">
             <h1 class="h1 font-weight-normal">Créer un compte</h1>
         </div>

@@ -23,13 +23,13 @@
         <div class="opacity-gray"></div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="./image/climbing1.jpg" alt="First slide">
+                <img class="d-block w-100" th:src="@{/image/climbing1.jpg}" alt="First slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="./image/climbing2.jpg" alt="Second slide">
+                <img class="d-block w-100" th:src="@{/image/climbing2.jpg}" alt="Second slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="./image/climbing3.jpg" alt="Third slide">
+                <img class="d-block w-100" th:src="@{/image/climbing3.jpg}" alt="Third slide">
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-5 col-lg-4 ml-auto">
                 <div class="card">
-                    <img class="card-img-top" src="/image/climbingarea.jpg" alt="Card image climbing area">
+                    <img class="card-img-top" th:src="@{/image/climbingarea.jpg}" alt="Card image climbing area">
                     <div class="card-body">
                         <h5 class="card-title">Trouve un site d'escalade</h5>
                         <p class="card-text">Ajoute un site d'escalade ou cherche parmis ceux qui ont été référencés par les autres grimpeurs.</p>
@@ -50,7 +50,7 @@
 
             <div class="col-sm-6 col-md-5 col-lg-4 mr-auto">
                 <div sec:authorize="isAuthenticated()" class="card">
-                    <img class="card-img-top" src="/image/climbingtopo.png" alt="Card image topo">
+                    <img class="card-img-top" th:src="@{/image/climbingtopo.png}" alt="Card image topo">
                     <div class="card-body">
                         <h5 class="card-title">Trouve un topo</h5>
                         <p class="card-text">Enregistre tes topos personnels, prête ou emprunte un topo à un autre grimpeur.</p>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div sec:authorize="!isAuthenticated()" class="card">
-                    <img class="card-img-top" src="/image/login.png" alt="Card image login">
+                    <img class="card-img-top" th:src="@{/image/login.png}" alt="Card image login">
                     <div class="card-body">
                         <h5 class="card-title">Inscris-toi gratuitement</h5>
                         <p class="card-text">Rejoins la communauté en t'inscrivant gratuitement.</p>

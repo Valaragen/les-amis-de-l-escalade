@@ -15,7 +15,7 @@
 <body>
 <main role="main" class="container bg-white mb-5 pb-3 mt-1">
     <div class="row position-relative">
-        <img src="/image/defaultTopoImg.jpg" class="img-cover h-300 w-100" alt="user icon">
+        <img th:src="@{/image/defaultTopoImg.jpg}" class="img-cover h-300 w-100" alt="user icon">
         <div class="bg-dark px-3 py-2 text-white rounded-pill text-center" id="siteNameDetailWrapper">
             <h1 class="h2" th:text="${#strings.capitalize(topo.name)}">Site name</h1>
             <p class="mb-0" th:if="${!#strings.isEmpty(topo.department.name)}"
