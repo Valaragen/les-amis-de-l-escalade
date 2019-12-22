@@ -43,7 +43,10 @@ public class Constant {
 
     public static final String TOPOS_PATH = "/topos";
     public static final String TOPO_ADD_PATH = TOPOS_PATH + "/add";
+    public static final String TOPO_MODIFY_PATH = TOPOS_PATH + "/modify";
+    public static final String TOPO_DELETE_PATH = TOPOS_PATH + "/delete";
     public static final String TOPO_ADD_PAGE = "topoAddPage";
+    public static final String TOPO_MODIFY_PAGE = "topoModifyPage";
 
     public static final String TOPO_ADD_RESERVATION_PATH = TOPOS_PATH + "/addReservation";
     public static final String TOPO_REMOVE_RESERVATION_PATH = TOPOS_PATH + "/removeReservation";

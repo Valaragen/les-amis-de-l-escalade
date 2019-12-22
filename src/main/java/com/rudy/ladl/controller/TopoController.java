@@ -1,9 +1,6 @@
 package com.rudy.ladl.controller;
 
-import com.rudy.ladl.core.dto.RegisterDTO;
-import com.rudy.ladl.core.dto.SiteContributionDTO;
 import com.rudy.ladl.core.dto.TopoReservationDTO;
-import com.rudy.ladl.core.site.Comment;
 import com.rudy.ladl.core.site.Site;
 import com.rudy.ladl.core.user.Topo;
 import com.rudy.ladl.core.user.User;
@@ -12,6 +9,8 @@ import com.rudy.ladl.service.TopoService;
 import com.rudy.ladl.service.UserService;
 import com.rudy.ladl.util.Constant;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
 public class TopoController {
@@ -35,6 +35,19 @@ public class TopoController {
         this.topoService = topoService;
         this.departmentService = departmentService;
         this.userService = userService;
+    }
+
+    @GetMapping(Constant.TOPOS_PATH + Constant.SLASHID_PATH)
+    public String goToTopoDetailById(@PathVariable("id") Long id, Model model) {
+        if(!model.containsAttribute("topoReservationDTO")) model.addAttribute("topoReservationDTO", new TopoReservationDTO());
+        addCurrentUserToModel(model);
+
+        Topo topo = topoService.findById(id);
+        if (topo != null) {
+            model.addAttribute("topo", topo);
+            return Constant.TOPO_DETAILS_PAGE;
+        }
+        return Constant.REDIRECT + Constant.TOPOS_PATH;
     }
 
     @GetMapping(Constant.TOPOS_PATH)
@@ -85,17 +98,75 @@ public class TopoController {
         return Constant.REDIRECT + Constant.TOPOS_PATH + Constant.SLASH + topo.getId();
     }
 
-    @GetMapping(Constant.TOPOS_PATH + Constant.SLASHID_PATH)
-    public String goToTopoDetailById(@PathVariable("id") Long id, Model model) {
-        if(!model.containsAttribute("topoReservationDTO")) model.addAttribute("topoReservationDTO", new TopoReservationDTO());
-        addCurrentUserToModel(model);
+    @GetMapping(Constant.TOPO_MODIFY_PATH + Constant.SLASHID_PATH)
+    public String topoModifyForm(@PathVariable("id") Long id, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        User user = userService.findByUsername(authentication.getName());
 
         Topo topo = topoService.findById(id);
-        if (topo != null) {
+
+        if (topo != null && (authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")) || user.equals(topo.getOwner()))){
             model.addAttribute("topo", topo);
-            return Constant.TOPO_DETAILS_PAGE;
+            model.addAttribute("departments", departmentService.findAll());
+            return Constant.TOPO_MODIFY_PAGE;
         }
-        return Constant.REDIRECT + Constant.TOPOS_PATH;
+
+        return Constant.REDIRECT + Constant.USER_TOPO_LIST_PATH;
+    }
+
+    @PostMapping(Constant.TOPO_MODIFY_PATH)
+    public String topoModifySubmit(@Valid @ModelAttribute("Topo") Topo topo, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        User user = userService.findByUsername(authentication.getName());
+
+        Topo currentTopo = topoService.findById(topo.getId());
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.site", bindingResult);
+            redirectAttributes.addFlashAttribute("topo", topo);
+            return Constant.REDIRECT + Constant.TOPO_MODIFY_PATH;
+        }
+
+        if (!authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")) && !user.equals(currentTopo.getOwner())) {
+            return Constant.REDIRECT + Constant.USER_TOPO_LIST_PATH;
+        }
+
+
+        topo = topoService.modifyTopo(currentTopo.merge(topo));
+
+        return Constant.REDIRECT + Constant.TOPOS_PATH + Constant.SLASH + topo.getId();
+    }
+
+    @PostMapping(Constant.TOPO_DELETE_PATH)
+    public String siteDeleteSubmit(@ModelAttribute("Topo") Topo topo, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        User user = userService.findByUsername(authentication.getName());
+
+        Topo currentTopo = topoService.findById(topo.getId());
+
+        if (!authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")) && !user.equals(currentTopo.getOwner())) {
+            return Constant.REDIRECT + Constant.TOPOS_PATH;
+        }
+
+        topoService.deleteTopo(currentTopo);
+
+        return Constant.REDIRECT + Constant.USER_TOPO_LIST_PATH;
     }
 
     @PostMapping(Constant.TOPO_ADD_RESERVATION_PATH)

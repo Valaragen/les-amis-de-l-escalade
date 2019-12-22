@@ -15,7 +15,7 @@
 <main role="main" class="container bg-white mb-5 pb-3 mt-1">
     <div class="row position-relative">
         <form sec:authorize="hasRole('ROLE_MEMBER')" th:if="${#lists.isEmpty(site.addedTags)}"
-              action="/sites/addOfficialTag" method="POST" th:object="${site}">
+              th:action="@{/sites/addOfficialTag}" method="POST" th:object="${site}">
             <input type="hidden" name="id" th:field="*{name}" th:value="${site.name}">
             <input type="hidden"
                    name="${_csrf.parameterName}"
@@ -23,7 +23,7 @@
             <button class="btn btn-success siteTagButton" type="submit">Tagger</button>
         </form>
         <form sec:authorize="hasRole('ROLE_MEMBER')" th:if="${!#lists.isEmpty(site.addedTags)}"
-              action="/sites/removeOfficialTag" method="POST" th:object="${site}">
+              th:action="@{/sites/removeOfficialTag}" method="POST" th:object="${site}">
             <input type="hidden" name="id" th:field="*{name}" th:value="${site.name}">
             <input type="hidden"
                    name="${_csrf.parameterName}"

@@ -165,11 +165,9 @@ public class SiteController {
         Site currentSite = siteService.findById(site.getId());
 
         if (!authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")) && !user.equals(currentSite.getSiteCreator())) {
-            System.out.println("not allowed");
             return Constant.REDIRECT + Constant.SITES_PATH;
         }
 
-        System.out.println("deleting");
         siteService.deleteSite(currentSite);
 
         return Constant.REDIRECT + Constant.SITES_PATH;

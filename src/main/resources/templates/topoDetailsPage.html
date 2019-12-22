@@ -17,11 +17,20 @@
     <div class="row position-relative">
         <img th:src="@{/image/defaultTopoImg.jpg}" class="img-cover h-300 w-100" alt="user icon">
         <div class="bg-dark px-3 py-2 text-white rounded-pill text-center" id="siteNameDetailWrapper">
-            <h1 class="h2" th:text="${#strings.capitalize(topo.name)}">Site name</h1>
+            <h1 class="h2" th:text="${#strings.capitalize(topo.name)}">Topo name</h1>
             <p class="mb-0" th:if="${!#strings.isEmpty(topo.department.name)}"
                th:text="${#strings.toUpperCase(topo.department.getFormattedString())}">
                 Department-twonship</p>
         </div>
+
+        <form th:object="${topo}" sec:authorize="hasRole('ROLE_MEMBER')" th:if="${!topo.owner.equals(currentUser)}" th:action="@{/topos/modify/{id}(id=${topo.id})}" method="GET">
+            <button class="btn btn-primary siteTagButton" type="submit"><i class="fas fa-edit"></i> Modifier</button>
+        </form>
+
+        <form th:object="${topo}" th:if="${topo.owner.equals(currentUser)}" th:action="@{/topos/modify/{id}(id=${topo.id})}" method="GET">
+            <button class="btn btn-primary siteTagButton" type="submit"><i class="fas fa-edit"></i> Modifier</button>
+        </form>
+
     </div>
 
     <div th:if="${topo.status}" class="row">

@@ -2,15 +2,23 @@
 <html th:replace="includes/layouts :: basicLayout(~{::title},~{::main},~{::link},~{::.additional-scripts})" lang="fr"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Ajouter un topo - Les amis de l'escalade</title>
+    <title>Modifier un topo - Les amis de l'escalade</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/select2.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/select2-bootstrap.min.css}">
 </head>
 <body>
 <main role="main" class="container bg-white">
-    <form class="mb-5 mt-2" th:action="@{/topos/add}" th:object="${topo}" id="form-site" method="post">
-        <h1 class="mb-4">Ajouter un topo</h1>
+    <div class="row">
+        <h1 class="mb-4 ml-3 pt-3">Modifier un topo</h1>
+        <form class="mx-3 col-auto ml-auto align-items-center d-flex" th:object="${topo}" th:action="@{/topos/delete}"
+              method="POST">
+            <input th:field="*{id}" type="hidden" th:value="*{id}" required>
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+        </form>
+    </div>
+    <form class="mb-5 mt-2" th:action="@{/topos/modify}" th:object="${topo}" id="form-site" method="post">
+        <input th:field="*{id}" type="hidden" th:value="*{id}" required>
         <div class="form-row my-3">
             <div class="col-md-6">
                 <label for="name">Nom du topo<span class="text-danger">*</span></label>
@@ -21,20 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-row my-3">
-            <div class="col-auto">
-                <label for="status">Rendre le topo disponible pour un prêt</label>
-                <select class="form-control js-example-basic"
-                        th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' : ''"
-                        id="status" type="text" th:field="*{status}">
-                    <option th:value="${true}">Oui</option>
-                    <option th:value="${false}">Non</option>
-                </select>
-                <div th:if="${#fields.hasErrors('status')}" th:class="invalid-feedback"
-                     th:errors="*{status}">name Error
-                </div>
-            </div>
-        </div>
+
         <div class="form-row mb-3">
             <div class="col-sm-3">
                 <label for="department">Departement</label>
