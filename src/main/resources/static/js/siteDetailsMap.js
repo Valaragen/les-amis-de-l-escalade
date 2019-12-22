@@ -9,7 +9,7 @@ var mymap = L.map(mapId).setView([lat, lon], 13);
 var marker = L.marker([lat, lon]).addTo(mymap);
 marker.bindTooltip("<b>" + mapElem.data("name") + "</b>");
 var carMarkerIcon = L.icon({
-    iconUrl: '../image/automotive.png',
+    iconUrl: '/image/automotive.png',
 
     iconSize:     [33, 44], // size of the icon
     iconAnchor:   [16.5, 44], // point of the icon which will correspond to marker's location
@@ -26,15 +26,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     maxZoom: 20
 }).addTo(mymap);
 
-var popup = L.popup();
-function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(mymap);
+//remove btns
+if ($('#infoViewModify label').length === 0) {
+    $('#infoViewContributionBtn').remove();
+    $('#infoViewModify').remove();
 }
 
-mymap.on('click', onMapClick);
+if ($('#descViewModify label').length === 0) {
+    $('#descViewContributionBtn').remove();
+    $('#descViewModify').remove();
+}
 
 $(document).on('click', '.contribute-desc', function() {
     $("#descView").toggleClass("d-none");

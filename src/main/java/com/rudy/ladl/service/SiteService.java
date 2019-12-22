@@ -8,10 +8,7 @@ import com.rudy.ladl.core.site.SiteField;
 import com.rudy.ladl.core.site.embeddable.SiteContributionId;
 import com.rudy.ladl.core.user.User;
 import com.rudy.ladl.exception.SiteFieldAlreadyFilledException;
-import com.rudy.ladl.repository.SiteContributionRepository;
-import com.rudy.ladl.repository.SiteFieldRepository;
-import com.rudy.ladl.repository.SiteRepository;
-import com.rudy.ladl.repository.TagRepository;
+import com.rudy.ladl.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -29,7 +26,7 @@ public class SiteService {
 
     @Autowired
     public SiteService(SiteRepository siteRepository, SiteContributionRepository siteContributionRepository,
-                       SiteFieldRepository siteFieldRepository, TagRepository tagRepository) {
+                       SiteFieldRepository siteFieldRepository) {
         this.siteRepository = siteRepository;
         this.siteContributionRepository = siteContributionRepository;
         this.siteFieldRepository = siteFieldRepository;
@@ -49,6 +46,15 @@ public class SiteService {
             siteContributionRepository.save(siteContribution);
         }
         return site;
+    }
+
+    public Site modifySite(Site site) {
+        siteRepository.save(site);
+        return site;
+    }
+
+    public void deleteSite(Site site) {
+        siteRepository.delete(site);
     }
 
     public void addContribution(Site site, SiteContributionDTO siteContributionDTO, User user) throws SiteFieldAlreadyFilledException {

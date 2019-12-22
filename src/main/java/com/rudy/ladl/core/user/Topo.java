@@ -47,4 +47,13 @@ public class Topo extends AbstractEntity {
     public String getSearchName() {
         return name.replace(" ", "_");
     }
+
+    public Topo merge(Topo topo) {
+        this.setName(topo.getName());
+        this.setDepartment(topo.getDepartment());
+        this.setParutionDate(topo.getParutionDate());
+        this.setDescription(topo.getDescription());
+
+        return this;
+    }
 }

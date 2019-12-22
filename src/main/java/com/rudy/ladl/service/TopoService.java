@@ -97,4 +97,13 @@ public  class TopoService {
         topo.setBookingAskers(null);
         topoRepository.save(topo);
     }
+
+    public Topo modifyTopo(Topo topo) {
+        topoRepository.save(topo);
+        return topo;
+    }
+
+    public void deleteTopo(Topo topo) {
+        topoRepository.delete(topo);
+    }
 }

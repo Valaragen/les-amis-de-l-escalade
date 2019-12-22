@@ -22,7 +22,7 @@ var popup = L.popup()
 
 
 var carMarkerIcon = L.icon({
-    iconUrl: '../image/automotive.png',
+    iconUrl: '/image/automotive.png',
 
     iconSize:     [33, 44], // size of the icon
     iconAnchor:   [16.5, 44], // point of the icon which will correspond to marker's location

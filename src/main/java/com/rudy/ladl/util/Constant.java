@@ -26,7 +26,10 @@ public class Constant {
     public static final String SITE_DETAILS_PAGE = "siteDetailsPage";
 
     public static final String SITE_ADD_PATH = SITES_PATH + "/add";
+    public static final String SITE_MODIFY_PATH = SITES_PATH + "/modify";
+    public static final String SITE_DELETE_PATH = SITES_PATH + "/delete";
     public static final String SITE_ADD_PAGE = "siteAddPage";
+    public static final String SITE_MODIFY_PAGE = "siteModifyPage";
 
     public static final String SITE_ADD_OFFICIAL_TAG_PATH = SITES_PATH + "/addOfficialTag";
     public static final String SITE_REMOVE_OFFICIAL_TAG_PATH = SITES_PATH + "/removeOfficialTag";
@@ -40,7 +43,10 @@ public class Constant {
 
     public static final String TOPOS_PATH = "/topos";
     public static final String TOPO_ADD_PATH = TOPOS_PATH + "/add";
+    public static final String TOPO_MODIFY_PATH = TOPOS_PATH + "/modify";
+    public static final String TOPO_DELETE_PATH = TOPOS_PATH + "/delete";
     public static final String TOPO_ADD_PAGE = "topoAddPage";
+    public static final String TOPO_MODIFY_PAGE = "topoModifyPage";
 
     public static final String TOPO_ADD_RESERVATION_PATH = TOPOS_PATH + "/addReservation";
     public static final String TOPO_REMOVE_RESERVATION_PATH = TOPOS_PATH + "/removeReservation";

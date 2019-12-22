@@ -103,6 +103,77 @@ public class SiteController {
         return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + site.getSearchName();
     }
 
+    @GetMapping(Constant.SITE_MODIFY_PATH  + Constant.SLASHSTRING_PATH)
+    public String siteModifyForm(@PathVariable("string") String name, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        User user = userService.findByUsername(authentication.getName());
+
+        Site site = siteService.findByName(name);
+
+        if (site != null && (authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")) || user.equals(site.getSiteCreator()))){
+            model.addAttribute("site", site);
+            loadEntityModelAttribute(model);
+            return Constant.SITE_MODIFY_PAGE;
+        }
+        return Constant.REDIRECT + Constant.SITES_PATH;
+    }
+
+    @PostMapping(Constant.SITE_MODIFY_PATH)
+    public String siteModifySubmit(@Valid @ModelAttribute("Site") Site site, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        User user = userService.findByUsername(authentication.getName());
+
+        Site currentSite = siteService.findById(site.getId());
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.site", bindingResult);
+            redirectAttributes.addFlashAttribute("site", site);
+            return Constant.REDIRECT + Constant.SITE_MODIFY_PATH;
+        }
+
+        if (!authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")) && !user.equals(currentSite.getSiteCreator())) {
+            return Constant.REDIRECT + Constant.SITES_PATH;
+        }
+
+
+        site = siteService.modifySite(currentSite.merge(site));
+
+        return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + site.getSearchName();
+    }
+
+    @PostMapping(Constant.SITE_DELETE_PATH)
+    public String siteDeleteSubmit(@ModelAttribute("Site") Site site, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!authentication.isAuthenticated()) {
+            return Constant.REDIRECT + Constant.LOGIN_PATH;
+        }
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        User user = userService.findByUsername(authentication.getName());
+
+        Site currentSite = siteService.findById(site.getId());
+
+        if (!authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER")) && !user.equals(currentSite.getSiteCreator())) {
+            return Constant.REDIRECT + Constant.SITES_PATH;
+        }
+
+        siteService.deleteSite(currentSite);
+
+        return Constant.REDIRECT + Constant.SITES_PATH;
+    }
+
+
     @GetMapping(Constant.SITES_PATH + Constant.SLASHSTRING_PATH)
     public String goToSiteDetailByName(@PathVariable("string") String name, SiteContributionDTO siteContributionDTO, Comment comment, Model model) {
         addCurrentUserToModel(model);
@@ -132,7 +203,6 @@ public class SiteController {
         }
 
         try {
-            System.out.println(siteContributionDTO);
             siteService.addContribution(site, siteContributionDTO, user);
         } catch (SiteFieldAlreadyFilledException e) {
             return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + name;
@@ -201,7 +271,6 @@ public class SiteController {
 
         User commentOwner = userService.findById(comment.getId().getUser().getId());
         Site site = siteService.findById(comment.getId().getSite().getId());
-        System.out.println(comment.getId().getDate());
         Comment newComment = commentService.findById(new CommentId(site, commentOwner, comment.getId().getDate()));
         newComment.setDescription(comment.getDescription());
 

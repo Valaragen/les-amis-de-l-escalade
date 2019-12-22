@@ -15,7 +15,7 @@
 <main role="main" class="container bg-white mb-5 pb-3 mt-1">
     <div class="row position-relative">
         <form sec:authorize="hasRole('ROLE_MEMBER')" th:if="${#lists.isEmpty(site.addedTags)}"
-              action="/sites/addOfficialTag" method="POST" th:object="${site}">
+              th:action="@{/sites/addOfficialTag}" method="POST" th:object="${site}">
             <input type="hidden" name="id" th:field="*{name}" th:value="${site.name}">
             <input type="hidden"
                    name="${_csrf.parameterName}"
@@ -23,7 +23,7 @@
             <button class="btn btn-success siteTagButton" type="submit">Tagger</button>
         </form>
         <form sec:authorize="hasRole('ROLE_MEMBER')" th:if="${!#lists.isEmpty(site.addedTags)}"
-              action="/sites/removeOfficialTag" method="POST" th:object="${site}">
+              th:action="@{/sites/removeOfficialTag}" method="POST" th:object="${site}">
             <input type="hidden" name="id" th:field="*{name}" th:value="${site.name}">
             <input type="hidden"
                    name="${_csrf.parameterName}"
@@ -31,6 +31,8 @@
             <button class="btn btn-danger siteTagButton" type="submit">Retirer tag</button>
         </form>
         <img th:src="@{/image/defaultSiteImg.jpg}" class="img-cover h-300 w-100" alt="user icon">
+
+        <!--/* SITE NAME, TOWNHSIP, DEPARTMENT */-->
         <div class="bg-dark px-3 py-2 text-white rounded-pill text-center" id="siteNameDetailWrapper">
             <h1 class="h2" th:text="${#strings.capitalize(site.name)}">Site name</h1>
             <p class="mb-0"
@@ -39,15 +41,21 @@
         </div>
     </div>
 
-    <div th:if="${!#lists.isEmpty(site.addedTags)}" class="row">
+    <div class="row">
         <p class="my-3 mx-3 col-auto bg-success text-white h5 rounded-lg" th:each="addedTag : ${site.addedTags}"
            th:text="${addedTag.id.tag.name}"></p>
+        <form class="my-3 mx-3 col-auto ml-auto align-items-center d-flex" sec:authorize="hasRole('ROLE_MEMBER')" th:if="${!site.siteCreator.equals(currentUser)}" th:action="@{/sites/modify/{name}(name=${#strings.replace(site.name, ' ', '_')})}" method="GET">
+            <button class="btn btn-primary" type="submit"><i class="fas fa-edit"></i> Modifier</button>
+        </form>
+        <form class="my-3 mx-3 col-auto ml-auto align-items-center d-flex" th:if="${site.siteCreator.equals(currentUser)}" th:action="@{/sites/modify/{name}(name=${#strings.replace(site.name, ' ', '_')})}" method="GET">
+            <button class="btn btn-primary" type="submit"><i class="fas fa-edit"></i> Modifier</button>
+        </form>
     </div>
 
     <div class="m-1 mt-3 p-3 bg-light position-relative">
         <h2>Informations</h2>
         <div id="infoView">
-            <button sec:authorize="isAuthenticated()"
+            <button sec:authorize="isAuthenticated()" th:if="${site.isAcceptContribution}" id="infoViewContributionBtn"
                     class="btn btn-outline-primary position-absolute contribute-button rounded-pill contribute-info">
                 + Contribuer aux
                 informations
@@ -102,7 +110,7 @@
             </div>
         </div>
         <!---->
-        <div id="infoViewModify" class="d-none" sec:authorize="isAuthenticated()">
+        <div id="infoViewModify" class="d-none" sec:authorize="isAuthenticated()" th:if="${site.isAcceptContribution}">
             <button class="btn btn-outline-primary position-absolute contribute-button rounded-pill contribute-info">
                 Annuler
             </button>
@@ -255,7 +263,7 @@
     <div class="m-1 mt-3 p-3 bg-light position-relative">
         <h2>Descriptions</h2>
         <div id="descView">
-            <button sec:authorize="isAuthenticated()"
+            <button sec:authorize="isAuthenticated()" th:if="${site.isAcceptContribution}" id="descViewContributionBtn"
                     class="btn btn-outline-primary position-absolute contribute-button rounded-pill contribute-desc">+
                 Contribuer aux
                 descriptions
@@ -288,7 +296,7 @@
             </div>
         </div>
         <!---->
-        <div id="descViewModify" class="d-none" sec:authorize="isAuthenticated()">
+        <div id="descViewModify" class="d-none" sec:authorize="isAuthenticated()" th:if="${site.isAcceptContribution}">
             <button class="btn btn-outline-primary position-absolute contribute-button rounded-pill contribute-desc">
                 Annuler
             </button>
