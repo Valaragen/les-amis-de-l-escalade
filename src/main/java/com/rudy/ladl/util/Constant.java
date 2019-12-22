@@ -26,6 +26,7 @@ public class Constant {
     public static final String SITE_DETAILS_PAGE = "siteDetailsPage";
 
     public static final String SITE_ADD_PATH = SITES_PATH + "/add";
+    public static final String SITE_MODIFY_PATH = SITES_PATH + "/modify";
     public static final String SITE_ADD_PAGE = "siteAddPage";
 
     public static final String SITE_ADD_OFFICIAL_TAG_PATH = SITES_PATH + "/addOfficialTag";

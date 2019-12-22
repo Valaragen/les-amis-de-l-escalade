@@ -26,15 +26,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     maxZoom: 20
 }).addTo(mymap);
 
-var popup = L.popup();
-function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(mymap);
+//remove btns
+if ($('#infoViewModify label').length === 0) {
+    $('#infoViewContributionBtn').remove();
+    $('#infoViewModify').remove();
 }
 
-mymap.on('click', onMapClick);
+if ($('#descViewModify label').length === 0) {
+    $('#descViewContributionBtn').remove();
+    $('#descViewModify').remove();
+}
 
 $(document).on('click', '.contribute-desc', function() {
     $("#descView").toggleClass("d-none");

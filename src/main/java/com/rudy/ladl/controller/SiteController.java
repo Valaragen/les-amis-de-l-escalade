@@ -132,7 +132,6 @@ public class SiteController {
         }
 
         try {
-            System.out.println(siteContributionDTO);
             siteService.addContribution(site, siteContributionDTO, user);
         } catch (SiteFieldAlreadyFilledException e) {
             return Constant.REDIRECT + Constant.SITES_PATH + Constant.SLASH + name;
