@@ -9,7 +9,7 @@ var mymap = L.map(mapId).setView([lat, lon], 13);
 var marker = L.marker([lat, lon]).addTo(mymap);
 marker.bindTooltip("<b>" + mapElem.data("name") + "</b>");
 var carMarkerIcon = L.icon({
-    iconUrl: '../image/automotive.png',
+    iconUrl: '/image/automotive.png',
 
     iconSize:     [33, 44], // size of the icon
     iconAnchor:   [16.5, 44], // point of the icon which will correspond to marker's location

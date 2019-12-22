@@ -93,7 +93,7 @@ public class Site extends AbstractEntity {
     @Column(nullable = false)
     private Boolean isAcceptContribution;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User siteCreator;
     @ManyToOne
     private RoutesNumber routesNumber;
@@ -139,7 +139,7 @@ public class Site extends AbstractEntity {
     @EqualsAndHashCode.Exclude
     private Set<SiteContribution> contributions = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "id.site")
+    @OneToMany(mappedBy = "id.site")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<AddedTag> addedTags = new HashSet<>();
@@ -200,6 +200,33 @@ public class Site extends AbstractEntity {
             }
         }
         return result;
+    }
+
+    public Site merge(Site site) {
+        this.setName(site.getName());
+        this.setTownship(site.getTownship());
+        this.setDepartment(site.getDepartment());
+        this.setLatitude(site.getLatitude());
+        this.setLongitude(site.getLongitude());
+        this.setIsAcceptContribution(site.getIsAcceptContribution());
+        this.setKidsFriendly(site.getKidsFriendly());
+        this.setMinGrade(site.getMinGrade());
+        this.setMaxGrade(site.getMaxGrade());
+        this.setRockType(site.getRockType());
+        this.setOrientations(site.getOrientations());
+        this.setSiteTypes(site.getSiteTypes());
+        this.setLevelGroups(site.getLevelGroups());
+        this.setRoutesNumber(site.getRoutesNumber());
+        this.setMaxRoutesHeight(site.getMaxRoutesHeight());
+        this.setCragsNumber(site.getCragsNumber());
+        this.setDescription(site.getDescription());
+        this.setKidsFriendlyInfo(site.getKidsFriendlyInfo());
+        this.setAdditionalInfos(site.getAdditionalInfos());
+        this.setAccessInfo(site.getAccessInfo());
+        this.setParkingLatitude(site.getParkingLatitude());
+        this.setParkingLongitude(site.getParkingLongitude());
+
+        return this;
     }
 
 }

@@ -41,9 +41,15 @@
         </div>
     </div>
 
-    <div th:if="${!#lists.isEmpty(site.addedTags)}" class="row">
+    <div class="row">
         <p class="my-3 mx-3 col-auto bg-success text-white h5 rounded-lg" th:each="addedTag : ${site.addedTags}"
            th:text="${addedTag.id.tag.name}"></p>
+        <form class="my-3 mx-3 col-auto ml-auto align-items-center d-flex" sec:authorize="hasRole('ROLE_MEMBER')" th:if="${!site.siteCreator.equals(currentUser)}" th:action="@{/sites/modify/{name}(name=${#strings.replace(site.name, ' ', '_')})}" method="GET">
+            <button class="btn btn-primary" type="submit"><i class="fas fa-edit"></i> Modifier</button>
+        </form>
+        <form class="my-3 mx-3 col-auto ml-auto align-items-center d-flex" th:if="${site.siteCreator.equals(currentUser)}" th:action="@{/sites/modify/{name}(name=${#strings.replace(site.name, ' ', '_')})}" method="GET">
+            <button class="btn btn-primary" type="submit"><i class="fas fa-edit"></i> Modifier</button>
+        </form>
     </div>
 
     <div class="m-1 mt-3 p-3 bg-light position-relative">
