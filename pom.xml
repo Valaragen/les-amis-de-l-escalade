@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.rudy.ladl</groupId>
     <artifactId>ladl</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Les amis de l'escalade</name>
