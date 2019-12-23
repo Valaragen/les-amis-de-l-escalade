@@ -22,24 +22,6 @@ Une version en ligne est déployée sur heroku -> https://ladl.herokuapp.com/
     - **catalina.sh** run (sur Linux)
 5. Depuis votre navigateur connectez vous à **localhost:8080/ladl-{version_du_site}**
 
-### Utilisateurs
-   Vous avez accès à trois types d'utilisateurs : 
-
-#### Admin 
-   Nom d'utlisateur : **valaragen**  
-   Mot de passe : **Azerty**
-
-#### Membre de l'association
-   Nom d'utlisateur : **member**  
-   Mot de passe : **Azerty**
-
-#### Utilisateur
-   Nom d'utlisateur : **user**  
-   Mot de passe : **Azerty**
-
-   Nom d'utlisateur : **toto**  
-   Mot de passe : **Azerty**
-
 ## Aperçus
 
 ![](https://github.com/Valaragen/les-amis-de-l-escalade/blob/master/homepage.JPG)  
