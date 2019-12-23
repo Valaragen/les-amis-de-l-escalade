@@ -25,14 +25,6 @@ Une version en ligne est déployée sur heroku -> https://ladl.herokuapp.com/
 ### Utilisateurs
    Vous avez accès à trois types d'utilisateurs : 
 
-#### Admin 
-   Nom d'utlisateur : **valaragen**  
-   Mot de passe : **Azerty**
-
-#### Membre de l'association
-   Nom d'utlisateur : **member**  
-   Mot de passe : **Azerty**
-
 #### Utilisateur
    Nom d'utlisateur : **user**  
    Mot de passe : **Azerty**
