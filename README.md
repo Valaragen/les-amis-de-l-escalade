@@ -4,6 +4,9 @@ Site permettant à la communauté de référencer, donner des infos et commenter
 
 *Projet géré avec **apache maven**, compilé sous **java 8**, SGBDR **postgresql***
 
+## Tester le site 
+Une version en ligne est déployée sur heroku -> https://ladl.herokuapp.com/
+
 ## Comment faire tourner le site en local ?
 ### Prérequis
 1. [Apache tomcat](https://tomcat.apache.org/download-90.cgi)
