@@ -2,7 +2,8 @@
 ## Description
 Site permettant à la communauté de référencer, donner des infos et commenter des sites d'escalade.
 
-*Projet géré avec **apache maven**, compilé sous **java 8**, SGBDR **postgresql***
+### Les technologies utilisées
+Projet **Spring boot** géré avec **apache maven**, compilé sous **java 8**, SGBDR **postgresql**, versionning de la base de données avec **liquibase**, mapping de la base de donnée avec **spring JPA**/**hibernate**, sécurisé avec **Spring security**
 
 ## Tester le site 
 Une version en ligne est déployée sur heroku -> https://ladl.herokuapp.com/
